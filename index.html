@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오키나와 가족 여행 커맨드센터</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js UMD Build (Fixes ReferenceError) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #FDFBF7; color: #44403C; -webkit-tap-highlight-color: transparent; }
+        
+        .tab-content {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            display: none;
+        }
+        .tab-content.active {
+            opacity: 1;
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #E7E5E4;
+            z-index: 0;
+        }
+        .timeline-item:last-child::before {
+            bottom: auto;
+            height: 20px;
+        }
+        
+        /* Mobile Scrollbar Hide */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .map-link:active {
+            color: #F97316;
+            background-color: #FFF7ED;
+            border-radius: 4px;
+        }
+
+        /* Touch interaction improvements */
+        button:active {
+            transform: scale(0.98);
+        }
+        .nav-btn:active {
+            background-color: #f5f5f4;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-10 md:pb-0">
+
+    <!-- Header Section -->
+    <header class="bg-stone-800 text-stone-50 pt-6 pb-6 px-4 md:pt-8 md:pb-10 md:px-6 relative overflow-hidden shadow-lg">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-6">
+                <div class="flex-1 min-w-0 w-full">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div id="dday-badge" class="inline-block bg-orange-500 text-white text-[11px] md:text-xs font-bold px-2.5 py-1 rounded-full mb-2 tracking-wide shadow-sm">D-DAY 확인 중...</div>
+                            <h1 class="text-3xl md:text-5xl font-black mb-3 leading-tight text-white break-keep tracking-tight">
+                                오키나와<br>
+                                <span class="text-sky-400">가족여행</span> <span class="text-orange-400">2026</span>
+                            </h1>
+                        </div>
+                        <!-- Mobile Weather Compact View -->
+                        <div class="md:hidden text-right">
+                             <div class="flex flex-col items-end">
+                                <span id="current-temp-mobile" class="text-3xl font-black text-white">--°</span>
+                                <span id="current-status-mobile-text" class="text-xs text-stone-300">날씨 로딩</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2 w-full">
+                        <div class="flex-1 bg-stone-700/60 backdrop-blur px-3 py-2 rounded-xl border border-stone-600/50 flex flex-col items-center justify-center">
+                            <span class="block text-[10px] text-stone-400 mb-0.5">출국 (KE2147)</span>
+                            <span class="font-bold text-white text-base">09:10</span>
+                        </div>
+                        <div class="flex-1 bg-stone-700/60 backdrop-blur px-3 py-2 rounded-xl border border-stone-600/50 flex flex-col items-center justify-center">
+                            <span class="block text-[10px] text-stone-400 mb-0.5">귀국 (OZ0171)</span>
+                            <span class="font-bold text-white text-base">18:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Weather View -->
+                <div class="hidden md:block bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 min-w-[280px] flex-shrink-0">
+                    <div class="flex justify-between items-end mb-3 border-b border-white/10 pb-2">
+                        <span class="text-xs font-bold text-sky-300">오키나와 (나하)</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="flex items-end gap-2">
+                            <span id="current-temp" class="text-4xl font-black text-white">--°</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span id="current-status-pc" class="text-base font-bold text-white">정보 로딩 중</span>
+                            <span id="today-range" class="text-xs text-stone-300 mt-0.5">최저 --° / 최고 --°</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2" id="forecast-container">
+                        <p class="text-xs text-stone-400 text-center">예보 로딩...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -right-10 -bottom-20 w-64 h-64 bg-orange-500 rounded-full opacity-10 blur-3xl"></div>
+    </header>
+
+    <!-- Main Navigation (Sticky & Scrollable) -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-stone-200 shadow-sm safe-area-inset-top">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex overflow-x-auto no-scrollbar py-1 px-2 md:px-4 space-x-1 md:space-x-4">
+                <button onclick="switchTab('schedule')" id="btn-schedule" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-orange-500 text-orange-600 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    📅 일정표
+                </button>
+                <button onclick="switchTab('mapcodes')" id="btn-mapcodes" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🚗 맵코드
+                </button>
+                <button onclick="switchTab('attractions')" id="btn-attractions" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🏝️ 관광지
+                </button>
+                <button onclick="switchTab('shopping')" id="btn-shopping" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🛍️ 쇼핑몰
+                </button>
+                <button onclick="switchTab('dining')" id="btn-dining" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🍽️ 맛집
+                </button>
+                <button onclick="switchTab('commandments')" id="btn-commandments" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    📜 십계명
+                </button>
+                <button onclick="switchTab('accommodation')" id="btn-accommodation" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🏨 숙소
+                </button>
+                <button onclick="switchTab('american-village')" id="btn-american-village" class="nav-btn flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-stone-500 transition-colors duration-200 whitespace-nowrap rounded-t-lg">
+                    🎡 아메리칸V
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-6 md:py-8">
+
+        <!-- TAB 1: SCHEDULE -->
+        <div id="schedule" class="tab-content active">
+            <div class="mb-5 flex flex-col md:flex-row md:items-end justify-between">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-1 flex items-center flex-wrap">
+                        상세 일정 
+                        <span class="text-xs md:text-sm font-medium text-red-500 ml-2 bg-red-50 px-2 py-0.5 rounded-full border border-red-100">변경 가능</span>
+                    </h2>
+                    <p class="text-stone-500 text-xs md:text-sm mt-1">장소명을 누르면 구글맵이 열립니다.</p>
+                </div>
+            </div>
+
+            <!-- Day Selectors -->
+            <div class="grid grid-cols-4 gap-2 mb-6">
+                <button onclick="switchDay(1)" id="day-btn-1" class="day-btn bg-stone-800 text-white shadow-md rounded-xl py-2.5 px-1 flex flex-col items-center justify-center transition-all active:scale-95"><span class="text-sm font-bold">1일차</span><span class="text-[10px] opacity-80 mt-0.5">4/2(목)</span></button>
+                <button onclick="switchDay(2)" id="day-btn-2" class="day-btn bg-white text-stone-600 border border-stone-300 rounded-xl py-2.5 px-1 flex flex-col items-center justify-center transition-all active:scale-95"><span class="text-sm font-bold">2일차</span><span class="text-[10px] opacity-80 mt-0.5">4/3(금)</span></button>
+                <button onclick="switchDay(3)" id="day-btn-3" class="day-btn bg-white text-stone-600 border border-stone-300 rounded-xl py-2.5 px-1 flex flex-col items-center justify-center transition-all active:scale-95"><span class="text-sm font-bold">3일차</span><span class="text-[10px] opacity-80 mt-0.5">4/4(토)</span></button>
+                <button onclick="switchDay(4)" id="day-btn-4" class="day-btn bg-white text-stone-600 border border-stone-300 rounded-xl py-2.5 px-1 flex flex-col items-center justify-center transition-all active:scale-95"><span class="text-sm font-bold">4일차</span><span class="text-[10px] opacity-80 mt-0.5">4/5(일)</span></button>
+            </div>
+
+            <!-- Day 1 -->
+            <div id="day-content-1" class="day-view space-y-0 relative pl-1">
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🚩</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">06:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=인천공항 제2여객터미널" target="_blank" class="map-link flex items-center py-1">인천공항 집결 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">제2여객터미널 3층 출국장 집결 및 대한항공 B,C 카운터 체크인입니다.</p>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🛫</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-sky-500 bg-sky-50 px-2 py-1 rounded mb-2 inline-block">09:10</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=나하공항" target="_blank" class="map-link flex items-center py-1">인천 출발 & 오키나와 도착</a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">대한항공 KE2147 탑승합니다. 11:35 나하 공항 도착 예정입니다.</p>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🚕</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded mb-2 inline-block">13:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=유니버스렌터카 오키나와" target="_blank" class="map-link flex items-center py-1">렌터카 인수 (유니버스) <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">셔틀이 없으므로 택시로 이동합니다. 카시트 2개 장착 여부를 꼭 확인하세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 005 306*61')"><span>MC: 33 005 306*61</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🍽️</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">13:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=우미카지테라스" target="_blank" class="map-link flex items-center py-1">우미카지 테라스 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">공항 근처의 하얀 건물들이 예쁜 곳입니다. 자유롭게 점심을 즐기고 사진을 찍으세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 002 602*06')"><span>MC: 33 002 602*06</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🏨</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">15:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="map-link flex items-center py-1">레쿠 오키나와 체크인 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">아메리칸 빌리지 내 호텔.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span>MC: 33 525 594*3</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🌆</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded mb-2 inline-block">17:00 ~ 저녁</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지 오키나와" target="_blank" class="map-link flex items-center py-1">아메리칸 빌리지 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">숙소 체크인 후 아메리칸 빌리지에서 자유식입니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 526 451*20')"><span>MC: 33 526 451*20</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div id="day-content-2" class="day-view space-y-0 relative pl-1 hidden">
+                <div class="bg-red-50 p-4 rounded-lg mb-6 border border-red-100"><p class="text-red-600 text-sm font-bold">❗ 주의: 이동 거리가 긴 날입니다. 멀미약을 챙기세요.</p></div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🚙</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">09:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="map-link flex items-center py-1">숙소 출발 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">북부까지 이동 시간이 꽤 걸립니다. 조식 후 지체 없이 출발하는 것이 좋습니다.</p>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🐘</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-emerald-500 bg-emerald-50 px-2 py-1 rounded mb-2 inline-block">10:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=만좌모" target="_blank" class="map-link flex items-center py-1">만좌모 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">바람이 강할 수 있으니 모자가 날아가지 않게 주의하세요. 산책로를 따라 30분 정도 소요됩니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('206 312 097*55')"><span>MC: 206 312 097*55</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🥩</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">11:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=우후야 오키나와" target="_blank" class="map-link flex items-center py-1">점심: 우후야 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">예약 필수 맛집입니다. 고택의 분위기를 즐기며 아구돼지 요리를 맛보세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('206 745 056*67')"><span>MC: 206 745 056*67</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🐋</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-sky-500 bg-sky-50 px-2 py-1 rounded mb-2 inline-block">13:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="map-link flex items-center py-1">츄라우미 수족관 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">오키짱 돌고래 쇼 시간(13:00 / 15:00)을 미리 확인하여 관람 동선을 짜보세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('553 075 797')"><span>MC: 553 075 797</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🍦</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-yellow-500 bg-yellow-50 px-2 py-1 rounded mb-2 inline-block">16:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=쿄다휴게소" target="_blank" class="map-link flex items-center py-1">쿄다 휴게소 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">옵빠 아이스크림과 갓 튀긴 튀김 간식이 유명합니다. </p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('206 476 706*66')"><span>MC: 206 476 706*66</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🏠</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">17:30</span>
+                        <h3 class="font-bold text-lg text-stone-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="map-link flex items-center py-1">
+                                숙소 복귀 (레쿠 오키나와) <span class="ml-2 text-xs text-stone-400">📍</span>
+                            </a>
+                        </h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">숙소 복귀 후 아메리칸 빌리지에서 자유식입니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span>MC: 33 525 594*3</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div id="day-content-3" class="day-view space-y-0 relative pl-1 hidden">
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🚙</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">09:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="map-link flex items-center py-1">숙소 출발 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">오늘은 비교적 여유로운 일정입니다. 조식을 든든히 먹고 출발하세요.</p>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🌴</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-emerald-500 bg-emerald-50 px-2 py-1 rounded mb-2 inline-block">10:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=동남식물원 오키나와" target="_blank" class="map-link flex items-center py-1">동남식물원 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">야외 활동이 많으니 자외선 차단제와 양산을 챙기세요. 동물 먹이 주기 체험도 있습니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 742 510*74')"><span>MC: 33 742 510*74</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🛍️</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded mb-2 inline-block">12:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=이온몰 오키나와 라이카무" target="_blank" class="map-link flex items-center py-1">이온몰 라이카무 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">오키나와 최대 쇼핑몰입니다. 1층 수족관 앞에서 만나기로 약속 장소를 정하면 좋습니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 530 230*74')"><span>MC: 33 530 230*74</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🏖️</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-yellow-500 bg-yellow-50 px-2 py-1 rounded mb-2 inline-block">15:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=아라하비치" target="_blank" class="map-link flex items-center py-1">아라하 비치 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">해질 무렵 석양이 아름다운 곳입니다. 해적선 놀이터에서 즐거운 시간 보내세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 496 038*21')"><span>MC: 33 496 038*21</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                 <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🛏️</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">17:30</span>
+                        <h3 class="font-bold text-lg text-stone-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="map-link flex items-center py-1">
+                                숙소 복귀 (레쿠 오키나와) <span class="ml-2 text-xs text-stone-400">📍</span>
+                            </a>
+                        </h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">숙소에서 잠시 휴식 및 재정비를 합니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span>MC: 33 525 594*3</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🍻</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">18:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="map-link flex items-center py-1">저녁: 야키니쿠 유메마루 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">단체 예약이 필수입니다. 무한리필 이용 시간을 확인하고 주문하세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 526 452*52')"><span>MC: 33 526 452*52</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div id="day-content-4" class="day-view space-y-0 relative pl-1 hidden">
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">👋</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100"><span class="text-xs font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">09:00</span><h3 class="font-bold text-lg text-stone-800">체크아웃</h3></div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">👺</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-rose-500 bg-stone-100 px-2 py-1 rounded mb-2 inline-block">10:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="map-link flex items-center py-1">오키나와 월드 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">동굴 내부는 습하고 미끄러울 수 있으니 편안한 신발을 신으세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('232 495 330*83')"><span>MC: 232 495 330*83</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🍽️</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded mb-2 inline-block">13:30</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=이아스 오키나와 토요사키" target="_blank" class="map-link flex items-center py-1">점심: 이아스 오키나와 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">공항 근처라 마지막 쇼핑과 식사를 해결하기 좋습니다. DMM 수족관도 있습니다.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('232 543 400*25')"><span>MC: 232 543 400*25</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10 pb-8">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🚗</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded mb-2 inline-block">15:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=유니버스렌터카 오키나와" target="_blank" class="map-link flex items-center py-1">렌터카 반납 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">반납 전 주유 필요 X, 렌터카 사무실에서 공항 택시 이동을 준비하세요.</p>
+                        <div class="mt-3 p-3 bg-stone-50 rounded-lg text-xs font-mono text-stone-600 flex justify-between items-center cursor-pointer active:bg-stone-200 transition-colors" onclick="copyToClipboard('33 005 306*61')"><span>MC: 33 005 306*61</span><span class="text-orange-500 font-bold">복사</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item relative pl-10">
+                    <div class="absolute left-0 top-1 w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center text-lg z-10 border-4 border-white shadow-sm">🛫</div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-stone-100">
+                        <span class="text-xs font-bold text-sky-500 bg-sky-50 px-2 py-1 rounded mb-2 inline-block">15:30 ~ 18:00</span>
+                        <h3 class="font-bold text-lg text-stone-800"><a href="https://www.google.com/maps/search/?api=1&query=나하공항" target="_blank" class="map-link flex items-center py-1">나하공항 출국 <span class="ml-2 text-xs text-stone-400">📍</span></a></h3>
+                        <p class="text-stone-500 text-sm mt-1 leading-relaxed">국제선 터미널로 이동하여 수속을 밟습니다. 남은 동전은 공항 편의점에서 털어버리세요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MAPCODES -->
+        <div id="mapcodes" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">드라이버 대시보드</h2>
+                <p class="text-stone-500 text-xs md:text-sm">지명을 누르면 <strong class="text-orange-600">구글맵</strong>이 열리고, 카드를 누르면 맵코드가 복사됩니다.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 005 306*61')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=유니버스렌터카 오키나와" target="_blank" class="hover:text-orange-600 flex items-center gap-1">유니버스 렌터카 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 005 306*61</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 002 602*06')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=우미카지테라스" target="_blank" class="hover:text-orange-600 flex items-center gap-1">우미카지 테라스 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 002 602*06</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 525 594*3')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="hover:text-orange-600 flex items-center gap-1">레쿠 오키나와 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 525 594*3</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 526 451*20')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지 오키나와" target="_blank" class="hover:text-orange-600 flex items-center gap-1">아메리칸 빌리지 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 526 451*20</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('206 312 097*55')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=만좌모" target="_blank" class="hover:text-orange-600 flex items-center gap-1">만좌모 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">206 312 097*55</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('206 745 056*67')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=우후야 오키나와" target="_blank" class="hover:text-orange-600 flex items-center gap-1">우후야 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">206 745 056*67</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('553 075 797')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="hover:text-orange-600 flex items-center gap-1">츄라우미 수족관 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">553 075 797</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('206 476 706*66')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=쿄다휴게소" target="_blank" class="hover:text-orange-600 flex items-center gap-1">쿄다 휴게소 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">206 476 706*66</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 742 510*74')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=동남식물원 오키나와" target="_blank" class="hover:text-orange-600 flex items-center gap-1">동남식물원 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 742 510*74</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 530 230*74')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=이온몰 오키나와 라이카무" target="_blank" class="hover:text-orange-600 flex items-center gap-1">이온몰 라이카무 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 530 230*74</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 496 038*21')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=아라하비치" target="_blank" class="hover:text-orange-600 flex items-center gap-1">아라하 비치 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 496 038*21</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 526 452*52')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="hover:text-orange-600 flex items-center gap-1">야키니쿠 유메마루 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 526 452*52</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 434 024*44')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=메가돈키호테 기노완점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">메가 돈키호테 기노완 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 434 024*44</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('33 064 552*55')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=만화창고 나하점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">만화창고 나하 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">33 064 552*55</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('232 543 400*25')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=이아스 오키나와 토요사키" target="_blank" class="hover:text-orange-600 flex items-center gap-1">이아스 오키나와 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">232 543 400*25</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('232 484 222*53')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=이토만 어민식당" target="_blank" class="hover:text-orange-600 flex items-center gap-1">이토만 어민식당 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">232 484 222*53</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('232 495 330*83')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="hover:text-orange-600 flex items-center gap-1">오키나와 월드 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">232 495 330*83</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-stone-200 active:bg-stone-50 transition-colors" onclick="copyToClipboard('232 544 452*22')">
+                    <h3 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=아시비나 아울렛" target="_blank" class="hover:text-orange-600 flex items-center gap-1">아시비나 아울렛 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i></a></h3>
+                    <p class="font-mono text-lg text-stone-600 mt-1">232 544 452*22</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ATTRACTIONS -->
+        <div id="attractions" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">오키나와 주요 명소 가이드</h2>
+                <p class="text-stone-500 text-xs md:text-sm">이름을 누르면 <strong class="text-orange-600">구글맵</strong>이 열립니다. 맵코드를 눌러 복사하세요.</p>
+            </div>
+
+            <!-- Northern Region -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-emerald-100 p-2 rounded-lg">
+                        <i data-lucide="trees" class="w-5 h-5 md:w-6 md:h-6 text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">북부 (얀바루)</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-emerald-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="hover:text-emerald-600 flex items-center gap-1">
+                                    츄라우미 수족관 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">거대한 수조에서 고래상어를 관람할 수 있는 세계적인 규모의 수족관입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-emerald-50 active:text-emerald-700 transition-colors" onclick="copyToClipboard('553 075 797')">
+                                <span class="text-xs font-mono font-bold">MC: 553 075 797</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-emerald-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=코우리대교" target="_blank" class="hover:text-emerald-600 flex items-center gap-1">
+                                    코우리 대교 & 섬 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">에메랄드빛 바다 위를 달리는 긴 다리와 하트 모양의 바위가 유명한 섬입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-emerald-50 active:text-emerald-700 transition-colors" onclick="copyToClipboard('485 693 485*06')">
+                                <span class="text-xs font-mono font-bold">MC: 485 693 485*06</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-emerald-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=나고파인애플파크" target="_blank" class="hover:text-emerald-600 flex items-center gap-1">
+                                    나고 파인애플 파크 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">파인애플 농장을 테마로 한 공원으로, 파인애플 카트를 타고 관람하는 명소입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-emerald-50 active:text-emerald-700 transition-colors" onclick="copyToClipboard('206 716 467*82')">
+                                <span class="text-xs font-mono font-bold">MC: 206 716 467*82</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-emerald-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=네오파크오키나와" target="_blank" class="hover:text-emerald-600 flex items-center gap-1">
+                                    네오 파크 오키나와 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">새와 동물을 가까이서 볼 수 있는 자연 동식물 공원입니다. 가족 단위 추천.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-emerald-50 active:text-emerald-700 transition-colors" onclick="copyToClipboard('206 653 842*55')">
+                                <span class="text-xs font-mono font-bold">MC: 206 653 842*55</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-emerald-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=부세나해중공원" target="_blank" class="hover:text-emerald-600 flex items-center gap-1">
+                                    부세나 해중공원 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">옷을 입은 채로 바닷속을 구경할 수 있는 해중 전망대와 글라스 보트가 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-emerald-50 active:text-emerald-700 transition-colors" onclick="copyToClipboard('206 442 075*11')">
+                                <span class="text-xs font-mono font-bold">MC: 206 442 075*11</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Region -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-orange-100 p-2 rounded-lg">
+                        <i data-lucide="map" class="w-5 h-5 md:w-6 md:h-6 text-orange-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">중부</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-orange-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=만좌모" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                    만좌모 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">코끼리 얼굴 모양을 한 단해 절벽과 푸른 바다가 어우러진 천연기념물입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('206 312 097*55')">
+                                <span class="text-xs font-mono font-bold">MC: 206 312 097*55</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-orange-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                    아메리칸 빌리지 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">미국 서해안의 분위기를 느낄 수 있는 대형 쇼핑 및 엔터테인먼트 복합 단지입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 451*20')">
+                                <span class="text-xs font-mono font-bold">MC: 33 526 451*20</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-orange-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=잔파곶" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                    잔파곶 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">웅장한 절벽과 하얀 등대가 있는 곳으로, 석양이 특히 아름다운 명소입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('1005 685 326*43')">
+                                <span class="text-xs font-mono font-bold">MC: 1005 685 326*43</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-orange-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=류큐무라" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                    류큐무라 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">옛 오키나와의 모습을 재현한 민속촌입니다. 전통 공연과 체험이 가능합니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('206 033 065*25')">
+                                <span class="text-xs font-mono font-bold">MC: 206 033 065*25</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-orange-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=동남식물원" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                    동남식물원 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">1,300종 이상의 식물이 있는 야외 식물원입니다. 야간 일루미네이션이 유명합니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 742 510*74')">
+                                <span class="text-xs font-mono font-bold">MC: 33 742 510*74</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Southern Region -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-rose-100 p-2 rounded-lg">
+                        <i data-lucide="landmark" class="w-5 h-5 md:w-6 md:h-6 text-rose-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">남부 (나하 포함)</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-rose-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="hover:text-rose-600 flex items-center gap-1">
+                                    오키나와 월드 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">거대한 종유동굴인 교쿠센도와 전통 류큐 문화를 체험할 수 있는 테마파크입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-rose-50 active:text-rose-700 transition-colors" onclick="copyToClipboard('232 495 330*83')">
+                                <span class="text-xs font-mono font-bold">MC: 232 495 330*83</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-rose-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=우미카지테라스" target="_blank" class="hover:text-rose-600 flex items-center gap-1">
+                                    우미카지 테라스 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">공항 근처 세나가섬에 위치하며, 하얀 건물과 바다가 어우러진 쇼핑 명소입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-rose-50 active:text-rose-700 transition-colors" onclick="copyToClipboard('33 002 602*06')">
+                                <span class="text-xs font-mono font-bold">MC: 33 002 602*06</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-rose-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=오키나와국제거리" target="_blank" class="hover:text-rose-600 flex items-center gap-1">
+                                    국제거리 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">나하 시내 중심가로, 다양한 상점과 맛집이 모여 있는 오키나와 최대의 번화가입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-rose-50 active:text-rose-700 transition-colors" onclick="copyToClipboard('33 157 382*41')">
+                                <span class="text-xs font-mono font-bold">MC: 33 157 382*41</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-rose-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=세이화우타키" target="_blank" class="hover:text-rose-600 flex items-center gap-1">
+                                    세이화 우타키 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">류큐 왕국 최고의 성지이자 세계문화유산입니다. 신비로운 분위기가 감돕니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-rose-50 active:text-rose-700 transition-colors" onclick="copyToClipboard('232 594 734*44')">
+                                <span class="text-xs font-mono font-bold">MC: 232 594 734*44</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-rose-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=슈리성공원" target="_blank" class="hover:text-rose-600 flex items-center gap-1">
+                                    슈리성 공원 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">류큐 왕국의 역사를 상징하는 성입니다. 현재 복원 공사 중이나 관람은 가능합니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-rose-50 active:text-rose-700 transition-colors" onclick="copyToClipboard('33 161 526*66')">
+                                <span class="text-xs font-mono font-bold">MC: 33 161 526*66</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: SHOPPING -->
+        <div id="shopping" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">오키나와 주요 쇼핑몰</h2>
+                <p class="text-stone-500 text-xs md:text-sm">가족 모두가 즐길 수 있는 추천 쇼핑 스팟입니다. 이름을 누르면 구글맵이 열립니다.</p>
+            </div>
+
+            <!-- Large Malls -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-pink-100 p-2 rounded-lg">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 md:w-6 md:h-6 text-pink-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">대형 복합 쇼핑몰</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-pink-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=이온몰오키나와라이카무" target="_blank" class="hover:text-pink-600 flex items-center gap-1">
+                                    이온몰 라이카무 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">오키나와 최대 규모의 리조트형 몰입니다. 거대한 수족관과 다양한 브랜드가 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-pink-50 active:text-pink-700 transition-colors" onclick="copyToClipboard('33 530 406*45')">
+                                <span class="text-xs font-mono font-bold">MC: 33 530 406*45</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ... other shopping items ... -->
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-pink-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=파르코시티오키나와" target="_blank" class="hover:text-pink-600 flex items-center gap-1">
+                                    파르코 시티 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">나하 인근 우라소에에 위치한 최신 몰입니다. 바다가 보이는 푸드코트가 인기입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-pink-50 active:text-pink-700 transition-colors" onclick="copyToClipboard('33 341 124*74')">
+                                <span class="text-xs font-mono font-bold">MC: 33 341 124*74</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-pink-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=나하메인플레이스" target="_blank" class="hover:text-pink-600 flex items-center gap-1">
+                                    나하 메인 플레이스 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">나하 신도심에 위치한 현지인들이 즐겨 찾는 쇼핑몰입니다. 대형 마트가 훌륭합니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-pink-50 active:text-pink-700 transition-colors" onclick="copyToClipboard('33 188 559*24')">
+                                <span class="text-xs font-mono font-bold">MC: 33 188 559*24</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-pink-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=이온차탄점" target="_blank" class="hover:text-pink-600 flex items-center gap-1">
+                                    이온 차탄점 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">아메리칸 빌리지 바로 옆에 위치하여 접근성이 매우 좋습니다. 식료품 쇼핑에 최적입니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-pink-50 active:text-pink-700 transition-colors" onclick="copyToClipboard('33 526 212*25')">
+                                <span class="text-xs font-mono font-bold">MC: 33 526 212*25</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outlets & Duty Free -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-indigo-100 p-2 rounded-lg">
+                        <i data-lucide="tag" class="w-5 h-5 md:w-6 md:h-6 text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">아울렛 & 면세점 & 특산품</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                     <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-indigo-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=아시비나아울렛" target="_blank" class="hover:text-indigo-600 flex items-center gap-1">
+                                    아시비나 아울렛 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">공항 근처에 위치한 대형 아울렛입니다. 스포츠 브랜드와 명품을 저렴하게 구매할 수 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-indigo-50 active:text-indigo-700 transition-colors" onclick="copyToClipboard('232 544 452*22')">
+                                <span class="text-xs font-mono font-bold">MC: 232 544 452*22</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ... other outlet items ... -->
+                     <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-indigo-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=티갤러리아오키나와" target="_blank" class="hover:text-indigo-600 flex items-center gap-1">
+                                    T 갤러리아 (DFS) <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">국내선 이용객도 이용 가능한 시내 면세점입니다. 명품 브랜드 쇼핑에 최적화되어 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-indigo-50 active:text-indigo-700 transition-colors" onclick="copyToClipboard('33 188 297*32')">
+                                <span class="text-xs font-mono font-bold">MC: 33 188 297*32</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-indigo-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=오카시고텐온나점" target="_blank" class="hover:text-indigo-600 flex items-center gap-1">
+                                    과자 저택 (온나점) <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">오키나와 대표 기념품인 자색고구마 타르트를 만드는 공장을 견학하고 구매할 수 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-indigo-50 active:text-indigo-700 transition-colors" onclick="copyToClipboard('206 315 289*63')">
+                                <span class="text-xs font-mono font-bold">MC: 206 315 289*63</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discount Stores -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-yellow-100 p-2 rounded-lg">
+                        <i data-lucide="gift" class="w-5 h-5 md:w-6 md:h-6 text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">잡화 & 디스카운트</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                     <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-yellow-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=메가돈키호테기노완점" target="_blank" class="hover:text-yellow-600 flex items-center gap-1">
+                                    메가 돈키호테 기노완 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">주차장이 넓고 통로가 쾌적한 메가 돈키호테입니다. 식료품부터 잡화까지 모든 것이 있습니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-yellow-50 active:text-yellow-700 transition-colors" onclick="copyToClipboard('33 434 024*44')">
+                                <span class="text-xs font-mono font-bold">MC: 33 434 024*44</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ... other discount items ... -->
+                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:border-yellow-500 transition-colors">
+                        <div class="p-5">
+                            <h4 class="font-bold text-lg mb-2 text-stone-800 flex items-center">
+                                <a href="https://www.google.com/maps/search/?api=1&query=돈키호테국제거리점" target="_blank" class="hover:text-yellow-600 flex items-center gap-1">
+                                    돈키호테 국제거리 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                                </a>
+                            </h4>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">국제거리 한복판에 위치하여 접근성이 좋습니다. 24시간 영업으로 늦은 시간 쇼핑에 유리합니다.</p>
+                            <div class="bg-stone-50 border border-stone-100 rounded-lg p-2.5 text-center cursor-pointer active:bg-yellow-50 active:text-yellow-700 transition-colors" onclick="copyToClipboard('33 157 382*41')">
+                                <span class="text-xs font-mono font-bold">MC: 33 157 382*41</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: DINING -->
+        <div id="dining" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">아메리칸 빌리지 미식 가이드 30선</h2>
+                <p class="text-stone-500 text-xs md:text-sm">구글 평점 4.0 이상, 리뷰 1,000개 이상의 검증된 맛집 위주로 선정했습니다. 이름을 누르면 <strong class="text-orange-600">구글맵</strong>이 열립니다.</p>
+            </div>
+
+            <!-- Meals -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-orange-100 p-2 rounded-lg">
+                        <i data-lucide="utensils" class="w-5 h-5 md:w-6 md:h-6 text-orange-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">든든한 식사 (18곳)</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 1. Gourmet Sushi -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=구르메스시 아메리칸빌리지점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                구르메 스시 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">신선한 오키나와산 생선과 다양한 창작 스시를 합리적인 가격에 즐길 수 있는 회전초밥 전문점입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 400*22')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 400*22</span>
+                        </div>
+                    </div>
+                    <!-- 2. Steak House 88 -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=스테이크하우스88 차탄점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                스테이크 하우스 88 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">미국적인 분위기에서 부드러운 안심 스테이크를 즐길 수 있는 오키나와 대표 스테이크 하우스입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 451*20')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 451*20</span>
+                        </div>
+                    </div>
+                    <!-- 3. Kijimuna -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=키지무나 데포아일랜드점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                키지무나 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">매콤한 타코라이스 위에 부드러운 오믈렛을 올린 오무타코가 대표 메뉴인 맛집입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 452*52')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 452*52</span>
+                        </div>
+                    </div>
+                    <!-- 4. Pork Tamago Onigiri -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=포크타마고오니기리 차탄점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                포크 타마고 오니기리 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">갓 지은 따뜻한 밥에 스팸과 계란을 넣은 오키나와식 주먹밥으로 아침 식사로 인기가 많습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 349*33')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 349*33</span>
+                        </div>
+                    </div>
+                    <!-- 5. Red Lobster -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=레드랍스터 오키나와 차탄점" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                레드 랍스터 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">신선한 랍스터와 다양한 해산물 요리를 쾌적한 패밀리 레스토랑 분위기에서 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 190*33')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 190*33</span>
+                        </div>
+                    </div>
+                    <!-- 6. Yakiniku Yumemaru -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                야키니쿠 유메마루 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">합리적인 가격에 다양한 부위의 고기를 마음껏 먹을 수 있는 무한리필 야키니쿠 전문점입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 452*52')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 452*52</span>
+                        </div>
+                    </div>
+                    <!-- 7. Chatan Harbor Brewery -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=차탄 하버 브루어리" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                차탄 하버 브루어리 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">매장에서 직접 양조한 신선한 크래프트 맥주와 이탈리안 요리를 아름다운 석양과 함께 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 860*58')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 860*58</span>
+                        </div>
+                    </div>
+                    <!-- 8. Atabii's -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Atabii's Hamburger" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                아타비스 햄버거 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">육즙이 가득한 두툼한 패티와 바삭하게 구운 번이 특징인 해안가 수제 버거 맛집입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 450*63')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 450*63</span>
+                        </div>
+                    </div>
+                    <!-- 9. Bollywood Dreams -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Bollywood Dreams Okinawa" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                발리우드 드림즈 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">현지 셰프가 향신료를 배합해 만드는 정통 인도 커리와 갓 구운 난을 맛볼 수 있는 곳입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 451*20')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 451*20</span>
+                        </div>
+                    </div>
+                    <!-- 10. Chatan Dono -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=차탄 도노" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                차탄 도노 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">오키나와 가정식 요리와 다양한 안주를 즐길 수 있는 활기찬 분위기의 현지 이자카야입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 274*52')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 274*52</span>
+                        </div>
+                    </div>
+                    <!-- 11. Kona's Coffee -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=코나스커피 아메리칸빌리지" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                코나스 커피 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">하와이안 분위기가 물씬 풍기는 인테리어에서 푸짐한 팬케이크와 코나 커피를 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 242*41')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 242*41</span>
+                        </div>
+                    </div>
+                    <!-- 12. Hale Noa -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Hale Noa Cafe" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                할레 노아 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">신선하고 건강한 재료를 사용한 하와이안 스타일의 조식과 런치를 제공하는 아담한 카페입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 366*60')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 366*60</span>
+                        </div>
+                    </div>
+                    <!-- 13. Taco Loco -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Taco Loco Okinawa" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                타코 로코 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">다양한 종류의 타코와 부리또 등 멕시코 본토의 맛을 캐주얼하게 즐기기 좋은 곳입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 450*63')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 450*63</span>
+                        </div>
+                    </div>
+                    <!-- 14. Jumbo Steak Han's -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Jumbo Steak Han's Chatan" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                점보 스테이크 한스 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">푸짐한 양의 티본 스테이크와 샐러드 바를 합리적인 가격에 즐길 수 있는 패밀리 스테이크 전문점입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 888*50')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 888*50</span>
+                        </div>
+                    </div>
+                    <!-- 15. Seafood House Pier 54 -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Seafood House Pier 54" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                씨푸드 하우스 피어 54 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">항구 바로 옆에서 신선한 굴과 다양한 해산물 요리를 와인과 함께 즐길 수 있는 레스토랑입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 743*36')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 743*36</span>
+                        </div>
+                    </div>
+                    <!-- 16. The Calif Kitchen -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=The Calif Kitchen Okinawa" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                더 칼리프 키친 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">캘리포니아 스타일의 인테리어와 탁 트인 오션뷰를 배경으로 부리또와 퓨전 요리를 맛볼 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 593*74')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 593*74</span>
+                        </div>
+                    </div>
+                    <!-- 17. SoliS Grande -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=SoliS Grande" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                솔리스 그란데 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">이탈리안 그릴 요리와 풍부한 와인 리스트를 갖춘 곳으로, 테라스 석의 분위기가 특히 훌륭합니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 525 714*05')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 714*05</span>
+                        </div>
+                    </div>
+                    <!-- 18. Benson's Hot Dog -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-orange-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Benson's Hot Dog" target="_blank" class="hover:text-orange-600 flex items-center gap-1">
+                                벤슨스 핫도그 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">100% 소고기 소시지를 사용한 정통 미국식 핫도그로, 출출할 때 간식으로 즐기기 좋습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-orange-50 active:text-orange-700 transition-colors" onclick="copyToClipboard('33 526 450*63')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 450*63</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts & Cafes -->
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="bg-blue-100 p-2 rounded-lg">
+                        <i data-lucide="coffee" class="w-5 h-5 md:w-6 md:h-6 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-stone-800">디저트 & 카페 (12곳)</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 14. Zhyvago -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=지바고커피웍스" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                지바고 커피 웍스 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">전문 바리스타가 내려주는 진한 풍미의 에스프레소와 라떼를 탁 트인 오션뷰와 함께 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 858*17')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 858*17</span>
+                        </div>
+                    </div>
+                    <!-- 15. Timeless Chocolate -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Timeless Chocolate" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                타임리스 초콜릿 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">카카오 콩을 직접 로스팅하여 만드는 빈투바 초콜릿 전문점으로 진한 초콜릿 음료가 유명합니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 858*41')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 858*41</span>
+                        </div>
+                    </div>
+                    <!-- 16. Seaside Cafe Hanon -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Seaside Cafe Hanon" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                시사이드 카페 하논 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">주문과 동시에 구워내는 폭신하고 부드러운 팬케이크를 푸른 바다를 바라보며 맛볼 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 798*41')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 798*41</span>
+                        </div>
+                    </div>
+                    <!-- 17. Blue Seal -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=블루실아이스크림 데포점" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                블루실 아이스크림 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">오키나와의 덥고 습한 날씨에 어울리는 자색고구마와 소금친스코 맛 아이스크림은 필수입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 526 450*63')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 450*63</span>
+                        </div>
+                    </div>
+                    <!-- 18. The Junglila -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=The Junglila Cafe" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                더 정글릴라 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">실내에 설치된 그네 의자와 모래 바닥이 인상적인 곳으로 편안하게 휴식을 취하기 좋습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 561*66')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 561*66</span>
+                        </div>
+                    </div>
+                    <!-- 19. Vongo & Anchor -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Vongo and Anchor" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                봉고 앤 앵커 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">유기농 야채와 신선한 재료를 사용한 샌드위치 플레이트가 맛있는 힙한 분위기의 카페입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 858*17')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 858*17</span>
+                        </div>
+                    </div>
+                    <!-- 20. Hold By Hand -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Hold By Hand Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                홀드 바이 핸드 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">다양한 소스를 곁들인 갓 튀긴 감자튀김과 부드러운 소프트 아이스크림을 간편하게 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 526 450*63')">
+                            <span class="text-xs font-mono font-bold">MC: 33 526 450*63</span>
+                        </div>
+                    </div>
+                    <!-- 21. Mylo Plus Cafe -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Mylo Plus Cafe" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                마일로 플러스 카페 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">바다가 보이는 테라스에서 열대 과일이 듬뿍 들어간 스무디 볼과 음료를 즐길 수 있습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 858*44')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 858*44</span>
+                        </div>
+                    </div>
+                    <!-- 22. WaGyu-Cafe KAPUKA -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=WaGyu-Cafe KAPUKA" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                와규 카페 카푸카 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">신선한 샐러드 볼과 오키나와산 와규 요리를 브런치로 즐기기 좋은 분위기 좋은 카페입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 772*85')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 772*85</span>
+                        </div>
+                    </div>
+                    <!-- 23. Coffee & Bread Caracalla -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Coffee and Bread Caracalla" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                카라칼라 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">알록달록한 무지개 베이글로 유명하며, 쫄깃한 식감과 예쁜 색감 덕분에 사진 찍기 좋습니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 556 045*20')">
+                            <span class="text-xs font-mono font-bold">MC: 33 556 045*20</span>
+                        </div>
+                    </div>
+                    <!-- 24. Good Day Coffee -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Good Day Coffee Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                굿 데이 커피 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">호주 스타일의 커피와 아보카도 토스트 등 든든한 아침 식사를 즐길 수 있는 인기 카페입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 555 581*77')">
+                            <span class="text-xs font-mono font-bold">MC: 33 555 581*77</span>
+                        </div>
+                    </div>
+                    <!-- 25. R Cafe -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200 hover:border-blue-500 transition-colors">
+                        <h4 class="font-bold flex items-center">
+                            <a href="https://www.google.com/maps/search/?api=1&query=R Cafe Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                알 카페 <i data-lucide="external-link" class="w-4 h-4 text-stone-400"></i>
+                            </a>
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-2 mb-3 leading-relaxed">마리나 뷰를 즐기며 겉은 바삭하고 속은 촉촉한 프렌치 토스트를 맛볼 수 있는 전문점입니다.</p>
+                        <div class="bg-stone-50 p-2 rounded text-center cursor-pointer active:bg-blue-50 active:text-blue-700 transition-colors" onclick="copyToClipboard('33 525 712*77')">
+                            <span class="text-xs font-mono font-bold">MC: 33 525 712*77</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: COMMANDMENTS -->
+        <div id="commandments" class="tab-content">
+            <div class="mb-6"><h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">가족 여행 십계명</h2></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-stone-200">
+                    <h3 class="font-bold text-lg md:text-xl text-stone-800 mb-4 md:mb-6 flex items-center"><span class="bg-orange-100 text-orange-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm">자녀</span>자녀의 약속</h3>
+                    <ul class="space-y-3 md:space-y-4 text-sm md:text-base">
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">1.</span>스마트폰은 이동 중에만 보기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">2.</span>가족 사진 찍을 때 웃으며 협조하기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">3.</span>"언제 도착해?"라고 묻지 않기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">4.</span>메뉴 고를 때 "아무거나" 하지 않기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">5.</span>걸어다닐 때 힘들다고 투정 부리지 않기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">6.</span>부모님이 길을 잃어도 한숨 쉬지 않기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">7.</span>데이터 로밍 안 된다고 짜증 내지 않기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">8.</span>쇼핑할 때 짐 들어드리기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">9.</span>여행 경비 계산할 때 눈치껏 빠져주기.</li>
+                        <li class="flex items-start"><span class="text-orange-500 font-bold mr-2 mt-0.5">10.</span>"집에 가고 싶다" 금지.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-stone-200">
+                    <h3 class="font-bold text-lg md:text-xl text-stone-800 mb-4 md:mb-6 flex items-center"><span class="bg-sky-100 text-sky-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm">부모</span>부모님의 약속</h3>
+                    <ul class="space-y-3 md:space-y-4 text-sm md:text-base">
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">1.</span>"이 돈이면 한국에서..." 라고 말하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">2.</span>음식 맛이 달거나 짜도 불평하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">3.</span>아이들에게 "빨리빨리" 재촉하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">4.</span>운전하는 사람에게 잔소리하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">5.</span>"여기보다 집이 편하다"고 말하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">6.</span>자녀 인생샷 찍어주려다 배경만 찍지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">7.</span>옛날 여행담("라떼는 말이야") 3번 이상 금지.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">8.</span>물건값 한국 돈으로 환산하며 비싸다고 하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">9.</span>아침 6시부터 다 깨워서 강행군하지 않기.</li>
+                        <li class="flex items-start"><span class="text-sky-500 font-bold mr-2 mt-0.5">10.</span>조식 뷔페에서 뽕 뽑으려고 과식하지 않기.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 8: ACCOMMODATION -->
+        <div id="accommodation" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">숙소 안내</h2>
+                <p class="text-stone-500 text-xs md:text-sm">레쿠 오키나와 차탄 스파 리조트의 시설 이용 안내 및 전경입니다.</p>
+            </div>
+
+            <!-- Facilities Info Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-6">
+                <!-- Welcome Drink -->
+                <div class="bg-blue-50 p-4 md:p-5 rounded-xl border border-blue-100 flex flex-col items-center text-center">
+                    <div class="bg-white p-2.5 md:p-3 rounded-full shadow-sm mb-3">
+                        <i data-lucide="coffee" class="w-5 h-5 md:w-6 md:h-6 text-blue-500"></i>
+                    </div>
+                    <h4 class="font-bold text-stone-800 mb-1">1층 웰컴드링크</h4>
+                    <p class="text-stone-600 text-sm font-medium">PM 14:00 ~ 21:00</p>
+                </div>
+
+                <!-- Breakfast -->
+                <div class="bg-orange-50 p-4 md:p-5 rounded-xl border border-orange-100 flex flex-col items-center text-center">
+                    <div class="bg-white p-2.5 md:p-3 rounded-full shadow-sm mb-3">
+                        <i data-lucide="utensils" class="w-5 h-5 md:w-6 md:h-6 text-orange-500"></i>
+                    </div>
+                    <h4 class="font-bold text-stone-800 mb-1">2층 라운지 조식</h4>
+                    <p class="text-stone-600 text-sm font-medium">AM 07:00 ~ 10:30</p>
+                </div>
+
+                <!-- Public Bath -->
+                <div class="bg-purple-50 p-4 md:p-5 rounded-xl border border-purple-100 flex flex-col items-center text-center">
+                    <div class="bg-white p-2.5 md:p-3 rounded-full shadow-sm mb-3">
+                        <i data-lucide="waves" class="w-5 h-5 md:w-6 md:h-6 text-purple-500"></i>
+                    </div>
+                    <h4 class="font-bold text-stone-800 mb-1">8층 대욕장</h4>
+                    <p class="text-stone-600 text-sm font-medium">
+                        AM 06:00 ~ 10:00<br>
+                        PM 15:00 ~ 01:00
+                    </p>
+                </div>
+            </div>
+
+            <!-- Rental Info Added -->
+            <div class="bg-stone-50 p-5 rounded-xl border border-stone-200 mb-6 text-center">
+                <h4 class="font-bold text-stone-800 mb-2">1층 로비 유아용품 무료 대여 가능</h4>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    (어린이용 슬리퍼, 변기커버, 장난감, 그림책, 어린이용 디딤대, 기저귀 정리용품, 야뇨 매트)
+                </p>
+            </div>
+
+            <div class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-stone-200">
+                 <img src="https://imgtour.auction.co.kr//JP/OKA/100735055/100735055_0640964_20260113153637.jpg" 
+                      alt="숙소 소개 이미지" 
+                      class="w-full h-auto rounded-lg"
+                      onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=Image+Not+Found';">
+            </div>
+        </div>
+
+        <!-- TAB 9: AMERICAN VILLAGE -->
+        <div id="american-village" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-stone-800 mb-2">아메리칸 빌리지 지도</h2>
+                <p class="text-stone-500 text-xs md:text-sm">아메리칸 빌리지 공식 웹사이트의 지도 페이지입니다.</p>
+            </div>
+            <div class="bg-white p-1 rounded-xl shadow-sm border border-stone-200 overflow-hidden h-[500px] md:h-[800px]">
+                 <iframe src="https://www.okinawa-americanvillage.com/ko/areamap/" 
+                         class="w-full h-full border-0 rounded-lg"
+                         title="아메리칸 빌리지 지도 공식 페이지"></iframe>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-stone-100 border-t border-stone-200 py-8 md:py-10 px-6 mt-auto">
+        <div class="max-w-4xl mx-auto text-center text-[10px] md:text-xs text-stone-400">
+            Created for the Okinawa Family Trip 2026
+        </div>
+    </footer>
+
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-stone-800 text-white px-6 py-3 rounded-full shadow-lg text-sm font-bold opacity-0 transition-opacity pointer-events-none z-50 whitespace-nowrap">
+        맵코드가 복사되었습니다! 🚗
+    </div>
+
+    <script>
+        const weatherStatusMap = { 0: "맑음", 1: "대체로 맑음", 2: "구름 조금", 3: "흐림", 45: "안개", 48: "안개", 51: "이슬비", 61: "약한 비", 63: "보통 비", 65: "강한 비", 80: "소나기", 95: "뇌우" };
+        const weatherIconMap = { 0: "sun", 1: "sun-medium", 2: "cloud-sun", 3: "cloud", 45: "cloud-fog", 61: "cloud-rain", 95: "cloud-lightning" };
+
+        function switchTab(tabId) {
+            const tabContent = document.getElementById(tabId);
+            if (!tabContent) return; 
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            tabContent.classList.add('active');
+
+            // Scroll to top when switching tabs
+            window.scrollTo(0, 0);
+
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('border-orange-500', 'text-orange-600');
+                el.classList.add('border-transparent', 'text-stone-500');
+            });
+            
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-stone-500');
+                activeBtn.classList.add('border-orange-500', 'text-orange-600');
+                
+                // Scroll nav into view if needed
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+            
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function switchDay(dayNum) {
+            document.querySelectorAll('.day-view').forEach(el => el.classList.add('hidden'));
+            const dayContent = document.getElementById('day-content-' + dayNum);
+            if(dayContent) dayContent.classList.remove('hidden');
+            
+            document.querySelectorAll('.day-btn').forEach(el => {
+                el.classList.remove('bg-stone-800', 'text-white', 'shadow-md');
+                el.classList.add('bg-white', 'text-stone-600', 'border', 'border-stone-300');
+            });
+            const activeDayBtn = document.getElementById('day-btn-' + dayNum);
+            if(activeDayBtn) {
+                activeDayBtn.classList.remove('bg-white', 'text-stone-600', 'border', 'border-stone-300');
+                activeDayBtn.classList.add('bg-stone-800', 'text-white', 'shadow-md');
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (!navigator.clipboard) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast();
+                return;
+            }
+            navigator.clipboard.writeText(text).then(showToast);
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 2000);
+        }
+
+        async function updateWeather() {
+            try {
+                const url = "https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo";
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!data || !data.current_weather) return;
+
+                const currentTemp = Math.round(data.current_weather.temperature);
+                const currentCode = data.current_weather.weathercode;
+                const currentStatusText = weatherStatusMap[currentCode] || "맑음";
+                
+                const tempEl = document.getElementById('current-temp');
+                if(tempEl) tempEl.innerText = `${currentTemp}°`;
+                
+                const statusPc = document.getElementById('current-status-pc');
+                if(statusPc) statusPc.innerText = currentStatusText;
+
+                // Mobile Update
+                const tempMobile = document.getElementById('current-temp-mobile');
+                if(tempMobile) tempMobile.innerText = `${currentTemp}°`;
+                const statusMobileText = document.getElementById('current-status-mobile-text');
+                if(statusMobileText) statusMobileText.innerText = currentStatusText;
+                
+                const todayMin = Math.round(data.daily.temperature_2m_min[0]);
+                const todayMax = Math.round(data.daily.temperature_2m_max[0]);
+                const rangeEl = document.getElementById('today-range');
+                if(rangeEl) rangeEl.innerText = `${todayMin}° / ${todayMax}°`;
+
+                const forecastContainer = document.getElementById('forecast-container');
+                if(forecastContainer) {
+                    forecastContainer.innerHTML = '';
+                    for (let i = 1; i <= 3; i++) { // Show 3 days max on widget
+                        const fDate = new Date(data.daily.time[i]);
+                        const month = fDate.getMonth() + 1;
+                        const day = fDate.getDate();
+                        const weekday = fDate.toLocaleDateString('ko-KR', { weekday: 'short' });
+                        const maxT = Math.round(data.daily.temperature_2m_max[i]);
+                        const minT = Math.round(data.daily.temperature_2m_min[i]);
+                        const code = data.daily.weathercode[i];
+                        const iconName = weatherIconMap[code] || "sun";
+                        const forecastRow = `
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="w-12 text-stone-400 font-medium">${month}.${day}(${weekday})</span>
+                                <span class="flex-1 flex justify-center"><i data-lucide="${iconName}" class="w-4 h-4 text-sky-300"></i></span>
+                                <span class="w-auto text-right font-bold text-stone-200">${minT}°/${maxT}°</span>
+                            </div>`;
+                        forecastContainer.innerHTML += forecastRow;
+                    }
+                }
+                if (window.lucide) lucide.createIcons();
+            } catch (error) { console.error(error); }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const ddayTarget = new Date('2026-04-02T00:00:00');
+            const todayNow = new Date();
+            ddayTarget.setHours(0,0,0,0); todayNow.setHours(0,0,0,0);
+            const diffDays = Math.ceil((ddayTarget - todayNow) / (1000 * 60 * 60 * 24));
+            const ddayBadge = document.getElementById('dday-badge');
+            if(ddayBadge) ddayBadge.innerText = diffDays > 0 ? `D-${diffDays}` : (diffDays === 0 ? "D-Day" : `D+${Math.abs(diffDays)}`);
+
+            updateWeather();
+            
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
