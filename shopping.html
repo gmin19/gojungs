@@ -53,6 +53,30 @@
             gap: 8px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
+
+        /* Top 버튼 스타일 */
+        #top-btn {
+            position: fixed;
+            bottom: 80px; /* 네비게이션 바 위 */
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #E2E8F0;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        #top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -60,6 +84,13 @@
     <!-- 헤더 섹션 -->
     <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
+            <!-- 상단 네비게이션 (뒤로가기) -->
+            <div class="flex justify-between items-center mb-4">
+                <a href="index.html" class="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-white/10 px-3 py-1.5 rounded-lg text-sm font-medium backdrop-blur-sm">
+                    <i data-lucide="home" class="w-4 h-4"></i> 홈으로
+                </a>
+            </div>
+
             <div class="flex justify-between items-start mb-6">
                 <div class="flex-1 pr-2">
                     <div id="dday-badge" class="inline-flex items-center gap-1 bg-orange-500 text-white text-[11px] font-bold px-2 py-1 rounded-full mb-3 shadow-md">
@@ -157,9 +188,9 @@
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32">
         <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">아메리칸 빌리지 쇼핑 맵</h2>
         
-        <!-- 호텔 카드키 혜택 안내 -->
+        <!-- 호텔 카드키 혜택 및 오프라인 안내 배너 -->
         <div class="bg-pink-50 border border-pink-200 rounded-xl p-4 mb-6 shadow-sm">
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-3 mb-3">
                 <i data-lucide="credit-card" class="w-6 h-6 text-pink-500 flex-shrink-0 mt-0.5"></i>
                 <div>
                     <h3 class="text-sm font-bold text-pink-700">호텔 카드키 쇼핑 혜택</h3>
@@ -168,6 +199,10 @@
                         <strong>결제 전</strong> 카드키를 제시하세요.
                     </p>
                 </div>
+            </div>
+            <div class="flex items-start gap-2 pt-3 border-t border-pink-200">
+                <i data-lucide="camera" class="w-4 h-4 text-pink-400 mt-0.5"></i>
+                <p class="text-[11px] text-pink-500 font-medium">데이터가 잘 안 터질 수 있으니 이 화면을 미리 캡처해 두세요.</p>
             </div>
         </div>
 
@@ -388,6 +423,11 @@
 
     </main>
 
+    <!-- Top 버튼 -->
+    <button id="top-btn" onclick="scrollToTop()" class="text-slate-600 hover:text-slate-900 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
     <!-- 토스트 알림 -->
     <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
         <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
@@ -498,6 +538,22 @@
             } else {
                 window.open("https://www.kakaocorp.com/service/KakaoT");
             }
+        }
+
+        // Top 버튼 로직
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            const topBtn = document.getElementById("top-btn");
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                topBtn.classList.add("visible");
+            } else {
+                topBtn.classList.remove("visible");
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         document.addEventListener('DOMContentLoaded', () => {
