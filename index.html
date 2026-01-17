@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 - 일정표</title>
+    <title>오키나와 가족 여행 커맨드센터</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
         
-        /* 탭 전환 애니메이션 (일자별 전환용) */
+        /* 탭 전환 애니메이션 */
         .day-content {
             display: none;
             animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -164,7 +164,7 @@
                 <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
                     <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
                 </a>
-                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                <a href="rent.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </a>
                 <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
@@ -284,12 +284,12 @@
                         <i data-lucide="languages" class="w-5 h-5 text-blue-500"></i> 번역 앱 실행
                     </h3>
                     <div class="grid grid-cols-2 gap-3">
-                        <a href="https://papago.naver.com/" target="_blank" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                        <button onclick="openPapago()" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Papago
-                        </a>
-                        <a href="https://translate.google.com/" target="_blank" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                        </button>
+                        <button onclick="openGoogleTranslate()" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Google
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -301,9 +301,9 @@
                         <button onclick="openKakaoT()" class="bg-[#FEE500] text-[#3c1e1e] py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Kakao T
                         </button>
-                        <a href="https://m.uber.com/ul" target="_blank" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
+                        <button onclick="openUber()" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
                             Uber
-                        </a>
+                        </button>
                     </div>
                     <p class="text-[12px] text-slate-500 mt-2 text-center leading-normal">
                         * 앱이 설치되어 있어야 실행됩니다. (일본 내 Kakao T는 JapanTaxi(GO)와 연동)
@@ -312,20 +312,74 @@
             `;
         }
 
-        // 2. 카카오T 실행 로직
-        function openKakaoT() {
+        // 앱 실행 헬퍼 함수
+        function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
             const userAgent = navigator.userAgent;
             const isAndroid = /android/i.test(userAgent);
             const isIOS = /iPad|iPhone|iPod/.test(userAgent);
 
             if (isAndroid) {
-                setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.kakao.taxi"; }, 1500);
-                window.location = "kakaot://";
+                // 안드로이드: 스토어 이동 타임아웃 설정 후 스킴 실행
+                setTimeout(function () { 
+                    window.location = storeUrlAndroid; 
+                }, 1500);
+                window.location = urlScheme;
             } else if (isIOS) {
-                setTimeout(function () { window.location = "https://apps.apple.com/app/id981110422"; }, 1500);
-                window.location = "kakaot://";
+                // iOS: 스토어 이동 타임아웃 설정 후 스킴 실행
+                setTimeout(function () { 
+                    window.location = storeUrlIOS; 
+                }, 1500);
+                window.location = urlScheme;
             } else {
-                window.open("https://www.kakaocorp.com/service/KakaoT");
+                // 데스크탑 등 기타: 웹 폴백
+                window.open(webFallback);
+            }
+        }
+
+        // 2. 각 앱별 실행 함수
+        function openKakaoT() {
+            openApp(
+                "kakaot://", 
+                "https://play.google.com/store/apps/details?id=com.kakao.taxi", 
+                "https://apps.apple.com/app/id981110422", 
+                "https://www.kakaocorp.com/service/KakaoT"
+            );
+        }
+
+        function openUber() {
+            openApp(
+                "uber://", 
+                "https://play.google.com/store/apps/details?id=com.ubercab", 
+                "https://apps.apple.com/app/id368677368", 
+                "https://m.uber.com/ul"
+            );
+        }
+
+        function openPapago() {
+            openApp(
+                "papago://", 
+                "https://play.google.com/store/apps/details?id=com.naver.labs.translator", 
+                "https://apps.apple.com/app/id1147246415", 
+                "https://papago.naver.com/"
+            );
+        }
+
+        function openGoogleTranslate() {
+            // 구글 번역은 URL Scheme이 표준화되어 있지 않아 iOS는 googletranslate://, 안드로이드는 intent 방식 시도
+            const userAgent = navigator.userAgent;
+            const isAndroid = /android/i.test(userAgent);
+            
+            if (isAndroid) {
+                // 안드로이드 Intent 방식
+                const intentUrl = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
+                window.location = intentUrl;
+            } else {
+                openApp(
+                    "googletranslate://", 
+                    "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", 
+                    "https://apps.apple.com/app/id414706506", 
+                    "https://translate.google.com/"
+                );
             }
         }
 
