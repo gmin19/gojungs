@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>오키나와 가족 여행 커맨드센터</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -55,7 +53,7 @@
         }
 
         /* 터치 반응성 향상 */
-        button:active, .clickable-card:active, a.nav-btn:active, a.app-link:active {
+        button:active, .clickable-card:active, a.nav-btn:active {
             transform: scale(0.98);
             background-color: #F1F5F9;
         }
@@ -81,35 +79,10 @@
         a.nav-btn {
             text-decoration: none;
         }
-
-        /* Top 버튼 스타일 */
-        #top-btn {
-            position: fixed;
-            bottom: 80px; /* 네비게이션 바 위 */
-            right: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #E2E8F0;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        #top-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <!-- 헤더 섹션 -->
     <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6">
@@ -122,7 +95,6 @@
                         <span class="text-sky-400">가족여행</span> <span class="text-orange-400">2026</span>
                     </h1>
                 </div>
-                <!-- 날씨 위젯 -->
                 <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="flex-none bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[180px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none">
                     <div class="flex justify-between items-center mb-2 pb-2 border-b border-white/10">
                         <div class="flex flex-col">
@@ -170,20 +142,16 @@
         <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
     </header>
 
-    <!-- 메인 네비게이션 -->
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto">
             <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <!-- 내부 탭: 일정표 -->
                 <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
                 </button>
-                <!-- 내부 탭: 맵코드 -->
                 <button onclick="switchTab('mapcodes')" id="nav-mapcodes" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
                 </button>
                 
-                <!-- 외부 링크 -->
                 <a href="place.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
                 </a>
@@ -194,7 +162,6 @@
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
                 </a>
 
-                <!-- 내부 탭 -->
                 <button onclick="switchTab('rules')" id="nav-rules" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
                 </button>
@@ -204,8 +171,7 @@
                 <button onclick="switchTab('rental-car')" id="nav-rental-car" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </button>
-                <!-- 긴급연락처 (붉은색 강조 유지) -->
-                <button onclick="switchTab('emergency')" id="nav-emergency" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
+                <button onclick="switchTab('emergency')" id="nav-emergency" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </button>
             </div>
@@ -214,7 +180,6 @@
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32">
 
-        <!-- 탭 1: 일정표 (유지) -->
         <div id="schedule" class="tab-content active">
             <div class="flex justify-between items-end mb-6">
                 <div>
@@ -224,7 +189,6 @@
                 <span class="text-[10px] font-medium text-rose-500 bg-rose-50 px-2 py-1 rounded-full border border-rose-100">변경 가능</span>
             </div>
 
-            <!-- 날짜 선택기 -->
             <div class="grid grid-cols-4 gap-2 mb-8">
                 <button onclick="switchDay(1)" id="day-btn-1" class="day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform hover:-translate-y-0.5">
                     <span class="text-sm font-bold mb-0.5">1일차</span>
@@ -244,7 +208,6 @@
                 </button>
             </div>
 
-            <!-- 1일차 콘텐츠 -->
             <div id="day-content-1" class="day-view space-y-0 relative">
                 <div class="timeline-item relative pl-14 pb-8">
                     <div class="timeline-line"></div>
@@ -268,7 +231,6 @@
                 <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-indigo-600"><i data-lucide="sunset" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded mb-2 inline-block">17:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">아메리칸 빌리지 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">숙소 체크인 후 아메리칸 빌리지에서 자유식입니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 526 451*20')"><span class="text-xs font-mono text-slate-500">MC: 33 526 451*20</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
             </div>
 
-            <!-- 2일차 -->
             <div id="day-content-2" class="day-view hidden relative">
                 <div class="bg-red-50 p-4 rounded-xl border border-red-100 mb-6 flex items-start gap-3"><i data-lucide="alert-circle" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i><p class="text-red-700 text-sm font-medium">주의: 이동 거리가 긴 날입니다. 멀미약을 챙기세요.</p></div>
                 <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="car-front" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:00</span><h3 class="font-bold text-lg text-slate-800 mb-1">숙소 출발</h3><p class="text-slate-500 text-sm leading-relaxed">북부까지 이동 시간이 꽤 걸립니다. 조식 후 지체 없이 출발하는 것이 좋습니다.</p></div></div>
@@ -279,7 +241,6 @@
                 <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-purple-600"><i data-lucide="home" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">17:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">숙소 복귀 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">숙소 복귀 후 아메리칸 빌리지에서 자유식입니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span class="text-xs font-mono text-slate-500">MC: 33 525 594*3</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
             </div>
 
-            <!-- 3일차 -->
             <div id="day-content-3" class="day-view hidden relative">
                 <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="car-front" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:30</span><h3 class="font-bold text-lg text-slate-800 mb-1">숙소 출발</h3><p class="text-slate-500 text-sm leading-relaxed">오늘은 비교적 여유로운 일정입니다. 조식을 든든히 먹고 출발하세요.</p></div></div>
                 <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-green-600"><i data-lucide="trees" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded mb-2 inline-block">10:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=동남식물원 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">동남식물원 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">야외 활동이 많으니 자외선 차단제와 양산을 챙기세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 742 510*74')"><span class="text-xs font-mono text-slate-500">MC: 33 742 510*74</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
@@ -289,7 +250,6 @@
                 <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="beer" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">18:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">저녁: 야키니쿠 유메마루 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">단체 예약이 필수입니다. 무한리필 이용 시간을 확인하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 526 452*52')"><span class="text-xs font-mono text-slate-500">MC: 33 526 452*52</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
             </div>
 
-            <!-- 4일차 -->
             <div id="day-content-4" class="day-view hidden relative">
                 <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="log-out" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:00</span><h3 class="font-bold text-lg text-slate-800 mb-1">체크아웃</h3></div></div>
                 <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="landmark" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">10:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">오키나와 월드 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">동굴 내부는 습하고 미끄러울 수 있으니 편안한 신발을 신으세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('232 495 330*83')"><span class="text-xs font-mono text-slate-500">MC: 232 495 330*83</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
@@ -299,7 +259,6 @@
             </div>
         </div>
 
-        <!-- 탭 2: 맵코드 (유지) -->
         <div id="mapcodes" class="tab-content">
             <div class="sticky top-[110px] bg-[#F8FAFC] pt-1 pb-4 z-40">
                 <div class="relative">
@@ -313,7 +272,6 @@
                     <div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店 外車・輸入車専門" target="_blank" class="flex items-center gap-1 hover:text-blue-600">유니버스 렌터카 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">렌터카</p></div>
                     <button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('33 005 306*61')">33 005 306*61 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
                 </div>
-                <!-- ... 나머지 맵코드 리스트 (기존과 동일) ... -->
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="우미카지 테라스"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=우미카지테라스" target="_blank" class="flex items-center gap-1 hover:text-blue-600">우미카지 테라스 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">쇼핑/맛집</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('33 002 602*06')">33 002 602*06 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="레쿠 오키나와"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="flex items-center gap-1 hover:text-blue-600">레쿠 오키나와 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">숙소</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('33 525 594*3')">33 525 594*3 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="아메리칸 빌리지"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600">아메리칸 빌리지 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">중부 관광/쇼핑</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('33 526 451*20')">33 526 451*20 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
@@ -330,7 +288,44 @@
             </div>
         </div>
 
-        <!-- 탭 8: 렌트카 (유지) -->
+        <div id="rules" class="tab-content">
+            <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="scroll" class="w-6 h-6 text-orange-500"></i> 가족 여행 십계명</h2>
+            <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100 shadow-sm">
+                <ol class="space-y-4">
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">1.</span><div><h4 class="font-bold text-slate-800">짜증 내지 않기</h4><p class="text-base text-slate-600">배고파도, 더워도, 길을 잃어도 웃음 잃지 않기.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">2.</span><div><h4 class="font-bold text-slate-800">주는 대로 먹기</h4><p class="text-base text-slate-600">메뉴 결정권은 운전수에게 있습니다. 군말 없이 먹기.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">3.</span><div><h4 class="font-bold text-slate-800">사진 예쁘게 찍어주기</h4><p class="text-base text-slate-600">똥손 금지. 인생샷 하나는 건져주겠다는 일념으로.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">4.</span><div><h4 class="font-bold text-slate-800">부정적인 말 하지 않기</h4><p class="text-base text-slate-600">"힘들다", "덥다" 금지.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">5.</span><div><h4 class="font-bold text-slate-800">지각 금지</h4><p class="text-base text-slate-600">약속 시간 5분 전 대기. 코리안 타임은 한국에 두고 오기.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">6.</span><div><h4 class="font-bold text-slate-800">쇼핑은 신속하게</h4><p class="text-base text-slate-600">고민하는 시간에 품절됩니다. 보일 때 사세요.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">7.</span><div><h4 class="font-bold text-slate-800">아프지 말기</h4><p class="text-base text-slate-600">컨디션 조절은 셀프. 아프면 여행도 꽝입니다.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">8.</span><div><h4 class="font-bold text-slate-800">핸드폰 보지 않기</h4><p class="text-base text-slate-600">이동 중이나 식사 중엔 가족 얼굴 보며 대화하기.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">9.</span><div><h4 class="font-bold text-slate-800">짐은 스스로 챙기기</h4><p class="text-base text-slate-600">내 물건은 내가 챙기기. "엄마 내 거 어딨어?" 금지.</p></div></li>
+                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">10.</span><div><h4 class="font-bold text-slate-800">무조건 행복하기</h4><p class="text-base text-slate-600">이 순간은 다시 오지 않습니다. 즐겁게 즐기기!</p></div></li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="accommodation" class="tab-content">
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="hotel" class="w-6 h-6 text-purple-500"></i> 레쿠 오키나와 이용 가이드</h2>
+            
+            <div class="bg-white p-5 mb-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-1 flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-purple-500"></i> 프론트 데스크</h3>
+                    <p class="text-base font-bold text-slate-600">+81-98-936-2288</p>
+                </div>
+                <a href="tel:+81989362288" class="bg-purple-100 text-purple-600 px-4 py-2 rounded-lg font-bold text-xs">전화걸기</a>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 체크인 / 체크아웃</h3><div class="grid grid-cols-2 gap-4 text-center"><div class="bg-slate-50 p-3 rounded-lg"><span class="text-xs text-slate-500 block mb-1">Check-in</span><span class="font-bold text-lg text-slate-700">14:00</span></div><div class="bg-slate-50 p-3 rounded-lg"><span class="text-xs text-slate-500 block mb-1">Check-out</span><span class="font-bold text-lg text-slate-700">11:00</span></div></div><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="block w-full text-center text-xs bg-purple-50 text-purple-600 font-bold py-3 mt-3 rounded-lg hover:bg-purple-100 transition-colors">호텔 위치 구글맵 보기</a></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="utensils" class="w-4 h-4 text-slate-400"></i> 조식 정보</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>장소: 메인 건물 2층 레스토랑</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>시간: 07:00 ~ 10:30 (L.O 10:00)</span></li><li class="flex items-start gap-2"><i data-lucide="ticket" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>입장 시 입장 티켓이 필요합니다.</span></li><li class="flex items-start gap-2"><i data-lucide="info" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>혼잡할 수 있으니 8시 이전을 추천합니다.</span></li></ul></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="bath" class="w-4 h-4 text-slate-400"></i> 대욕장 & 사우나</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>장소: 메인 건물 8층</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>시간: 06:00 ~ 10:00 / 15:00 ~ 01:00</span></li><li class="flex items-start gap-2"><i data-lucide="ticket" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>입장 시 입장 티켓이 필요합니다.</span></li></ul></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="baby" class="w-4 h-4 text-slate-400"></i> 유아용품 무료 대여</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-pink-500 mt-0.5"></i> <span>장소: 1층 로비</span></li><li class="flex items-start gap-2"><i data-lucide="package-check" class="w-4 h-4 text-pink-500 mt-0.5"></i> <span>대여 품목: 어린이용 슬리퍼, 변기커버, 장난감, 그림책, 어린이용 디딤대, 기저귀 정리용품, 야뇨 매트</span></li></ul></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="waves" class="w-4 h-4 text-slate-400"></i> 인피니티 풀</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>장소: 메인 건물 8층 (유료)</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>시간: 08:00 ~ 20:00 (시즌별 상이)</span></li><li class="flex items-start gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>문신이 있는 경우 래쉬가드 착용 필수.</span></li></ul></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="store" class="w-4 h-4 text-slate-400"></i> 편의시설</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="shopping-cart" class="w-4 h-4 text-green-500 mt-0.5"></i> <span>1층에 로손 편의점이 연결되어 있습니다.</span></li><li class="flex items-start gap-2"><i data-lucide="shirt" class="w-4 h-4 text-green-500 mt-0.5"></i> <span>코인 세탁실: 3층, 6층 등에 위치.</span></li></ul></div>
+            </div>
+        </div>
+
         <div id="rental-car" class="tab-content">
             <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="car" class="w-6 h-6 text-blue-500"></i> 렌터카 사고/문제 대처 가이드</h2>
             <div class="space-y-4">
@@ -346,7 +341,6 @@
             </div>
         </div>
 
-        <!-- 탭 9: 긴급연락처 (유지) -->
         <div id="emergency" class="tab-content">
             <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="siren" class="w-6 h-6 text-red-600"></i> 긴급 상황 및 영사관 안내</h2>
             <div class="space-y-6">
@@ -364,22 +358,6 @@
             </div>
         </div>
 
-        <!-- 번역 앱 연결 섹션 (추가됨) -->
-        <div class="mt-8 pt-6 border-t border-slate-200">
-            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                <i data-lucide="languages" class="w-5 h-5 text-indigo-500"></i> 번역 앱 연결
-            </h3>
-            <div class="grid grid-cols-2 gap-3">
-                <a href="intent://papago.naver.com/#Intent;scheme=https;package=com.naver.labs.translator;end" class="bg-[#2DB400] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                    <img src="https://papago.naver.com/favicon.ico" alt="Papago" class="w-5 h-5 rounded bg-white p-0.5"> Papago
-                </a>
-                <a href="intent://translate.google.com/#Intent;scheme=https;package=com.google.android.apps.translate;end" class="bg-[#4285F4] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                    <i data-lucide="globe" class="w-5 h-5"></i> Google
-                </a>
-            </div>
-        </div>
-
-        <!-- 하단: 택시 앱 호출 섹션 (공통) -->
         <div class="mt-8 pt-6 border-t border-slate-200 pb-10">
             <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
                 <i data-lucide="car" class="w-5 h-5 text-yellow-500"></i> 택시 앱 호출
@@ -399,12 +377,6 @@
 
     </main>
 
-    <!-- Top 버튼 -->
-    <button id="top-btn" onclick="scrollToTop()" class="text-slate-600 hover:text-slate-900 transition-colors">
-        <i data-lucide="arrow-up" class="w-6 h-6"></i>
-    </button>
-
-    <!-- 토스트 알림 -->
     <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
         <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
         <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
@@ -483,22 +455,17 @@
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 // a태그로 바뀐 요소들은 onclick 이벤트가 없으므로 스타일 영향 안 받음
                 btn.classList.remove('active', 'text-orange-600', 'border-orange-500');
-                // 긴급연락처 버튼 스타일 분기 처리
-                if (btn.id === 'nav-emergency') {
-                   // 긴급연락처는 기본 색상이 다르므로 별도 처리 필요하지만, 
-                   // 여기서는 active 제거 시 기본 클래스로 돌아가도록 둠 (CSS 클래스 우선순위 활용)
-                   // 다만 JS로 강제 제어하는 부분이 있어, 긴급연락처만 예외를 둡니다.
+                if(!btn.tagName || btn.tagName === 'BUTTON') { // 버튼인 경우만 기본 스타일 복구
+                     btn.classList.add('text-slate-500', 'border-transparent');
                 } else {
-                     if(!btn.tagName || btn.tagName === 'BUTTON' || btn.tagName === 'A') { 
-                         btn.classList.add('text-slate-500', 'border-transparent');
-                    }
+                     // a태그인 경우도 기본 스타일 유지
+                     btn.classList.add('text-slate-500', 'border-transparent');
                 }
             });
             
             const activeBtn = document.getElementById('nav-' + tabId);
             if (activeBtn) {
                 if (tabId === 'emergency') {
-                    // 긴급연락처 탭 활성화 시 스타일 (붉은색 유지하면서 밑줄만 추가)
                     activeBtn.classList.add('active');
                 } else {
                     activeBtn.classList.add('active', 'text-orange-600', 'border-orange-500');
@@ -507,6 +474,30 @@
                 activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // 일자별 전환 로직
+        function switchDay(dayNum) {
+            document.querySelectorAll('.day-view').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('day-content-' + dayNum);
+            if (target) {
+                target.classList.remove('hidden');
+                target.style.opacity = '0';
+                target.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    target.style.transition = 'all 0.3s ease';
+                    target.style.opacity = '1';
+                    target.style.transform = 'translateY(0)';
+                }, 10);
+            }
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.className = 'day-btn bg-white text-slate-600 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all';
+            });
+            const activeBtn = document.getElementById('day-btn-' + dayNum);
+            if (activeBtn) {
+                activeBtn.className = 'day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform -translate-y-0.5';
+            }
+            lucide.createIcons();
         }
 
         function copyToClipboard(text) {
@@ -552,20 +543,19 @@
             }
         }
 
-        // Top 버튼 로직
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-            const topBtn = document.getElementById("top-btn");
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                topBtn.classList.add("visible");
-            } else {
-                topBtn.classList.remove("visible");
-            }
-        }
-
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
+        const searchInput = document.getElementById('mapcode-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                document.querySelectorAll('#mapcode-list > div').forEach(item => {
+                    const name = item.getAttribute('data-name').toLowerCase();
+                    if (name.includes(term)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -575,11 +565,22 @@
             const badge = document.getElementById('dday-badge');
             badge.innerHTML = `<i data-lucide="clock" class="w-3 h-3"></i> <span>D-${diff > 0 ? diff : 'Day'}</span>`;
 
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const date = today.getDate();
+
+            if (year === 2026 && month === 4) {
+                if (date === 3) switchDay(2);
+                else if (date === 4) switchDay(3);
+                else if (date === 5) switchDay(4);
+                else switchDay(1); 
+            } else {
+                switchDay(1); 
+            }
+
             updateWeather();
             lucide.createIcons();
         });
     </script>
 </body>
 </html>
-
-
