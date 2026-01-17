@@ -139,10 +139,10 @@
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto">
             <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#schedule" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#mapcodes" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
                 </a>
                 
@@ -157,16 +157,16 @@
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
                 </a>
 
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#rules" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#accommodation" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#rental-car" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </a>
-                <a href="index.html" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
+                <a href="index.html#emergency" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </a>
             </div>
@@ -457,6 +457,21 @@
             </div>
         </div>
 
+        <!-- 번역 앱 연결 섹션 (추가됨) -->
+        <div class="mt-8 pt-6 border-t border-slate-200">
+            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i data-lucide="languages" class="w-5 h-5 text-indigo-500"></i> 번역 앱 연결
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <a href="intent://papago.naver.com/#Intent;scheme=https;package=com.naver.labs.translator;end" class="bg-[#2DB400] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                    <img src="https://papago.naver.com/favicon.ico" alt="Papago" class="w-5 h-5 rounded bg-white p-0.5"> Papago
+                </a>
+                <a href="intent://translate.google.com/#Intent;scheme=https;package=com.google.android.apps.translate;end" class="bg-[#4285F4] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                    <i data-lucide="globe" class="w-5 h-5"></i> Google
+                </a>
+            </div>
+        </div>
+
         <!-- 하단: 택시 앱 호출 섹션 (공통) -->
         <div class="mt-8 pt-6 border-t border-slate-200 pb-10">
             <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
@@ -551,6 +566,42 @@
             }
         }
 
+        // 탭 전환 로직 (수정: 분리된 페이지는 a 태그로 이동하므로, 이 함수는 내부 탭만 처리)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                // a태그로 바뀐 요소들은 onclick 이벤트가 없으므로 스타일 영향 안 받음
+                btn.classList.remove('active', 'text-orange-600', 'border-orange-500');
+                // 긴급연락처 버튼 스타일 분기 처리
+                if (btn.id === 'nav-emergency') {
+                   // 긴급연락처는 기본 색상이 다르므로 별도 처리 필요하지만, 
+                   // 여기서는 active 제거 시 기본 클래스로 돌아가도록 둠 (CSS 클래스 우선순위 활용)
+                   // 다만 JS로 강제 제어하는 부분이 있어, 긴급연락처만 예외를 둡니다.
+                } else {
+                     if(!btn.tagName || btn.tagName === 'BUTTON' || btn.tagName === 'A') { 
+                         btn.classList.add('text-slate-500', 'border-transparent');
+                    }
+                }
+            });
+            
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn) {
+                if (tabId === 'emergency') {
+                    // 긴급연락처 탭 활성화 시 스타일 (붉은색 유지하면서 밑줄만 추가)
+                    activeBtn.classList.add('active');
+                } else {
+                    activeBtn.classList.add('active', 'text-orange-600', 'border-orange-500');
+                    activeBtn.classList.remove('text-slate-500', 'border-transparent');
+                }
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
         function copyToClipboard(text) {
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(showToast);
@@ -623,4 +674,5 @@
     </script>
 </body>
 </html>
+
 

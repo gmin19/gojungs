@@ -151,10 +151,10 @@
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto">
             <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#schedule" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#mapcodes" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
                 </a>
                 
@@ -165,20 +165,21 @@
                     <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
                 </a>
                 
+                <!-- 현재 페이지 (활성화) -->
                 <a href="shopping.html" class="nav-btn active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
                 </a>
 
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#rules" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#accommodation" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html#rental-car" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </a>
-                <a href="index.html" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
+                <a href="index.html#emergency" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </a>
             </div>
@@ -400,6 +401,21 @@
                         <a href="https://www.google.com/maps/search/?api=1&query=Respect+American+Village+Chatan" target="_blank" class="text-xs flex items-center gap-1 text-blue-600 font-bold hover:underline">구글맵 보기 <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 번역 앱 연결 섹션 (추가됨) -->
+        <div class="mt-8 pt-6 border-t border-slate-200">
+            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i data-lucide="languages" class="w-5 h-5 text-indigo-500"></i> 번역 앱 연결
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <a href="intent://papago.naver.com/#Intent;scheme=https;package=com.naver.labs.translator;end" class="bg-[#2DB400] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                    <img src="https://papago.naver.com/favicon.ico" alt="Papago" class="w-5 h-5 rounded bg-white p-0.5"> Papago
+                </a>
+                <a href="intent://translate.google.com/#Intent;scheme=https;package=com.google.android.apps.translate;end" class="bg-[#4285F4] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                    <i data-lucide="globe" class="w-5 h-5"></i> Google
+                </a>
             </div>
         </div>
 
