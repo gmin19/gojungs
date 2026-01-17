@@ -109,19 +109,15 @@
                 <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
                 </a>
-                
                 <a href="place.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
                 </a>
-                
                 <a href="dining.html" class="nav-btn active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
                 </a>
-                
                 <a href="shopping.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
                 </a>
-
                 <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
                 </a>
@@ -131,7 +127,7 @@
                 <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </a>
-                <a href="index.html" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all hover:bg-slate-50">
+                <a href="index.html" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </a>
             </div>
@@ -140,25 +136,161 @@
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32">
         <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">아메리칸 빌리지 미식 가이드</h2>
+        
+        <div class="bg-pink-50 border border-pink-200 rounded-xl p-4 mb-6 shadow-sm">
+            <div class="flex items-start gap-3">
+                <i data-lucide="credit-card" class="w-6 h-6 text-pink-500 flex-shrink-0 mt-0.5"></i>
+                <div>
+                    <h3 class="text-sm font-bold text-pink-700">호텔 카드키 제시 혜택</h3>
+                    <p class="text-xs text-pink-600 mt-1 leading-relaxed">
+                        레쿠 오키나와 또는 베셀 호텔 캄파나 숙박 카드키를 제시하면 아래 뱃지(<span class="inline-block bg-pink-100 text-pink-600 px-1.5 rounded text-[10px] font-bold border border-pink-200 align-middle">호텔키 혜택</span>)가 있는 매장에서 특별 서비스를 받을 수 있습니다. 주문 또는 결제 시 미리 제시해주세요.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <p class="text-sm text-slate-500 mb-6 flex items-center gap-1"><i data-lucide="footprints" class="w-4 h-4"></i> 모든 식당은 숙소(레쿠 오키나와)에서 도보 이동 가능합니다.</p>
         
         <div class="mb-8">
             <h3 class="font-bold text-lg text-slate-800 mb-3 border-b border-slate-200 pb-2 flex items-center gap-2"><i data-lucide="utensils" class="w-5 h-5 text-orange-600"></i> 든든한 식사 (평점 4.0+ & 리뷰 500+)</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">스테이크 하우스 88</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">오키나와를 대표하는 미국풍 스테이크 전문점입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=스테이크하우스88 차탄점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">스테이크 하우스 88</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🥤 드링크바 무료 제공</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">오키나와를 대표하는 미국풍 스테이크 전문점입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=스테이크하우스88 차탄점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">구르메 스시</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 4분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">아메리칸 빌리지의 인기 회전초밥 맛집입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=구르메스시 아메리칸빌리지점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">야키니쿠 유메마루</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">합리적인 가격의 무한리필 고기 구이 전문점입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">포크 타마고 오니기리</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">스팸과 계란이 들어간 오키나와 소울 푸드 주먹밥입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=포크타마고오니기리 차탄점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">키지무나</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 2분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">타코라이스 위에 부드러운 오믈렛을 올린 '오무타코' 맛집입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=키지무나 데포아일랜드점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">레드 랍스터</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 6분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">신선한 랍스터와 해산물 요리를 즐기는 패밀리 레스토랑입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=레드랍스터 오키나와 차탄점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">점보 스테이크 한스</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 2분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">푸짐한 양의 티본 스테이크와 샐러드바가 있는 곳입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Jumbo Steak Han's Chatan" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">블루 오션 스테이크</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">오션뷰를 즐기며 식사할 수 있는 고급 스테이크 레스토랑입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Blue Ocean Steak" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">솔리스 그란데</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">분위기 좋은 테라스에서 즐기는 이탈리안 그릴 요리입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=SoliS Grande" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">키지무나</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 2분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🥤 식사 시 소프트 드링크 1잔 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">타코라이스 위에 부드러운 오믈렛을 올린 '오무타코' 맛집입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=키지무나 데포아일랜드점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">레드 랍스터</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 6분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍷 글라스 맥주/와인/음료 중 1잔 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">신선한 랍스터와 해산물 요리를 즐기는 패밀리 레스토랑입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=레드랍스터 오키나와 차탄점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">점보 스테이크 한스</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 2분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">💰 전체 금액 10% 할인</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">푸짐한 양의 티본 스테이크와 샐러드바가 있는 곳입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Jumbo Steak Han's Chatan" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">블루 오션 스테이크</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 5분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍹 웰컴 드링크 1잔 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">오션뷰를 즐기며 식사할 수 있는 고급 스테이크 레스토랑입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Blue Ocean Steak" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">솔리스 그란데</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍨 식사 주문 시 아이스크림 3종 서비스</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">분위기 좋은 테라스에서 즐기는 이탈리안 그릴 요리입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SoliS Grande" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">더 칼리프 키친</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">바다 뷰가 멋진 캘리포니아 스타일 멕시칸 식당입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=The Calif Kitchen Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">벤슨스 핫도그</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">미국 본토 맛을 느낄 수 있는 100% 비프 핫도그입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Benson's Hotdog" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">아타비스 햄버거</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 6분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">육즙 가득한 패티와 바삭한 번이 일품인 수제버거입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Atabii's Hamburger" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">발리우드 드림즈</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">현지 셰프가 요리하는 정통 인도 커리와 난 맛집입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Bollywood Dreams Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">타코 로코</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 4분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">타코와 부리또 등 멕시칸 요리를 캐주얼하게 즐깁니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Taco Loco Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">벤슨스 핫도그</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🌭 핫도그 토핑 1개 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">미국 본토 맛을 느낄 수 있는 100% 비프 핫도그입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Benson's Hotdog" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">아타비스 햄버거</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 6분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍔 햄버거 토핑 1개 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">육즙 가득한 패티와 바삭한 번이 일품인 수제버거입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Atabii's Hamburger" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">발리우드 드림즈</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 3분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">💰 10% 할인</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">현지 셰프가 요리하는 정통 인도 커리와 난 맛집입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Bollywood Dreams Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">타코 로코</h4>
+                        <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 4분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🥤 소프트 드링크 1잔 무료</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">타코와 부리또 등 멕시칸 요리를 캐주얼하게 즐깁니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Taco Loco Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">할레 노아 카페</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">하와이안 스타일의 건강한 조식과 브런치를 제공합니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Hale Noa Cafe" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">코나스 커피</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 7분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">하와이 분위기에서 팬케이크와 커피를 즐길 수 있습니다.</p><a href="https://www.google.com/maps/search/?api=1&query=코나스커피 아메리칸빌리지" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">와규 카페 카푸카</h4><span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-medium">도보 7분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">신선한 샐러드와 와규 요리를 즐기는 브런치 맛집입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=WaGyu-Cafe KAPUKA" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
@@ -170,11 +302,61 @@
         <div>
             <h3 class="font-bold text-lg text-slate-800 mb-3 border-b border-slate-200 pb-2 flex items-center gap-2"><i data-lucide="coffee" class="w-5 h-5 text-blue-600"></i> 디저트 & 카페</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">블루실 아이스크림</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">오키나와 필수 디저트, 자색고구마 맛을 추천합니다.</p><a href="https://www.google.com/maps/search/?api=1&query=블루실아이스크림 데포점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">지바고 커피 웍스</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 6분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">해안가 산책로에 위치한 힙한 분위기의 로스터리 카페입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=지바고커피웍스" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">블루실 아이스크림</h4>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 3분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍦 싱글 아이스크림 주문 시 주니어 스쿱 추가</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">오키나와 필수 디저트, 자색고구마 맛을 추천합니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=블루실아이스크림 데포점" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">지바고 커피 웍스</h4>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 6분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">💰 10% 할인 (레쿠 오키나와 투숙객 한정)</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">해안가 산책로에 위치한 힙한 분위기의 로스터리 카페입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=지바고커피웍스" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">타임리스 초콜릿</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">카카오 본연의 맛을 살린 빈투바 초콜릿 전문점입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Timeless Chocolate" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">시사이드 카페 하논</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 5분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">바다를 바라보며 즐기는 폭신한 팬케이크 맛집입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Seaside Cafe Hanon" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">봉고 앤 앵커</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 6분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">유기농 재료를 사용한 샌드위치와 커피가 맛있습니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Vongo and Anchor" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
+                
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">시사이드 카페 하논</h4>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 5분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">🍨 식사 주문 시 아이스크림 서비스</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">바다를 바라보며 즐기는 폭신한 팬케이크 맛집입니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Seaside Cafe Hanon" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800">봉고 앤 앵커</h4>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 6분</span>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <span class="inline-flex items-center gap-1 bg-pink-100 text-pink-600 px-2 py-1 rounded text-[10px] font-bold border border-pink-200"><i data-lucide="credit-card" class="w-3 h-3"></i> 호텔키 혜택</span>
+                        <p class="text-xs text-pink-600 mt-1 font-medium">💰 10% 할인</p>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-2">유기농 재료를 사용한 샌드위치와 커피가 맛있습니다.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Vongo and Anchor" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a>
+                </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">더 정글릴라</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 10분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">그네 의자와 모래 바닥이 있는 이색적인 카페입니다.</p><a href="https://www.google.com/maps/search/?api=1&query=The Junglila Cafe" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">마일로 플러스 카페</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 6분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">해변 뷰를 보며 스무디 볼을 즐기기 좋습니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Mylo Plus Cafe" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start"><h4 class="font-bold text-slate-800">홀드 바이 핸드</h4><span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">도보 3분</span></div><p class="text-xs text-slate-500 mt-1 mb-2">소프트 아이스크림과 감자튀김을 간편하게 먹을 수 있습니다.</p><a href="https://www.google.com/maps/search/?api=1&query=Hold By Hand Okinawa" target="_blank" class="block w-full text-center text-xs bg-slate-50 py-2 rounded text-blue-600 font-bold hover:bg-slate-100 transition-colors">구글맵 보기</a></div>
