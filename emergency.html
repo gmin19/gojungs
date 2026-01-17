@@ -54,16 +54,16 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+    <header class="bg-slate-900 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
-            <div class="absolute top-0 left-0 p-4 z-50">
-                <a href="index.html" class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-slate-800/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-slate-700">
+            <div class="absolute -top-6 left-0 z-50">
+                <a href="index.html" class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-slate-800/80 px-3 py-1.5 rounded-full backdrop-blur-sm border border-slate-700 shadow-sm">
                     <i data-lucide="home" class="w-4 h-4"></i>
                     <span class="text-xs font-bold">홈으로</span>
                 </a>
             </div>
 
-            <div class="flex justify-between items-start mb-6 mt-6">
+            <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
                         긴급 상황 및<br>
@@ -221,12 +221,12 @@
                         <i data-lucide="languages" class="w-5 h-5 text-blue-500"></i> 번역 앱 실행
                     </h3>
                     <div class="grid grid-cols-2 gap-3">
-                        <a href="https://papago.naver.com/" target="_blank" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                        <button onclick="openPapago()" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Papago
-                        </a>
-                        <a href="https://translate.google.com/" target="_blank" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                        </button>
+                        <button onclick="openGoogleTranslate()" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Google
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -238,9 +238,9 @@
                         <button onclick="openKakaoT()" class="bg-[#FEE500] text-[#3c1e1e] py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                             Kakao T
                         </button>
-                        <a href="https://m.uber.com/ul" target="_blank" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
+                        <button onclick="openUber()" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
                             Uber
-                        </a>
+                        </button>
                     </div>
                     <p class="text-[12px] text-slate-500 mt-2 text-center leading-normal">
                         * 앱이 설치되어 있어야 실행됩니다. (일본 내 Kakao T는 JapanTaxi(GO)와 연동)
@@ -249,19 +249,39 @@
             `;
         }
 
-        function openKakaoT() {
+        // 앱 실행 헬퍼 함수
+        function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
             const userAgent = navigator.userAgent;
             const isAndroid = /android/i.test(userAgent);
             const isIOS = /iPad|iPhone|iPod/.test(userAgent);
 
             if (isAndroid) {
-                setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.kakao.taxi"; }, 1500);
-                window.location = "kakaot://";
+                setTimeout(function () { window.location = storeUrlAndroid; }, 1500);
+                window.location = urlScheme;
             } else if (isIOS) {
-                setTimeout(function () { window.location = "https://apps.apple.com/app/id981110422"; }, 1500);
-                window.location = "kakaot://";
+                setTimeout(function () { window.location = storeUrlIOS; }, 1500);
+                window.location = urlScheme;
             } else {
-                window.open("https://www.kakaocorp.com/service/KakaoT");
+                window.open(webFallback);
+            }
+        }
+
+        function openKakaoT() {
+            openApp("kakaot://", "https://play.google.com/store/apps/details?id=com.kakao.taxi", "https://apps.apple.com/app/id981110422", "https://www.kakaocorp.com/service/KakaoT");
+        }
+        function openUber() {
+            openApp("uber://", "https://play.google.com/store/apps/details?id=com.ubercab", "https://apps.apple.com/app/id368677368", "https://m.uber.com/ul");
+        }
+        function openPapago() {
+            openApp("papago://", "https://play.google.com/store/apps/details?id=com.naver.labs.translator", "https://apps.apple.com/app/id1147246415", "https://papago.naver.com/");
+        }
+        function openGoogleTranslate() {
+            const userAgent = navigator.userAgent;
+            const isAndroid = /android/i.test(userAgent);
+            if (isAndroid) {
+                window.location = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
+            } else {
+                openApp("googletranslate://", "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", "https://apps.apple.com/app/id414706506", "https://translate.google.com/");
             }
         }
 
