@@ -1,6 +1,6 @@
 /**
  * 오키나와 가족 여행 웹사이트 공통 스크립트
- * (앱 연동 최적화, 홈 버튼/날씨 위젯 통합 관리, 5일 예보 포함)
+ * (앱 연동, 플로팅 홈 버튼, 날씨 위젯, 유틸리티)
  */
 
 // ==========================================
@@ -83,7 +83,7 @@ function renderGlobalApps() {
 }
 
 // ==========================================
-// 3. 홈 버튼 & 날씨 위젯 통합 생성 (+4일 예보 포함)
+// 3. UI 인젝션: 날씨 위젯 & 플로팅 홈 버튼
 // ==========================================
 const weatherIconMap = {
     0: 'sun', 1: 'sun', 2: 'cloud-sun', 3: 'cloud',
@@ -94,23 +94,16 @@ const weatherIconMap = {
     95: 'cloud-lightning', 96: 'cloud-lightning', 99: 'cloud-lightning'
 };
 
-function injectHeaderElements() {
-    // 1. 이미 날씨가 있는 페이지(Index)는 건너뜀 (Index는 이 함수가 필요 없음)
+function injectCommonElements() {
+    // Index 페이지 체크 (Index에는 홈버튼/헤더위젯 삽입 안 함)
+    // Index 페이지는 HTML에 이미 id="current-temp"가 하드코딩 되어 있음
     if (document.getElementById('current-temp')) return;
 
-    // 2. 헤더의 Flex 컨테이너 찾기
+    // 1. 헤더 날씨 위젯 삽입 (우측 상단)
     const headerFlex = document.querySelector('header .max-w-4xl .flex.justify-between');
-    if (!headerFlex) return;
-
-    // 3. 홈 버튼 + 날씨 위젯(5일치 그리드 포함) 삽입
-    // - 너비 w-[180px]로 고정하여 4일치 예보가 잘 보이도록 함
-    const rightSideHtml = `
-        <div class="flex flex-col items-end gap-2 ml-2">
-            <a href="index.html" class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-slate-800/80 px-3 py-1.5 rounded-full backdrop-blur-sm border border-slate-700 shadow-sm text-xs font-bold">
-                <i data-lucide="home" class="w-3.5 h-3.5"></i> 홈으로
-            </a>
-
-            <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[180px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none">
+    if (headerFlex) {
+        const weatherHtml = `
+            <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="flex-none bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[180px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none ml-2">
                 <div class="flex justify-between items-center mb-2 pb-2 border-b border-white/10">
                     <div class="flex flex-col">
                         <span class="text-[10px] text-sky-300 font-bold mb-0.5 flex items-center gap-1">오키나와(나하) <i data-lucide="external-link" class="w-2 h-2"></i></span>
@@ -127,15 +120,22 @@ function injectHeaderElements() {
                     <div class="text-[10px] text-slate-400 col-span-4 py-1">예보 로딩...</div>
                 </div>
             </a>
-        </div>
-    `;
+        `;
+        headerFlex.insertAdjacentHTML('beforeend', weatherHtml);
+    }
 
-    // 헤더의 맨 뒤(오른쪽)에 삽입
-    headerFlex.insertAdjacentHTML('beforeend', rightSideHtml);
+    // 2. 플로팅 홈 버튼 삽입 (우측 하단, Top 버튼 위)
+    // Top 버튼이 bottom: 24px 이므로, 그 위에 배치 (bottom: 90px 정도)
+    const homeBtnHtml = `
+        <a href="index.html" class="fixed bottom-[90px] right-[24px] z-50 bg-slate-800 text-white p-3 rounded-full shadow-xl hover:bg-slate-700 transition-colors flex items-center justify-center border border-slate-700">
+            <i data-lucide="home" class="w-6 h-6"></i>
+        </a>
+    `;
+    document.body.insertAdjacentHTML('beforeend', homeBtnHtml);
 }
 
 async function updateWeather() {
-    injectHeaderElements(); // 위젯 생성 시도
+    injectCommonElements(); // 위젯 및 버튼 생성 시도
 
     const tempEl = document.getElementById('current-temp');
     if (!tempEl) return;
@@ -160,14 +160,13 @@ async function updateWeather() {
             const rangeEl = document.getElementById('today-range');
             if (rangeEl) rangeEl.innerText = `${todayMin}°/${todayMax}°`;
 
-            // +4일 예보 채우기
+            // +4일 예보
             const forecastGrid = document.getElementById('forecast-grid');
             if (forecastGrid) {
                 forecastGrid.innerHTML = ''; 
                 const days = ['일', '월', '화', '수', '목', '금', '토'];
                 const today = new Date();
                 
-                // 내일부터 4일간 (i=1 to 4)
                 for (let i = 1; i < 5; i++) {
                     const date = new Date(today);
                     date.setDate(today.getDate() + i);
