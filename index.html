@@ -15,7 +15,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
         
-        /* 탭 전환 애니메이션 (일자별 전환용) */
+        /* 탭 전환 애니메이션 */
         .day-content {
             display: none;
             animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,7 +82,7 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+    <header class="bg-slate-900 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6">
                 <div class="flex-1 pr-2">
@@ -268,165 +268,9 @@
         <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
     </div>
 
+    <script src="common.js"></script>
     <script>
-        // ==========================================
-        // [공통 모듈] 이 스크립트는 모든 페이지에서 공통으로 사용될 수 있습니다.
-        // ==========================================
-
-        // 1. 공통 앱 섹션 렌더링 (번역 및 택시)
-        function renderGlobalApps() {
-            const container = document.getElementById('global-apps-container');
-            if (!container) return;
-
-            container.innerHTML = `
-                <div class="mb-6">
-                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i data-lucide="languages" class="w-5 h-5 text-blue-500"></i> 번역 앱 실행
-                    </h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="openPapago()" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                            Papago
-                        </button>
-                        <button onclick="openGoogleTranslate()" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                            Google
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i data-lucide="car" class="w-5 h-5 text-yellow-500"></i> 택시 앱 호출
-                    </h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="openKakaoT()" class="bg-[#FEE500] text-[#3c1e1e] py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
-                            Kakao T
-                        </button>
-                        <button onclick="openUber()" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
-                            Uber
-                        </button>
-                    </div>
-                    <p class="text-[12px] text-slate-500 mt-2 text-center leading-normal">
-                        * 앱이 설치되어 있어야 실행됩니다. (일본 내 Kakao T는 JapanTaxi(GO)와 연동)
-                    </p>
-                </div>
-            `;
-        }
-
-        // 앱 실행 헬퍼 함수
-        function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
-            const userAgent = navigator.userAgent;
-            const isAndroid = /android/i.test(userAgent);
-            const isIOS = /iPad|iPhone|iPod/.test(userAgent);
-
-            if (isAndroid) {
-                setTimeout(function () { window.location = storeUrlAndroid; }, 1500);
-                window.location = urlScheme;
-            } else if (isIOS) {
-                setTimeout(function () { window.location = storeUrlIOS; }, 1500);
-                window.location = urlScheme;
-            } else {
-                window.open(webFallback);
-            }
-        }
-
-        // 2. 각 앱별 실행 함수
-        function openKakaoT() {
-            openApp("kakaot://", "https://play.google.com/store/apps/details?id=com.kakao.taxi", "https://apps.apple.com/app/id981110422", "https://www.kakaocorp.com/service/KakaoT");
-        }
-        function openUber() {
-            openApp("uber://", "https://play.google.com/store/apps/details?id=com.ubercab", "https://apps.apple.com/app/id368677368", "https://m.uber.com/ul");
-        }
-        function openPapago() {
-            openApp("papago://", "https://play.google.com/store/apps/details?id=com.naver.labs.translator", "https://apps.apple.com/app/id1147246415", "https://papago.naver.com/");
-        }
-        function openGoogleTranslate() {
-            const userAgent = navigator.userAgent;
-            const isAndroid = /android/i.test(userAgent);
-            if (isAndroid) {
-                window.location = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
-            } else {
-                openApp("googletranslate://", "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", "https://apps.apple.com/app/id414706506", "https://translate.google.com/");
-            }
-        }
-
-        // 3. Top 버튼 로직
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.addEventListener('scroll', () => {
-            const topBtn = document.getElementById('top-btn');
-            if (window.scrollY > 300) {
-                topBtn.classList.add('visible');
-            } else {
-                topBtn.classList.remove('visible');
-            }
-        });
-
-        // ==========================================
-        // [Index 전용] 일정표 및 날씨 로직
-        // ==========================================
-
-        const weatherIconMap = {
-            0: 'sun', 1: 'sun', 2: 'cloud-sun', 3: 'cloud',
-            45: 'cloud-fog', 48: 'cloud-fog',
-            51: 'cloud-drizzle', 53: 'cloud-drizzle', 55: 'cloud-drizzle',
-            61: 'cloud-rain', 63: 'cloud-rain', 65: 'cloud-rain',
-            80: 'cloud-rain', 81: 'cloud-rain', 82: 'cloud-rain',
-            95: 'cloud-lightning', 96: 'cloud-lightning', 99: 'cloud-lightning'
-        };
-
-        async function updateWeather() {
-            try {
-                const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=5");
-                const data = await res.json();
-                
-                if (data && data.current_weather && data.daily) {
-                    const currentTemp = Math.round(data.current_weather.temperature);
-                    document.getElementById('current-temp').innerText = currentTemp + "°";
-                    
-                    const currentCode = data.current_weather.weathercode;
-                    const mainIcon = weatherIconMap[currentCode] || 'cloud';
-                    const iconEl = document.getElementById('weather-icon-main');
-                    iconEl.setAttribute('data-lucide', mainIcon);
-
-                    const todayMin = Math.round(data.daily.temperature_2m_min[0]);
-                    const todayMax = Math.round(data.daily.temperature_2m_max[0]);
-                    document.getElementById('today-range').innerText = `${todayMin}° / ${todayMax}°`;
-
-                    const forecastGrid = document.getElementById('forecast-grid');
-                    forecastGrid.innerHTML = ''; 
-
-                    const days = ['일', '월', '화', '수', '목', '금', '토'];
-                    const today = new Date();
-                    
-                    for (let i = 1; i < 5; i++) {
-                        const date = new Date(today);
-                        date.setDate(today.getDate() + i);
-                        const dayName = days[date.getDay()];
-                        
-                        const code = data.daily.weathercode[i];
-                        const icon = weatherIconMap[code] || 'cloud';
-                        const min = Math.round(data.daily.temperature_2m_min[i]);
-                        const max = Math.round(data.daily.temperature_2m_max[i]);
-
-                        const cell = document.createElement('div');
-                        cell.className = 'flex flex-col items-center justify-center p-1 bg-white/5 rounded hover:bg-white/10 transition-colors';
-                        cell.innerHTML = `
-                            <span class="text-[9px] text-slate-300 mb-0.5">${dayName}</span>
-                            <i data-lucide="${icon}" class="w-3.5 h-3.5 text-slate-200 mb-0.5"></i>
-                            <span class="text-[9px] font-bold text-white leading-tight">${max}°<br><span class="text-slate-400 font-normal">${min}°</span></span>
-                        `;
-                        forecastGrid.appendChild(cell);
-                    }
-                    lucide.createIcons();
-                }
-            } catch (e) {
-                console.error("날씨 정보 로딩 실패", e);
-                document.getElementById('forecast-grid').innerHTML = '<div class="text-[10px] text-red-300 col-span-4">정보 없음</div>';
-            }
-        }
-
+        // Index 페이지 전용 로직 (D-Day, 탭 전환)
         function switchDay(dayNum) {
             document.querySelectorAll('.day-content').forEach(el => {
                 el.classList.remove('active');
@@ -444,33 +288,6 @@
                 activeBtn.className = 'day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform -translate-y-0.5';
             }
             lucide.createIcons();
-        }
-
-        function copyToClipboard(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(showToast);
-            } else {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.left = "-9999px";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast();
-                } catch (err) {
-                    console.error('복사 실패', err);
-                }
-                document.body.removeChild(textArea);
-            }
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('opacity-0');
-            setTimeout(() => toast.classList.add('opacity-0'), 2000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -494,10 +311,6 @@
             } else {
                 switchDay(1); 
             }
-
-            renderGlobalApps(); // 공통 앱 렌더링
-            updateWeather();
-            lucide.createIcons();
         });
     </script>
 </body>
