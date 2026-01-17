@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 커맨드센터</title>
+    <title>오키나와 가족 여행 - 일정표</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
         
-        /* 탭 전환 애니메이션 */
+        /* 탭 전환 애니메이션 (일자별 전환용) */
         .day-content {
             display: none;
             animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -164,7 +164,7 @@
                 <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
                     <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
                 </a>
-                <a href="rent.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </a>
                 <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
@@ -319,67 +319,33 @@
             const isIOS = /iPad|iPhone|iPod/.test(userAgent);
 
             if (isAndroid) {
-                // 안드로이드: 스토어 이동 타임아웃 설정 후 스킴 실행
-                setTimeout(function () { 
-                    window.location = storeUrlAndroid; 
-                }, 1500);
+                setTimeout(function () { window.location = storeUrlAndroid; }, 1500);
                 window.location = urlScheme;
             } else if (isIOS) {
-                // iOS: 스토어 이동 타임아웃 설정 후 스킴 실행
-                setTimeout(function () { 
-                    window.location = storeUrlIOS; 
-                }, 1500);
+                setTimeout(function () { window.location = storeUrlIOS; }, 1500);
                 window.location = urlScheme;
             } else {
-                // 데스크탑 등 기타: 웹 폴백
                 window.open(webFallback);
             }
         }
 
         // 2. 각 앱별 실행 함수
         function openKakaoT() {
-            openApp(
-                "kakaot://", 
-                "https://play.google.com/store/apps/details?id=com.kakao.taxi", 
-                "https://apps.apple.com/app/id981110422", 
-                "https://www.kakaocorp.com/service/KakaoT"
-            );
+            openApp("kakaot://", "https://play.google.com/store/apps/details?id=com.kakao.taxi", "https://apps.apple.com/app/id981110422", "https://www.kakaocorp.com/service/KakaoT");
         }
-
         function openUber() {
-            openApp(
-                "uber://", 
-                "https://play.google.com/store/apps/details?id=com.ubercab", 
-                "https://apps.apple.com/app/id368677368", 
-                "https://m.uber.com/ul"
-            );
+            openApp("uber://", "https://play.google.com/store/apps/details?id=com.ubercab", "https://apps.apple.com/app/id368677368", "https://m.uber.com/ul");
         }
-
         function openPapago() {
-            openApp(
-                "papago://", 
-                "https://play.google.com/store/apps/details?id=com.naver.labs.translator", 
-                "https://apps.apple.com/app/id1147246415", 
-                "https://papago.naver.com/"
-            );
+            openApp("papago://", "https://play.google.com/store/apps/details?id=com.naver.labs.translator", "https://apps.apple.com/app/id1147246415", "https://papago.naver.com/");
         }
-
         function openGoogleTranslate() {
-            // 구글 번역은 URL Scheme이 표준화되어 있지 않아 iOS는 googletranslate://, 안드로이드는 intent 방식 시도
             const userAgent = navigator.userAgent;
             const isAndroid = /android/i.test(userAgent);
-            
             if (isAndroid) {
-                // 안드로이드 Intent 방식
-                const intentUrl = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
-                window.location = intentUrl;
+                window.location = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
             } else {
-                openApp(
-                    "googletranslate://", 
-                    "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", 
-                    "https://apps.apple.com/app/id414706506", 
-                    "https://translate.google.com/"
-                );
+                openApp("googletranslate://", "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", "https://apps.apple.com/app/id414706506", "https://translate.google.com/");
             }
         }
 
