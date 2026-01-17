@@ -1,43 +1,51 @@
 /**
  * 오키나와 가족 여행 웹사이트 공통 스크립트
- * (앱 연동, 날씨 자동 생성 및 데이터 연동, 유틸리티)
+ * (앱 연동 최적화, 날씨 위젯 확장, 유틸리티)
  */
 
 // ==========================================
-// 1. 앱 실행 (Deep Link) 로직
+// 1. 앱 실행 (Deep Link) 로직 - iOS 최적화
 // ==========================================
 
 /**
  * 앱 실행 헬퍼 함수
- * Android/iOS를 구분하여 앱 스킴을 호출하고, 앱이 없으면 스토어/웹으로 이동 시도
+ * iOS Safari의 "앱 열기" 확인 팝업 시간을 고려하여 타임아웃을 연장하고,
+ * 앱이 없을 경우 앱스토어보다는 웹 폴백을 우선하도록 로직 개선
  */
 function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
     const userAgent = navigator.userAgent;
     const isAndroid = /android/i.test(userAgent);
     const isIOS = /iPad|iPhone|iPod/.test(userAgent);
 
-    // 1. 앱 실행 시도
     if (isAndroid) {
-        // 안드로이드는 iframe이나 location.href로 스킴 호출 시도
-        // 1.5초 후 반응 없으면 스토어로 이동하는 타임아웃 설정
+        // [안드로이드]
         const now = new Date().getTime();
         setTimeout(function () {
-            if (new Date().getTime() - now < 2000) {
-                window.location = storeUrlAndroid;
+            // 2.5초 지났는데도 화면이 그대로면(앱 실행 안됨) 스토어/웹으로 이동
+            if (new Date().getTime() - now < 3000) {
+                window.location = webFallback || storeUrlAndroid;
             }
-        }, 1500);
+        }, 2500);
         window.location = urlScheme;
+        
     } else if (isIOS) {
-        // iOS도 유사한 방식
+        // [iOS]
         const now = new Date().getTime();
+        
+        // 타임아웃을 3000ms(3초)로 늘림: "Open in Papago?" 팝업 클릭 시간 확보
         setTimeout(function () {
-            if (new Date().getTime() - now < 2000) {
-                window.location = storeUrlIOS;
+            // 앱이 실행되어 백그라운드로 갔다면 시간이 멈춤. 
+            // 흐른 시간이 지정 시간(3500ms)보다 작다면 앱이 안 열린 것으로 간주.
+            if (new Date().getTime() - now < 3500) {
+                // 앱스토어 강제 이동보다는 웹사이트(webFallback) 우선 이동이 사용자 경험에 좋음
+                window.location = webFallback || storeUrlIOS;
             }
-        }, 1500);
-        window.location = urlScheme;
+        }, 3000);
+        
+        window.location.href = urlScheme; // iOS는 href 사용 권장
+        
     } else {
-        // PC 등 기타 환경은 웹 폴백
+        // [PC/기타]
         window.open(webFallback);
     }
 }
@@ -62,14 +70,24 @@ function openUber() {
     );
 }
 
-// 파파고(Papago) 실행 - 요청하신 연동
+// [수정됨] 파파고(Papago) 실행
 function openPapago() {
-    openApp(
-        "papago://", // 파파고 URL Scheme
-        "https://play.google.com/store/apps/details?id=com.naver.labs.translator", 
-        "https://apps.apple.com/app/id1147246415", 
-        "https://papago.naver.com/"
-    );
+    const userAgent = navigator.userAgent;
+    const isAndroid = /android/i.test(userAgent);
+
+    if (isAndroid) {
+        // 안드로이드: Intent Scheme 사용 (가장 확실한 방법)
+        const intentUrl = "intent://#Intent;scheme=papago;package=com.naver.labs.translator;S.browser_fallback_url=https://papago.naver.com/;end";
+        window.location = intentUrl;
+    } else {
+        // iOS: 타임아웃을 늘린 openApp 함수 사용 + 폴백을 웹사이트로 지정
+        openApp(
+            "papago://", 
+            "", 
+            "https://apps.apple.com/app/id1147246415", 
+            "https://papago.naver.com/" // 앱 없으면 웹사이트로 이동
+        );
+    }
 }
 
 // 구글 번역 실행
@@ -78,13 +96,12 @@ function openGoogleTranslate() {
     const isAndroid = /android/i.test(userAgent);
     
     if (isAndroid) {
-        // 안드로이드 Intent 방식 (더 확실한 방법)
-        const intentUrl = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;end;";
+        const intentUrl = "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;S.browser_fallback_url=https://translate.google.com/;end;";
         window.location = intentUrl;
     } else {
         openApp(
             "googletranslate://", 
-            "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", 
+            "", 
             "https://apps.apple.com/app/id414706506", 
             "https://translate.google.com/"
         );
@@ -135,10 +152,9 @@ function renderGlobalApps() {
 
 
 // ==========================================
-// 3. 날씨 위젯 자동 생성 및 데이터 연동
+// 3. 날씨 위젯 (모든 페이지 공통 적용 + 5일 예보)
 // ==========================================
 
-// 날씨 아이콘 매핑
 const weatherIconMap = {
     0: 'sun', 1: 'sun', 2: 'cloud-sun', 3: 'cloud',
     45: 'cloud-fog', 48: 'cloud-fog',
@@ -149,51 +165,43 @@ const weatherIconMap = {
 };
 
 /**
- * 페이지 헤더에 날씨 위젯 HTML을 동적으로 삽입하는 함수
- * (Index 페이지는 이미 HTML이 있으므로 건너뜀)
+ * [수정됨] 헤더에 날씨 위젯 HTML을 전체(오늘+4일) 형태로 삽입
  */
 function injectWeatherWidget() {
-    // 이미 날씨 위젯이 존재하는지 확인 (Index 페이지 등)
+    // 이미 위젯이 있으면(Index 페이지) 생성하지 않음
     if (document.getElementById('current-temp')) return;
 
-    // 헤더의 타이틀 영역 찾기 (flex justify-between 구조)
+    // 헤더의 타이틀 영역 찾기
     const headerFlex = document.querySelector('header .max-w-4xl .flex.justify-between');
     
     if (headerFlex) {
-        // 날씨 위젯 HTML 생성
+        // Index와 동일한 너비와 그리드 구조의 위젯 삽입
         const widgetHtml = `
-            <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="flex-none bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[140px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none ml-2">
-                <div class="flex justify-between items-center mb-1 pb-1 border-b border-white/10">
+            <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="flex-none bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[180px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none ml-2">
+                <div class="flex justify-between items-center mb-2 pb-2 border-b border-white/10">
                     <div class="flex flex-col">
-                        <span class="text-[9px] text-sky-300 font-bold mb-0.5 flex items-center gap-1">나하 <i data-lucide="external-link" class="w-2 h-2"></i></span>
-                        <span id="current-temp" class="text-2xl font-black text-white leading-none tracking-tighter">--°</span>
+                        <span class="text-[10px] text-sky-300 font-bold mb-0.5 flex items-center gap-1">오키나와(나하) <i data-lucide="external-link" class="w-2 h-2"></i></span>
+                        <span id="current-temp" class="text-3xl font-black text-white leading-none tracking-tighter">--°</span>
                     </div>
                     <div class="text-right flex flex-col items-end">
-                        <i data-lucide="cloud" class="w-5 h-5 text-yellow-400 mb-0.5" id="weather-icon-main"></i>
-                        <div class="text-[9px] text-slate-200 font-medium bg-white/10 px-1 py-0.5 rounded">
-                            <span id="today-range">--/--</span>
+                        <i data-lucide="cloud" class="w-6 h-6 text-yellow-400 mb-0.5" id="weather-icon-main"></i>
+                        <div class="text-[10px] text-slate-200 font-medium bg-white/10 px-1.5 py-0.5 rounded">
+                            <span id="today-range">--° / --°</span>
                         </div>
                     </div>
                 </div>
-                <div class="text-[9px] text-center text-slate-300" id="forecast-simple">
-                    로딩중..
+                <div class="grid grid-cols-4 gap-1 text-center" id="forecast-grid">
+                    <div class="text-[10px] text-slate-400 col-span-4 py-1">예보 로딩...</div>
                 </div>
             </a>
         `;
-        
-        // HTML 삽입
         headerFlex.insertAdjacentHTML('beforeend', widgetHtml);
     }
 }
 
-/**
- * 날씨 데이터 가져오기 (Open-Meteo API)
- */
 async function updateWeather() {
-    // 위젯 주입 시도 (없으면 생성)
-    injectWeatherWidget();
+    injectWeatherWidget(); // 위젯 주입
 
-    // 주입 후에도 엘리먼트가 없으면 중단
     const tempEl = document.getElementById('current-temp');
     if (!tempEl) return;
 
@@ -202,23 +210,22 @@ async function updateWeather() {
         const data = await res.json();
         
         if (data && data.current_weather && data.daily) {
-            // 현재 기온
+            // 1. 현재 날씨
             const currentTemp = Math.round(data.current_weather.temperature);
             tempEl.innerText = currentTemp + "°";
             
-            // 메인 아이콘
             const currentCode = data.current_weather.weathercode;
             const mainIcon = weatherIconMap[currentCode] || 'cloud';
             const iconEl = document.getElementById('weather-icon-main');
             if (iconEl) iconEl.setAttribute('data-lucide', mainIcon);
 
-            // 오늘 최저/최고
+            // 2. 오늘 최저/최고
             const todayMin = Math.round(data.daily.temperature_2m_min[0]);
             const todayMax = Math.round(data.daily.temperature_2m_max[0]);
             const rangeEl = document.getElementById('today-range');
-            if (rangeEl) rangeEl.innerText = `${todayMin}°/${todayMax}°`;
+            if (rangeEl) rangeEl.innerText = `${todayMin}° / ${todayMax}°`;
 
-            // 1. Index 페이지용 (상세 그리드)
+            // 3. 예보 그리드 채우기 (내일부터 4일간)
             const forecastGrid = document.getElementById('forecast-grid');
             if (forecastGrid) {
                 forecastGrid.innerHTML = ''; 
@@ -245,26 +252,13 @@ async function updateWeather() {
                     forecastGrid.appendChild(cell);
                 }
             }
-
-            // 2. 다른 페이지용 (간소화 텍스트)
-            const forecastSimple = document.getElementById('forecast-simple');
-            if (forecastSimple) {
-                // 내일 날씨만 간단히 표시
-                const tomorrowCode = data.daily.weathercode[1];
-                const tomorrowMax = Math.round(data.daily.temperature_2m_max[1]);
-                // 날씨 코드에 따른 텍스트 (간단 변환)
-                let weatherText = "맑음";
-                if (tomorrowCode > 3) weatherText = "흐림";
-                if (tomorrowCode > 50) weatherText = "비";
-                
-                forecastSimple.innerText = `내일: ${weatherText} (최고 ${tomorrowMax}°)`;
-            }
-
             // 동적으로 추가된 아이콘 렌더링
             if (window.lucide) window.lucide.createIcons();
         }
     } catch (e) {
         console.error("날씨 정보 로딩 실패", e);
+        const grid = document.getElementById('forecast-grid');
+        if (grid) grid.innerHTML = '<div class="text-[10px] text-red-300 col-span-4">정보 없음</div>';
     }
 }
 
@@ -307,7 +301,7 @@ function scrollToTop() {
 
 window.addEventListener('scroll', () => {
     const topBtn = document.getElementById('top-btn');
-    const searchContainer = document.getElementById('search-container'); // 맵코드 페이지용
+    const searchContainer = document.getElementById('search-container'); 
 
     if (topBtn) {
         if (window.scrollY > 300) {
@@ -329,11 +323,11 @@ window.addEventListener('scroll', () => {
 
 
 // ==========================================
-// 5. 초기화 (페이지 로드 시 실행)
+// 5. 초기화
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    renderGlobalApps(); // 1. 하단 앱 버튼 생성
-    updateWeather();    // 2. 날씨 위젯 생성 및 데이터 로드
+    renderGlobalApps(); // 앱 버튼 생성
+    updateWeather();    // 날씨 위젯 생성 및 데이터 로드
     
     if (window.lucide) {
         window.lucide.createIcons();
