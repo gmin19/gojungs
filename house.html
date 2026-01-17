@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오키나와 가족 여행 - 숙소</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: #F8FAFC; 
+            color: #334155; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        button:active, a:active {
+            transform: scale(0.98);
+        }
+
+        /* Top 버튼 스타일 */
+        .top-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .top-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* 네비게이션 활성화 스타일 */
+        .nav-link.active {
+            color: #EA580C; 
+            border-bottom-color: #EA580C;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-safe">
+
+    <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="absolute top-0 left-0 p-4 z-50">
+                <a href="index.html" class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-slate-800/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-slate-700">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span class="text-xs font-bold">홈으로</span>
+                </a>
+            </div>
+
+            <div class="flex justify-between items-start mb-6 mt-6">
+                <div class="flex-1 pr-2">
+                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                        레쿠 오키나와<br>
+                        <span class="text-orange-400">숙소</span> <span class="text-sky-400">가이드</span>
+                    </h1>
+                    <p class="text-slate-400 text-xs mt-2">체크인부터 부대시설까지 완벽 정리</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
+        <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
+    </header>
+
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
+                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
+                </a>
+                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
+                </a>
+                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
+                </a>
+                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
+                </a>
+                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
+                </a>
+                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
+                </a>
+                <a href="house.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
+                </a>
+                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="car" class="w-4 h-4"></i> 렌트카
+                </a>
+                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+
+        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <i data-lucide="hotel" class="w-6 h-6 text-purple-500"></i> 이용 가이드
+        </h2>
+        
+        <div class="bg-white p-5 mb-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+            <div>
+                <h3 class="font-bold text-slate-800 mb-1 flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-purple-500"></i> 프론트 데스크</h3>
+                <p class="text-base font-bold text-slate-600">+81-98-936-2288</p>
+            </div>
+            <a href="tel:+81989362288" class="bg-purple-100 text-purple-600 px-4 py-2 rounded-lg font-bold text-xs hover:bg-purple-200 transition-colors">전화걸기</a>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 체크인 / 체크아웃
+                </h3>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-slate-50 p-3 rounded-lg">
+                        <span class="text-xs text-slate-500 block mb-1">Check-in</span>
+                        <span class="font-bold text-lg text-slate-700">14:00</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg">
+                        <span class="text-xs text-slate-500 block mb-1">Check-out</span>
+                        <span class="font-bold text-lg text-slate-700">11:00</span>
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="block w-full text-center text-xs bg-purple-50 text-purple-600 font-bold py-3 mt-3 rounded-lg hover:bg-purple-100 transition-colors flex items-center justify-center gap-1">
+                    호텔 위치 구글맵 보기 <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="utensils" class="w-4 h-4 text-slate-400"></i> 조식 정보
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
+                        <span>장소: 메인 건물 2층 레스토랑</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
+                        <span>시간: 07:00 ~ 10:30 (L.O 10:00)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
+                        <span>입장 시 입장 티켓이 필요합니다.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="info" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
+                        <span>혼잡할 수 있으니 8시 이전을 추천합니다.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="bath" class="w-4 h-4 text-slate-400"></i> 대욕장 & 사우나
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
+                        <span>장소: 메인 건물 8층</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
+                        <span>시간: 06:00 ~ 10:00 / 15:00 ~ 01:00</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
+                        <span>입장 시 입장 티켓이 필요합니다.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="baby" class="w-4 h-4 text-slate-400"></i> 유아용품 무료 대여
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-pink-500 mt-0.5"></i> 
+                        <span>장소: 1층 로비</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="package-check" class="w-4 h-4 text-pink-500 mt-0.5"></i> 
+                        <span>대여 품목: 어린이용 슬리퍼, 변기커버, 장난감, 그림책, 어린이용 디딤대, 기저귀 정리용품, 야뇨 매트</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="waves" class="w-4 h-4 text-slate-400"></i> 인피니티 풀
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>장소: 메인 건물 8층 (유료)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>시간: 08:00 ~ 20:00 (시즌별 상이)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>문신이 있는 경우 래쉬가드 착용 필수.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="store" class="w-4 h-4 text-slate-400"></i> 편의시설
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4 text-green-500 mt-0.5"></i> 
+                        <span>1층에 로손 편의점이 연결되어 있습니다.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="shirt" class="w-4 h-4 text-green-500 mt-0.5"></i> 
+                        <span>코인 세탁실: 3층, 6층 등에 위치.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
+    </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        // ==========================================
+        // [공통 모듈]
+        // ==========================================
+        function renderGlobalApps() {
+            const container = document.getElementById('global-apps-container');
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="languages" class="w-5 h-5 text-blue-500"></i> 번역 앱 실행
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="https://papago.naver.com/" target="_blank" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Papago
+                        </a>
+                        <a href="https://translate.google.com/" target="_blank" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Google
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="car" class="w-5 h-5 text-yellow-500"></i> 택시 앱 호출
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="openKakaoT()" class="bg-[#FEE500] text-[#3c1e1e] py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Kakao T
+                        </button>
+                        <a href="https://m.uber.com/ul" target="_blank" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
+                            Uber
+                        </a>
+                    </div>
+                    <p class="text-[12px] text-slate-500 mt-2 text-center leading-normal">
+                        * 앱이 설치되어 있어야 실행됩니다. (일본 내 Kakao T는 JapanTaxi(GO)와 연동)
+                    </p>
+                </div>
+            `;
+        }
+
+        function openKakaoT() {
+            const userAgent = navigator.userAgent;
+            const isAndroid = /android/i.test(userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+            if (isAndroid) {
+                setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.kakao.taxi"; }, 1500);
+                window.location = "kakaot://";
+            } else if (isIOS) {
+                setTimeout(function () { window.location = "https://apps.apple.com/app/id981110422"; }, 1500);
+                window.location = "kakaot://";
+            } else {
+                window.open("https://www.kakaocorp.com/service/KakaoT");
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const topBtn = document.getElementById('top-btn');
+            if (window.scrollY > 200) {
+                topBtn.classList.add('visible');
+            } else {
+                topBtn.classList.remove('visible');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGlobalApps(); // 공통 앱 렌더링
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

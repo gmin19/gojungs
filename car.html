@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오키나와 가족 여행 - 렌트카</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: #F8FAFC; 
+            color: #334155; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        button:active, a:active {
+            transform: scale(0.98);
+        }
+
+        /* Top 버튼 스타일 */
+        .top-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .top-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* 네비게이션 활성화 스타일 */
+        .nav-link.active {
+            color: #EA580C; 
+            border-bottom-color: #EA580C;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-safe">
+
+    <header class="bg-slate-900 text-white pt-8 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="absolute top-0 left-0 p-4 z-50">
+                <a href="index.html" class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors bg-slate-800/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-slate-700">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span class="text-xs font-bold">홈으로</span>
+                </a>
+            </div>
+
+            <div class="flex justify-between items-start mb-6 mt-6">
+                <div class="flex-1 pr-2">
+                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                        렌터카<br>
+                        <span class="text-orange-400">사고/문제</span> <span class="text-sky-400">대처 가이드</span>
+                    </h1>
+                    <p class="text-slate-400 text-xs mt-2">안전한 여행을 위한 필수 매뉴얼</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
+        <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
+    </header>
+
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
+                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
+                </a>
+                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
+                </a>
+                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
+                </a>
+                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
+                </a>
+                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
+                </a>
+                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
+                </a>
+                <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
+                </a>
+                <a href="rent.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="car" class="w-4 h-4"></i> 렌트카
+                </a>
+                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
+                    <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+
+        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+            <i data-lucide="car" class="w-6 h-6 text-blue-500"></i> 렌터카 이용 정보
+        </h2>
+        
+        <div class="space-y-4">
+            <div class="bg-red-50 p-5 rounded-xl border border-red-100 shadow-sm">
+                <h3 class="font-bold text-red-700 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="phone-call" class="w-5 h-5"></i> 필수 긴급 연락처
+                </h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-3 rounded-lg text-center shadow-sm">
+                        <span class="text-xs text-slate-500 block">경찰 (사고 신고)</span>
+                        <span class="font-black text-2xl text-slate-800">110</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg text-center shadow-sm">
+                        <span class="text-xs text-slate-500 block">구급 (부상자 발생)</span>
+                        <span class="font-black text-2xl text-slate-800">119</span>
+                    </div>
+                </div>
+                <div class="mt-3 bg-white p-3 rounded-lg flex justify-between items-center shadow-sm">
+                    <div>
+                        <span class="text-xs text-slate-500 block">유니버스 렌터카</span>
+                        <span class="font-bold text-slate-800">+81-98-858-5343</span>
+                    </div>
+                    <a href="tel:+81988585343" class="bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-blue-600 transition-colors">전화걸기</a>
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店 外車・輸入車専門" target="_blank" class="block w-full text-center text-xs bg-white text-slate-600 font-bold py-3 mt-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-200 flex items-center justify-center gap-1">
+                    렌터카 사무실 위치 구글맵 보기 <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-orange-500"></i> 사고 발생 시 대처 순서
+                </h3>
+                <ol class="relative border-l border-slate-200 ml-2 space-y-6">
+                    <li class="ml-6">
+                        <span class="absolute -left-2.5 flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full ring-4 ring-white">
+                            <span class="text-blue-600 font-bold text-xs">1</span>
+                        </span>
+                        <h4 class="font-bold text-slate-800">안전 확보 및 정차</h4>
+                        <p class="text-sm text-slate-500 mt-1">즉시 운전을 멈추고 비상등을 켭니다. 2차 사고를 방지하기 위해 안전한 곳으로 이동하세요.</p>
+                    </li>
+                    <li class="ml-6">
+                        <span class="absolute -left-2.5 flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full ring-4 ring-white">
+                            <span class="text-blue-600 font-bold text-xs">2</span>
+                        </span>
+                        <h4 class="font-bold text-slate-800">부상자 확인 및 구호</h4>
+                        <p class="text-sm text-slate-500 mt-1">부상자가 있다면 즉시 119에 신고하고 구급 조치를 취합니다.</p>
+                    </li>
+                    <li class="ml-6">
+                        <span class="absolute -left-2.5 flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full ring-4 ring-white">
+                            <span class="text-blue-600 font-bold text-xs">3</span>
+                        </span>
+                        <h4 class="font-bold text-slate-800">경찰 신고 (필수)</h4>
+                        <p class="text-sm text-slate-500 mt-1">경미한 사고라도 반드시 110에 신고해야 보험 처리가 가능합니다. "사고 증명서"가 필요합니다.</p>
+                    </li>
+                    <li class="ml-6">
+                        <span class="absolute -left-2.5 flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full ring-4 ring-white">
+                            <span class="text-blue-600 font-bold text-xs">4</span>
+                        </span>
+                        <h4 class="font-bold text-slate-800">렌터카 회사 연락</h4>
+                        <p class="text-sm text-slate-500 mt-1">유니버스 렌터카에 사고 상황을 알리고 지시를 따릅니다. (상대방과 개인적인 합의 금지)</p>
+                    </li>
+                </ol>
+                <div class="mt-5 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-octagon" class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-yellow-800 text-sm">보험 적용 주의사항</h4>
+                            <p class="text-xs text-yellow-700 mt-1 font-medium">상대가 없는 단독 사고의 경우에도 연락이 없으면 보험적용이 불가합니다. (작은 사고라도 당일 사고현장에서 경찰/렌트카/보험회사에 연락해주세요!!)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4 text-slate-500"></i> 알아두면 좋은 용어
+                </h3>
+                <div class="space-y-3">
+                    <div>
+                        <span class="font-bold text-sm text-blue-600">NOC (휴업 손해 부담금)</span>
+                        <p class="text-xs text-slate-500 mt-0.5">사고나 고장으로 차량 수리가 필요할 때, 렌터카 회사가 영업을 하지 못해 발생하는 손실에 대한 보상금입니다. 보통 2만엔~5만엔 정도가 청구될 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+                <i data-lucide="fuel" class="w-8 h-8 text-green-500"></i>
+                <div>
+                    <h4 class="font-bold text-slate-800">반납 시 주유 불필요</h4>
+                    <p class="text-sm text-slate-500">만탄(가득 채움) 반납 불필요 옵션이 포함되어 있어, <span class="font-bold text-green-600">주유 없이 바로 반납</span>하시면 됩니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
+    </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        // ==========================================
+        // [공통 모듈]
+        // ==========================================
+        function renderGlobalApps() {
+            const container = document.getElementById('global-apps-container');
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="languages" class="w-5 h-5 text-blue-500"></i> 번역 앱 실행
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="https://papago.naver.com/" target="_blank" class="bg-green-500 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Papago
+                        </a>
+                        <a href="https://translate.google.com/" target="_blank" class="bg-blue-600 text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Google
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="car" class="w-5 h-5 text-yellow-500"></i> 택시 앱 호출
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="openKakaoT()" class="bg-[#FEE500] text-[#3c1e1e] py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                            Kakao T
+                        </button>
+                        <a href="https://m.uber.com/ul" target="_blank" class="bg-black text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:bg-slate-800 transition-colors">
+                            Uber
+                        </a>
+                    </div>
+                    <p class="text-[12px] text-slate-500 mt-2 text-center leading-normal">
+                        * 앱이 설치되어 있어야 실행됩니다. (일본 내 Kakao T는 JapanTaxi(GO)와 연동)
+                    </p>
+                </div>
+            `;
+        }
+
+        function openKakaoT() {
+            const userAgent = navigator.userAgent;
+            const isAndroid = /android/i.test(userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+
+            if (isAndroid) {
+                setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=com.kakao.taxi"; }, 1500);
+                window.location = "kakaot://";
+            } else if (isIOS) {
+                setTimeout(function () { window.location = "https://apps.apple.com/app/id981110422"; }, 1500);
+                window.location = "kakaot://";
+            } else {
+                window.open("https://www.kakaocorp.com/service/KakaoT");
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const topBtn = document.getElementById('top-btn');
+            if (window.scrollY > 200) {
+                topBtn.classList.add('visible');
+            } else {
+                topBtn.classList.remove('visible');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGlobalApps(); // 공통 앱 렌더링
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
