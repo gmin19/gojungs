@@ -81,6 +81,30 @@
         a.nav-btn {
             text-decoration: none;
         }
+
+        /* Top 버튼 스타일 */
+        #top-btn {
+            position: fixed;
+            bottom: 80px; /* 네비게이션 바 위 */
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #E2E8F0;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        #top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -180,7 +204,7 @@
                 <button onclick="switchTab('rental-car')" id="nav-rental-car" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </button>
-                <!-- 긴급연락처 (붉은색 강조 유지) -->
+                <!-- 긴급연락처 -->
                 <button onclick="switchTab('emergency')" id="nav-emergency" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </button>
@@ -192,6 +216,7 @@
 
         <!-- 탭 1: 일정표 (유지) -->
         <div id="schedule" class="tab-content active">
+            <!-- 일정표 내용 (기존과 동일) -->
             <div class="flex justify-between items-end mb-6">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">상세 일정표</h2>
@@ -391,10 +416,10 @@
                 <i data-lucide="languages" class="w-5 h-5 text-indigo-500"></i> 번역 앱 연결
             </h3>
             <div class="grid grid-cols-2 gap-3">
-                <a href="https://papago.naver.com/" target="_blank" class="bg-[#2DB400] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                <a href="intent://papago.naver.com/#Intent;scheme=https;package=com.naver.labs.translator;end" class="bg-[#2DB400] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                     <img src="https://papago.naver.com/favicon.ico" alt="Papago" class="w-5 h-5 rounded bg-white p-0.5"> Papago
                 </a>
-                <a href="https://translate.google.com/" target="_blank" class="bg-[#4285F4] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+                <a href="intent://translate.google.com/#Intent;scheme=https;package=com.google.android.apps.translate;end" class="bg-[#4285F4] text-white py-3 px-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
                     <i data-lucide="globe" class="w-5 h-5"></i> Google
                 </a>
             </div>
@@ -530,30 +555,6 @@
             setTimeout(() => lucide.createIcons(), 50);
         }
 
-        // 일자별 전환 로직
-        function switchDay(dayNum) {
-            document.querySelectorAll('.day-view').forEach(el => el.classList.add('hidden'));
-            const target = document.getElementById('day-content-' + dayNum);
-            if (target) {
-                target.classList.remove('hidden');
-                target.style.opacity = '0';
-                target.style.transform = 'translateY(10px)';
-                setTimeout(() => {
-                    target.style.transition = 'all 0.3s ease';
-                    target.style.opacity = '1';
-                    target.style.transform = 'translateY(0)';
-                }, 10);
-            }
-            document.querySelectorAll('.day-btn').forEach(btn => {
-                btn.className = 'day-btn bg-white text-slate-600 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all';
-            });
-            const activeBtn = document.getElementById('day-btn-' + dayNum);
-            if (activeBtn) {
-                activeBtn.className = 'day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform -translate-y-0.5';
-            }
-            lucide.createIcons();
-        }
-
         function copyToClipboard(text) {
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text).then(showToast);
@@ -597,21 +598,6 @@
             }
         }
 
-        const searchInput = document.getElementById('mapcode-search');
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                document.querySelectorAll('#mapcode-list > div').forEach(item => {
-                    const name = item.getAttribute('data-name').toLowerCase();
-                    if (name.includes(term)) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        }
-
         // Top 버튼 로직
         window.onscroll = function() {scrollFunction()};
 
@@ -634,19 +620,6 @@
             const diff = Math.ceil((ddayTarget - today) / (1000 * 60 * 60 * 24));
             const badge = document.getElementById('dday-badge');
             badge.innerHTML = `<i data-lucide="clock" class="w-3 h-3"></i> <span>D-${diff > 0 ? diff : 'Day'}</span>`;
-
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const date = today.getDate();
-
-            if (year === 2026 && month === 4) {
-                if (date === 3) switchDay(2);
-                else if (date === 4) switchDay(3);
-                else if (date === 5) switchDay(4);
-                else switchDay(1); 
-            } else {
-                switchDay(1); 
-            }
 
             updateWeather();
             lucide.createIcons();
