@@ -204,7 +204,7 @@
                 <button onclick="switchTab('rental-car')" id="nav-rental-car" class="nav-btn text-slate-500 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 transition-all">
                     <i data-lucide="car" class="w-4 h-4"></i> 렌트카
                 </button>
-                <!-- 긴급연락처 -->
+                <!-- 긴급연락처 (붉은색 강조 유지) -->
                 <button onclick="switchTab('emergency')" id="nav-emergency" class="nav-btn text-red-600 border-transparent flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-black border-b-2 transition-all hover:bg-red-50">
                     <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
                 </button>
@@ -216,7 +216,6 @@
 
         <!-- 탭 1: 일정표 (유지) -->
         <div id="schedule" class="tab-content active">
-            <!-- 일정표 내용 (기존과 동일) -->
             <div class="flex justify-between items-end mb-6">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">상세 일정표</h2>
@@ -328,51 +327,6 @@
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="야키니쿠 유메마루"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="flex items-center gap-1 hover:text-blue-600">야키니쿠 유메마루 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">중부 맛집</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('33 526 452*52')">33 526 452*52 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="오키나와 월드"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="flex items-center gap-1 hover:text-blue-600">오키나와 월드 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">남부 관광</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('232 495 330*83')">232 495 330*83 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
                 <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex justify-between items-center" data-name="이아스 오키나와"><div><h3 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=이아스 오키나와 토요사키" target="_blank" class="flex items-center gap-1 hover:text-blue-600">이아스 오키나와 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3><p class="text-xs text-slate-500 mt-0.5">남부 쇼핑몰</p></div><button class="mapcode-btn px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" onclick="copyToClipboard('232 543 400*25')">232 543 400*25 <i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div>
-            </div>
-        </div>
-
-        <!-- 탭 3~5 분리됨 (내용 제거) -->
-        <!-- 관광지 (place.html로 이동) -->
-        <!-- 맛집 (dining.html로 이동) -->
-        <!-- 쇼핑 (shopping.html로 이동) -->
-
-        <!-- 탭 6: 십계명 (유지) -->
-        <div id="rules" class="tab-content">
-            <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="scroll" class="w-6 h-6 text-orange-500"></i> 가족 여행 십계명</h2>
-            <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100 shadow-sm">
-                <ol class="space-y-4">
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">1.</span><div><h4 class="font-bold text-slate-800">짜증 내지 않기</h4><p class="text-base text-slate-600">배고파도, 더워도, 길을 잃어도 웃음 잃지 않기.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">2.</span><div><h4 class="font-bold text-slate-800">주는 대로 먹기</h4><p class="text-base text-slate-600">메뉴 결정권은 운전수에게 있습니다. 군말 없이 먹기.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">3.</span><div><h4 class="font-bold text-slate-800">사진 예쁘게 찍어주기</h4><p class="text-base text-slate-600">똥손 금지. 인생샷 하나는 건져주겠다는 일념으로.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">4.</span><div><h4 class="font-bold text-slate-800">부정적인 말 하지 않기</h4><p class="text-base text-slate-600">"힘들다", "덥다" 금지.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">5.</span><div><h4 class="font-bold text-slate-800">지각 금지</h4><p class="text-base text-slate-600">약속 시간 5분 전 대기. 코리안 타임은 한국에 두고 오기.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">6.</span><div><h4 class="font-bold text-slate-800">쇼핑은 신속하게</h4><p class="text-base text-slate-600">고민하는 시간에 품절됩니다. 보일 때 사세요.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">7.</span><div><h4 class="font-bold text-slate-800">아프지 말기</h4><p class="text-base text-slate-600">컨디션 조절은 셀프. 아프면 여행도 꽝입니다.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">8.</span><div><h4 class="font-bold text-slate-800">핸드폰 보지 않기</h4><p class="text-base text-slate-600">이동 중이나 식사 중엔 가족 얼굴 보며 대화하기.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">9.</span><div><h4 class="font-bold text-slate-800">짐은 스스로 챙기기</h4><p class="text-base text-slate-600">내 물건은 내가 챙기기. "엄마 내 거 어딨어?" 금지.</p></div></li>
-                    <li class="flex gap-3"><span class="font-black text-orange-500 text-lg">10.</span><div><h4 class="font-bold text-slate-800">무조건 행복하기</h4><p class="text-base text-slate-600">이 순간은 다시 오지 않습니다. 즐겁게 즐기기!</p></div></li>
-                </ol>
-            </div>
-        </div>
-
-        <!-- 탭 7: 숙소 (유지) -->
-        <div id="accommodation" class="tab-content">
-            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="hotel" class="w-6 h-6 text-purple-500"></i> 레쿠 오키나와 이용 가이드</h2>
-            
-            <div class="bg-white p-5 mb-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
-                <div>
-                    <h3 class="font-bold text-slate-800 mb-1 flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-purple-500"></i> 프론트 데스크</h3>
-                    <p class="text-base font-bold text-slate-600">+81-98-936-2288</p>
-                </div>
-                <a href="tel:+81989362288" class="bg-purple-100 text-purple-600 px-4 py-2 rounded-lg font-bold text-xs">전화걸기</a>
-            </div>
-            <div class="space-y-4">
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 체크인 / 체크아웃</h3><div class="grid grid-cols-2 gap-4 text-center"><div class="bg-slate-50 p-3 rounded-lg"><span class="text-xs text-slate-500 block mb-1">Check-in</span><span class="font-bold text-lg text-slate-700">14:00</span></div><div class="bg-slate-50 p-3 rounded-lg"><span class="text-xs text-slate-500 block mb-1">Check-out</span><span class="font-bold text-lg text-slate-700">11:00</span></div></div><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="block w-full text-center text-xs bg-purple-50 text-purple-600 font-bold py-3 mt-3 rounded-lg hover:bg-purple-100 transition-colors">호텔 위치 구글맵 보기</a></div>
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="utensils" class="w-4 h-4 text-slate-400"></i> 조식 정보</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>장소: 메인 건물 2층 레스토랑</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>시간: 07:00 ~ 10:30 (L.O 10:00)</span></li><li class="flex items-start gap-2"><i data-lucide="ticket" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>입장 시 입장 티켓이 필요합니다.</span></li><li class="flex items-start gap-2"><i data-lucide="info" class="w-4 h-4 text-purple-500 mt-0.5"></i> <span>혼잡할 수 있으니 8시 이전을 추천합니다.</span></li></ul></div>
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="bath" class="w-4 h-4 text-slate-400"></i> 대욕장 & 사우나</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>장소: 메인 건물 8층</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>시간: 06:00 ~ 10:00 / 15:00 ~ 01:00</span></li><li class="flex items-start gap-2"><i data-lucide="ticket" class="w-4 h-4 text-blue-500 mt-0.5"></i> <span>입장 시 입장 티켓이 필요합니다.</span></li></ul></div>
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="baby" class="w-4 h-4 text-slate-400"></i> 유아용품 무료 대여</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-pink-500 mt-0.5"></i> <span>장소: 1층 로비</span></li><li class="flex items-start gap-2"><i data-lucide="package-check" class="w-4 h-4 text-pink-500 mt-0.5"></i> <span>대여 품목: 어린이용 슬리퍼, 변기커버, 장난감, 그림책, 어린이용 디딤대, 기저귀 정리용품, 야뇨 매트</span></li></ul></div>
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="waves" class="w-4 h-4 text-slate-400"></i> 인피니티 풀</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>장소: 메인 건물 8층 (유료)</span></li><li class="flex items-start gap-2"><i data-lucide="clock" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>시간: 08:00 ~ 20:00 (시즌별 상이)</span></li><li class="flex items-start gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-sky-500 mt-0.5"></i> <span>문신이 있는 경우 래쉬가드 착용 필수.</span></li></ul></div>
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2"><i data-lucide="store" class="w-4 h-4 text-slate-400"></i> 편의시설</h3><ul class="space-y-2 text-sm text-slate-600"><li class="flex items-start gap-2"><i data-lucide="shopping-cart" class="w-4 h-4 text-green-500 mt-0.5"></i> <span>1층에 로손 편의점이 연결되어 있습니다.</span></li><li class="flex items-start gap-2"><i data-lucide="shirt" class="w-4 h-4 text-green-500 mt-0.5"></i> <span>코인 세탁실: 3층, 6층 등에 위치.</span></li></ul></div>
             </div>
         </div>
 
