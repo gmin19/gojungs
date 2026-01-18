@@ -21,8 +21,38 @@
         .day-tab.active { background-color: #3B82F6; color: white; border-color: #3B82F6; }
         .day-tab { transition: all 0.2s ease; }
         
-        /* 맵코드 스타일 */
-        .mapcode { font-family: monospace; font-size: 11px; background-color: #EFF6FF; color: #2563EB; padding: 2px 6px; border-radius: 4px; font-weight: bold; display: inline-flex; align-items: center; gap: 2px; margin-top: 4px; }
+        /* [수정됨] 맵코드 가독성 향상 (크기 확대) */
+        .mapcode { 
+            font-family: monospace; 
+            font-size: 13px; /* 크기 확대 */
+            background-color: #EFF6FF; 
+            color: #1D4ED8; 
+            padding: 4px 8px; 
+            border-radius: 6px; 
+            font-weight: 800; /* 굵게 */
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px; 
+            margin-top: 6px; 
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            border: 1px solid #DBEAFE;
+        }
+        .mapcode:active { background-color: #DBEAFE; }
+
+        /* 예약필수 뱃지 */
+        .badge-reservation {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            color: #DC2626;
+            background-color: #FEF2F2;
+            border: 1px solid #FECACA;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -85,13 +115,13 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-blue-600">06:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Incheon Airport Terminal 2" target="_blank" class="hover:text-blue-600">인천공항 2터미널 집결</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Incheon+Airport+Terminal+2" target="_blank" class="hover:text-blue-600 flex items-center gap-1">인천공항 2터미널 집결 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">대한항공 체크인 카운터: <strong>B, C</strong></p>
                         
                         <div class="bg-white border border-slate-200 rounded-lg p-3 mt-2 shadow-sm">
                             <h4 class="text-xs font-bold text-slate-700 mb-1 flex items-center gap-1"><i data-lucide="check-square" class="w-3 h-3 text-blue-500"></i> 한국 출발 체크</h4>
                             <ul class="space-y-1 text-xs text-slate-600">
-                                <li>• 여권 (유효기간 확인)</li>
+                                <li>• 여권 (유효기간 6개월 이상)</li>
                                 <li>• 포켓 와이파이/로밍 확인</li>
                                 <li>• 110v 돼지코 어댑터</li>
                                 <li>• 렌터카 예약 바우처 & 국제면허증</li>
@@ -135,9 +165,13 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/..." target="_blank" class="hover:text-blue-600">렌터카 인수</a></h3>
-                        <p class="text-slate-500 text-sm mt-1">유니버스 렌터카 셔틀 이동 및 인수</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <h3 class="text-lg font-bold text-slate-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                유니버스 렌터카 인수 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                            </a>
+                        </h3>
+                        <p class="text-slate-500 text-sm mt-1">공항 셔틀 탑승 후 영업소 이동</p>
+                        <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -148,9 +182,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:30</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Umikaji Terrace" target="_blank" class="hover:text-blue-600">우미카지 테라스</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Umikaji+Terrace" target="_blank" class="hover:text-blue-600 flex items-center gap-1">우미카지 테라스 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">공항 근처 하얀 테라스에서 바다 보며 산책</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 002 602*06')">MC: 33 002 602*06 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 002 602*06')">MC: 33 002 602*06 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -161,9 +195,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:30</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600">레쿠 오키나와 체크인</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">레쿠 오키나와 체크인 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">아메리칸 빌리지 내 위치, 짐 풀기</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -174,9 +208,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/American Village" target="_blank" class="hover:text-blue-600">아메리칸 빌리지</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=American+Village+Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">아메리칸 빌리지 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">주변 산책, 야경 감상 및 <strong>저녁 자유식</strong></p>
-                        <span class="mapcode" onclick="copyToClipboard('33 526 451*20')">MC: 33 526 451*20 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 526 451*20')">MC: 33 526 451*20 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
             </div>
@@ -206,9 +240,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">10:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Manzamo" target="_blank" class="hover:text-blue-600">만좌모</a></h3>
-                        <p class="text-slate-500 text-sm mt-1">코끼리 바위와 절벽 절경 감상</p>
-                        <span class="mapcode" onclick="copyToClipboard('206 312 097*55')">MC: 206 312 097*55 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Manzamo" target="_blank" class="hover:text-blue-600 flex items-center gap-1">만좌모 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
+                        <p class="text-slate-500 text-sm mt-1">코끼리 바위와 푸른 바다 절경 감상</p>
+                        <span class="mapcode" onclick="copyToClipboard('206 312 097*55')">MC: 206 312 097*55 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -219,9 +253,13 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">11:30</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Ufuya" target="_blank" class="hover:text-blue-600">백년고택 우후야 (점심)</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Ufuya+Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                백년고택 우후야 (점심) <span class="badge-reservation">예약필수</span> <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                            </a>
+                        </h3>
                         <p class="text-slate-500 text-sm mt-1">분위기 좋은 고택에서 즐기는 아구 돼지 요리</p>
-                        <span class="mapcode" onclick="copyToClipboard('206 745 056*67')">MC: 206 745 056*67 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('206 745 056*67')">MC: 206 745 056*67 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -232,9 +270,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Churaumi Aquarium" target="_blank" class="hover:text-blue-600">츄라우미 수족관</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Churaumi+Aquarium" target="_blank" class="hover:text-blue-600 flex items-center gap-1">츄라우미 수족관 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">고래상어와 오키짱 돌고래쇼 관람</p>
-                        <span class="mapcode" onclick="copyToClipboard('553 075 797')">MC: 553 075 797 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('553 075 797')">MC: 553 075 797 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -245,21 +283,22 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Kyoda Rest Area" target="_blank" class="hover:text-blue-600">쿄다 휴게소</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Kyoda+Rest+Area" target="_blank" class="hover:text-blue-600 flex items-center gap-1">쿄다 휴게소 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">옵빠 아이스크림 등 간식 타임</p>
-                        <span class="mapcode" onclick="copyToClipboard('206 476 706*66')">MC: 206 476 706*66 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('206 476 706*66')">MC: 206 476 706*66 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
                 <div class="flex gap-4 relative last-item">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
-                        <div class="bg-purple-100 text-purple-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="moon" class="w-5 h-5"></i></div>
+                        <div class="bg-purple-100 text-purple-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="home" class="w-5 h-5"></i></div>
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">18:00</span>
-                        <h3 class="text-lg font-bold text-slate-800">숙소 복귀 & 저녁 자유식</h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">18:30부터 자유롭게 저녁 식사 및 휴식</p>
+                        <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
             </div>
@@ -288,9 +327,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">10:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Southeast Botanical Gardens" target="_blank" class="hover:text-blue-600">동남식물원</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Southeast+Botanical+Gardens" target="_blank" class="hover:text-blue-600 flex items-center gap-1">동남식물원 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">이국적인 식물과 동물 먹이주기 체험</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 742 510*74')">MC: 33 742 510*74 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 742 510*74')">MC: 33 742 510*74 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -301,9 +340,11 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">12:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/AEON Mall Okinawa Rycom" target="_blank" class="hover:text-blue-600">이온몰 라이카무</a></h3>
-                        <p class="text-slate-500 text-sm mt-1">쇼핑 및 <strong>개별 점심 식사</strong> (푸드코트 등)</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 530 406*45')">MC: 33 530 406*45 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Aeon+Mall+Okinawa+Rycom" target="_blank" class="hover:text-blue-600 flex items-center gap-1">이온몰 라이카무 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
+                        <p class="text-slate-500 text-sm mt-1">쇼핑 및 <strong>개별 점심 식사</strong></p>
+                        <p class="text-blue-600 text-xs mt-1 bg-blue-50 px-2 py-1 rounded inline-block"><i data-lucide="info" class="w-3 h-3 inline"></i> 팁: 1층 대형 수족관 앞에서 만남</p>
+                        <br>
+                        <span class="mapcode" onclick="copyToClipboard('33 530 406*45')">MC: 33 530 406*45 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -314,9 +355,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Araha Beach" target="_blank" class="hover:text-blue-600">아라하 비치</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Araha+Beach" target="_blank" class="hover:text-blue-600 flex items-center gap-1">아라하 비치 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">해적선 놀이터가 있어 아이들이 놀기 좋습니다.</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 496 038*21')">MC: 33 496 038*21 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 496 038*21')">MC: 33 496 038*21 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -327,7 +368,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:00</span>
-                        <h3 class="text-lg font-bold text-slate-800">숙소 복귀 및 휴식</h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
+                        <p class="text-slate-500 text-sm mt-1">잠시 휴식 후 저녁 식사 이동</p>
+                        <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -338,9 +381,13 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">18:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Yakiniku Yumemaru Chatan" target="_blank" class="hover:text-blue-600">야키니쿠 유메마루 (저녁)</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Yakiniku+Yumemaru+Chatan" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                야키니쿠 유메마루 (저녁) <span class="badge-reservation">예약필수</span> <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                            </a>
+                        </h3>
                         <p class="text-slate-500 text-sm mt-1">맛있는 야키니쿠와 함께 저녁 식사</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 526 452*52')">MC: 33 526 452*52 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 526 452*52')">MC: 33 526 452*52 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
             </div>
@@ -369,9 +416,9 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">11:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/Okinawa World" target="_blank" class="hover:text-blue-600">오키나와 월드</a></h3>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=Okinawa+World" target="_blank" class="hover:text-blue-600 flex items-center gap-1">오키나와 월드 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
                         <p class="text-slate-500 text-sm mt-1">옥천동굴 탐험 및 에이서 공연 관람</p>
-                        <span class="mapcode" onclick="copyToClipboard('232 495 330*83')">MC: 232 495 330*83 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('232 495 330*83')">MC: 232 495 330*83 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -382,9 +429,15 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
-                        <h3 class="text-lg font-bold text-slate-800"><a href="http://googleusercontent.com/maps.google.com/iias Okinawa Toyosaki" target="_blank" class="hover:text-blue-600">이아스 오키나와 & 점심</a></h3>
-                        <p class="text-slate-500 text-sm mt-1">쇼핑몰 내 개별 식사 (옵션: 옆 어시장 방문)</p>
-                        <span class="mapcode" onclick="copyToClipboard('232 543 400*25')">MC: 232 543 400*25 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <h3 class="text-lg font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=iias+Okinawa+Toyosaki" target="_blank" class="hover:text-blue-600 flex items-center gap-1">이아스 오키나와 & 점심 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h3>
+                        <p class="text-slate-500 text-sm mt-1">쇼핑몰 내 개별 식사</p>
+                        <span class="mapcode" onclick="copyToClipboard('232 543 400*25')">MC: 232 543 400*25 <i data-lucide="copy" class="w-3 h-3"></i></span>
+                        
+                        <div class="bg-white border border-slate-200 p-2 rounded mt-2">
+                            <span class="text-xs font-bold text-slate-600 block mb-1">옵션: 이토만 어시장 (차로 3분)</span>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Itoman+Fish+Market" target="_blank" class="text-xs text-blue-600 font-bold hover:underline flex items-center gap-1">이토만 어시장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></a>
+                            <span class="mapcode" style="font-size: 11px;" onclick="copyToClipboard('232 484 136*78')">MC: 232 484 136*78 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        </div>
                     </div>
                 </div>
 
@@ -395,9 +448,13 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:00</span>
-                        <h3 class="text-lg font-bold text-slate-800">렌터카 반납</h3>
+                        <h3 class="text-lg font-bold text-slate-800">
+                            <a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                                유니버스 렌터카 반납 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
+                            </a>
+                        </h3>
                         <p class="text-slate-500 text-sm mt-1"><strong>주유 반납 불필요.</strong> 셔틀 타고 공항 이동.</p>
-                        <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                        <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
 
@@ -412,7 +469,7 @@
                         <div class="bg-white border border-slate-200 rounded-lg p-3 mt-2 shadow-sm">
                             <h4 class="text-xs font-bold text-slate-700 mb-1 flex items-center gap-1"><i data-lucide="check-square" class="w-3 h-3 text-indigo-500"></i> 귀국 준비 체크</h4>
                             <ul class="space-y-1 text-xs text-slate-600">
-                                <li>• 렌터카 반납 확인</li>
+                                <li>• 렌터카 반납 및 짐 확인</li>
                                 <li>• 체크인 & 수하물 위탁</li>
                                 <li>• 보안 검색 & 출국 심사</li>
                                 <li>• 면세점 (로이즈, 특산품) 쇼핑</li>
@@ -458,6 +515,11 @@
     <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+        <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
+    </div>
 
     <script src="common.js"></script>
     <script>
