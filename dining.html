@@ -12,7 +12,14 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         button:active, a:active { transform: scale(0.98); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
+        
+        /* 혜택 뱃지 스타일 */
+        .badge-benefit { background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; }
+        /* 음식 종류 뱃지 스타일 */
+        .badge-food { background-color: #F1F5F9; color: #475569; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -25,7 +32,7 @@
                         아메리칸 빌리지<br>
                         <span class="text-orange-400">미식</span> <span class="text-sky-400">가이드</span>
                     </h1>
-                    <p class="text-slate-400 text-xs mt-2">구글 평점 4.5 이상 검증된 맛집 리스트입니다.</p>
+                    <p class="text-slate-400 text-xs mt-2">평점 4.0+ & 리뷰 500+ 검증된 맛집 30선</p>
                 </div>
             </div>
         </div>
@@ -48,299 +55,404 @@
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
 
+        <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 mb-8 shadow-sm">
+            <h3 class="font-bold text-rose-800 text-lg mb-2 flex items-center gap-2">
+                <i data-lucide="credit-card" class="w-6 h-6 text-rose-600"></i> 호텔 카드키 특별 혜택
+            </h3>
+            <p class="text-sm text-slate-700 leading-relaxed">
+                <strong>레쿠 오키나와</strong> 또는 <strong>베셀 호텔 캄파나</strong>의 카드키를 제시하면 아래 <span class="badge-benefit">카드키 혜택</span> 뱃지가 있는 매장에서 특별 서비스를 받을 수 있습니다. (주문/결제 시 제시 필수)
+            </p>
+        </div>
+
         <div class="mb-12">
             <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-orange-500 pl-3 flex items-center justify-between">
-                든든한 식사 전문점
-                <span class="text-xs font-normal text-slate-400">평점 4.5+ / 리뷰 500+</span>
+                든든한 식사 (20선)
+                <span class="text-xs font-normal text-slate-400">레쿠 도보 기준</span>
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">블루 오션 스테이크</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">블루 오션 스테이크</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-sky-50 text-sky-600 text-[10px] px-2 py-0.5 rounded font-bold">오키나와 와규</span>
-                        [span_6](start_span)[span_7](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">웰컴 드링크[span_6](end_span)[span_7](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">스테이크</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 웰컴 드링크 1잔</span>
                     </div>
-                    [span_8](start_span)[span_9](start_span)<p class="text-xs text-slate-500 leading-relaxed">아메리칸 빌리지 해변을 조망하며 최상급 스테이크를 즐길 수 있습니다.[span_8](end_span)[span_9](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">오션뷰와 함께 즐기는 최상급 와규 스테이크.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Blue Ocean Steak" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">야키니쿠 리키오</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">야키니쿠 리키오</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-red-50 text-red-600 text-[10px] px-2 py-0.5 rounded font-bold">야키니쿠</span>
-                        [span_10](start_span)[span_11](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">드링크/디저트 택1[span_10](end_span)[span_11](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">야키니쿠</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크 or 디저트</span>
                     </div>
-                    [span_12](start_span)[span_13](start_span)<p class="text-xs text-slate-500 leading-relaxed">합리적인 가격으로 신선한 이시가키규를 맛볼 수 있는 야키니쿠 전문점입니다.[span_12](end_span)[span_13](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">합리적인 가격의 이시가키규 숯불 구이.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Yakiniku Rikio" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">발리우드 드림즈</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 3분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">발리우드 드림즈</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">인도 커리</span>
-                        [span_14](start_span)[span_15](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_14](end_span)[span_15](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">인도 커리</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
-                    [span_16](start_span)[span_17](start_span)<p class="text-xs text-slate-500 leading-relaxed">현지 셰프가 만드는 정통 인도식 카레와 난이 유명한 곳입니다.[span_16](end_span)[span_17](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">현지인이 인정하는 정통 인도 커리와 난.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Bollywood Dreams" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">아타비스 버거</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 6분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">솔리스 그란데</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-yellow-50 text-yellow-600 text-[10px] px-2 py-0.5 rounded font-bold">수제버거</span>
-                        [span_18](start_span)[span_19](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">토핑 1종 서비스[span_18](end_span)[span_19](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">이탈리안</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 아이스크림 서비스</span>
                     </div>
-                    [span_20](start_span)[span_21](start_span)<p class="text-xs text-slate-500 leading-relaxed">육즙이 풍부한 패티와 직접 구운 번으로 유명한 아메리칸 빌리지 대표 버거입니다.[span_20](end_span)[span_21](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">바다 바로 앞 테라스에서 즐기는 화덕 피자.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Solis Grande" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">키지무나 타코라이스</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">키지무나 (데포아일랜드)</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-green-50 text-green-600 text-[10px] px-2 py-0.5 rounded font-bold">오무타코</span>
-                        [span_22](start_span)[span_23](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">소프트 드링크 1잔[span_22](end_span)[span_23](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">타코라이스</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 소프트 드링크 1잔</span>
                     </div>
-                    [span_24](start_span)[span_25](start_span)<p class="text-xs text-slate-500 leading-relaxed">부드러운 계란이 올라간 오무타코 라이스의 원조 맛집입니다.[span_24](end_span)[span_25](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">오무타코(오므라이스+타코)의 원조 맛집.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Kijimuna Depot Island" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">아구노카쿠레가</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 12분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">아타비스 버거</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-pink-50 text-pink-600 text-[10px] px-2 py-0.5 rounded font-bold">아구 샤브샤브</span>
-                        [span_26](start_span)[span_27](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_26](end_span)[span_27](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">수제버거</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 토핑 1개 추가</span>
                     </div>
-                    [span_28](start_span)[span_29](start_span)<p class="text-xs text-slate-500 leading-relaxed">오키나와 특산 흑돼지인 아구 샤브샤브 전문점입니다.[span_28](end_span)[span_29](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">육즙 가득한 패티가 일품인 수제버거.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Atabii's" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">스테이크 하우스 88</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 3분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">카메젠 식당</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-sky-50 text-sky-600 text-[10px] px-2 py-0.5 rounded font-bold">뉴욕 스트립</span>
-                        [span_30](start_span)[span_31](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">드링크바 무료[span_30](end_span)[span_31](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">오키나와 소바</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 5% 할인</span>
                     </div>
-                    [span_32](start_span)[span_33](start_span)<p class="text-xs text-slate-500 leading-relaxed">오키나와에서 가장 유명한 정통 스테이크 하우스 중 하나입니다.[span_32](end_span)[span_33](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">레트로한 분위기에서 즐기는 소바와 정식.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Kamezen Shokudo" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">피제리아 바 아리차</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 6분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">스테이크 하우스 88</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded font-bold">화덕 피자</span>
-                        [span_34](start_span)[span_35](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">드링크 200엔 할인[span_34](end_span)[span_35](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">스테이크</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크바 무료</span>
                     </div>
-                    [span_36](start_span)[span_37](start_span)<p class="text-xs text-slate-500 leading-relaxed">바다 바로 옆에서 이탈리아 정통 화덕 피자를 즐길 수 있습니다.[span_36](end_span)[span_37](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">오키나와 정통 스테이크 체인의 미하마점.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=스테이크하우스88" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">카메젠 식당</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">피제리아 바 아리차</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-indigo-50 text-indigo-600 text-[10px] px-2 py-0.5 rounded font-bold">오키나와 소바</span>
-                        [span_38](start_span)[span_39](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 5% 할인[span_38](end_span)[span_39](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">화덕 피자</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 드링크 할인</span>
                     </div>
-                    [span_40](start_span)[span_41](start_span)<p class="text-xs text-slate-500 leading-relaxed">빈티지한 쇼와풍 인테리어에서 로컬 소바를 맛볼 수 있습니다.[span_40](end_span)[span_41](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">해변가에서 즐기는 가성비 최고의 피자.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Pizzeria Bar Ariccia" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">점보 스테이크 HAN'S</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">아구노카쿠레가</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-sky-50 text-sky-600 text-[10px] px-2 py-0.5 rounded font-bold">T-본 스테이크</span>
-                        [span_42](start_span)[span_43](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_42](end_span)[span_43](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">아구 샤브샤브</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
-                    [span_44](start_span)[span_45](start_span)<p class="text-xs text-slate-500 leading-relaxed">합리적인 가격으로 거대한 점보 스테이크를 제공하는 곳입니다.[span_44](end_span)[span_45](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">오키나와 흑돼지 샤브샤브 전문점.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Agu no Kakurega" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">솔리스 그란데</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 3분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">점보 스테이크 HAN'S</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-green-50 text-green-600 text-[10px] px-2 py-0.5 rounded font-bold">이탈리안</span>
-                        [span_46](start_span)[span_47](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">아이스크림 3종 증정[span_46](end_span)[span_47](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">스테이크</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
-                    [span_48](start_span)[span_49](start_span)<p class="text-xs text-slate-500 leading-relaxed">식사 주문 고객에 한해 아이스크림 디저트를 서비스합니다.[span_48](end_span)[span_49](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">푸짐한 양의 티본 스테이크가 인기.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Jumbo Steak Hans" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">포크 타마고 오니기리</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">차탄 하버 브루어리</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-yellow-50 text-yellow-600 text-[10px] px-2 py-0.5 rounded font-bold">스팸 무스비</span>
-                        <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">아침 대용 추천</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">수제 맥주</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
-                    <p class="text-xs text-slate-500 leading-relaxed">오키나와식 주먹밥으로 줄 서서 먹는 최고 인기 매장입니다.</p>
+                    <p class="text-xs text-slate-500 mb-3">직접 양조한 맥주와 고급스러운 그릴 요리.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Chatan Harbor Brewery" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">하마야 소바</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 15분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">자이 타이 (Jai Thai)</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-indigo-50 text-indigo-600 text-[10px] px-2 py-0.5 rounded font-bold">수부이 소바</span>
-                        <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">현지인 맛집</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">태국 요리</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 소프트 드링크 1잔</span>
                     </div>
-                    <p class="text-xs text-slate-500 leading-relaxed">담백하고 맑은 국물이 일품인 로컬 소바 명소입니다.</p>
+                    <p class="text-xs text-slate-500 mb-3">태국 정부 인증을 받은 정통 타이 레스토랑.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Jai Thai" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">미하마 톤톤 잭키</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">카프리쵸사</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-rose-50 text-rose-600 text-[10px] px-2 py-0.5 rounded font-bold">돈카츠</span>
-                        [span_50](start_span)[span_51](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_50](end_span)[span_51](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">이탈리안</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크 1잔 무료</span>
                     </div>
-                    [span_52](start_span)[span_53](start_span)<p class="text-xs text-slate-500 leading-relaxed">바삭한 흑돼지 돈카츠 전문점으로 알코올 제외 10% 할인됩니다.[span_52](end_span)[span_53](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">푸짐한 양의 파스타가 맛있는 패밀리 레스토랑.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Capricciosa Mihama" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">라멘 가류야</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">츠케멘</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">미하마 톤톤 잭키</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">돈카츠</span></div>
+                    <p class="text-xs text-slate-500 mb-3">인생 돈카츠라 불리는 두툼한 식감.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Ton Ton Jacky" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Sushi Zen (스시 젠)</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">정통 초밥</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">하마야 소바</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 15분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">소바</span></div>
+                    <p class="text-xs text-slate-500 mb-3">맑은 국물과 연골 소바가 유명한 노포.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Hamaya Soba" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Capricciosa (카프리쵸사)</h4>
-                    [span_54](start_span)[span_55](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">드링크 1잔 무료[span_54](end_span)[span_55](end_span)</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">스시 젠 (Sushi Zen)</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">스시</span></div>
+                    <p class="text-xs text-slate-500 mb-3">장인의 손길이 느껴지는 정통 초밥집.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Sushi Zen" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Jai Thai (자이 타이)</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">태국 요리</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">라멘 가류야</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">라멘/츠케멘</span></div>
+                    <p class="text-xs text-slate-500 mb-3">진한 닭육수 베이스의 츠케멘 맛집.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Ramen Garyuya" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">차탄 하버 브루어리</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">수제 맥주</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">더 칼리프 키친</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">퓨전 브런치</span></div>
+                    <p class="text-xs text-slate-500 mb-3">바다 전망이 훌륭한 캘리포니아 스타일 다이닝.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/The Calif Kitchen" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">The Calif Kitchen</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">퓨전 일식</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">고디스 (Gordie's)</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">수제버거</span></div>
+                    <p class="text-xs text-slate-500 mb-3">미국 빈티지 감성의 숯불 패티 버거.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Gordies Hamburger" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
             </div>
         </div>
 
-        <div>
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-sky-500 pl-3">디저트 & 카페</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="mb-12">
+            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-sky-500 pl-3">디저트 & 카페 (10선)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">시사이드 카페 하논</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">시사이드 카페 하논</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-pink-50 text-pink-600 text-[10px] px-2 py-0.5 rounded font-bold">팬케이크</span>
-                        [span_56](start_span)[span_57](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">아이스크림 서비스[span_56](end_span)[span_57](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">팬케이크</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 아이스크림 서비스</span>
                     </div>
-                    [span_58](start_span)[span_59](start_span)<p class="text-xs text-slate-500 leading-relaxed">음식 주문 시 투숙객 모두에게 아이스크림을 서비스합니다.[span_58](end_span)[span_59](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">바다를 보며 먹는 폭신한 팬케이크.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Seaside Cafe Hanon" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">지바고 커피 로스터리</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 6분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">지바고 커피 로스터리</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-stone-50 text-stone-600 text-[10px] px-2 py-0.5 rounded font-bold">로스터리 커피</span>
-                        [span_60](start_span)[span_61](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_60](end_span)[span_61](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">스페셜티 커피</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
-                    [span_62](start_span)[span_63](start_span)<p class="text-xs text-slate-500 leading-relaxed">레쿠 오키나와 투숙객에 한해 10% 할인이 적용됩니다.[span_62](end_span)[span_63](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">힙한 분위기의 오션뷰 로스터리 카페.</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=지바고커피웍스 Zhyvago" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">KAME ANDAGI</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 1분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">KAME ANDAGI</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 1분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-amber-50 text-amber-600 text-[10px] px-2 py-0.5 rounded font-bold">사타안다기</span>
-                        [span_64](start_span)[span_65](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">안다기 1개 증정[span_64](end_span)[span_65](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">사타안다기</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 안다기 1개 증정</span>
                     </div>
-                    [span_66](start_span)[span_67](start_span)<p class="text-xs text-slate-500 leading-relaxed">1,000엔 이상 구매 시 갓 튀긴 안다기를 증정합니다.[span_66](end_span)[span_67](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">즉석에서 튀겨낸 오키나와식 도넛.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Kame Andagi" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800">블루씰 아이스크림</h4>
-                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">도보 4분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">블루씰 데포아일랜드점</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 4분</span>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                        <span class="bg-sky-50 text-sky-600 text-[10px] px-2 py-0.5 rounded font-bold">자색고구마맛</span>
-                        [span_68](start_span)[span_69](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">주니어스쿱 서비스[span_68](end_span)[span_69](end_span)</span>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">아이스크림</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 사이즈업 혜택</span>
                     </div>
-                    [span_70](start_span)[span_71](start_span)<p class="text-xs text-slate-500 leading-relaxed">싱글 가격으로 더블(주니어스쿱 추가)을 즐길 수 있습니다.[span_70](end_span)[span_71](end_span)</p>
+                    <p class="text-xs text-slate-500 mb-3">오키나와 필수! 싱글 가격에 주니어 스쿱 추가.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Blue Seal Depot" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Vongo & Anchor</h4>
-                    [span_72](start_span)<span class="bg-orange-50 text-orange-600 text-[10px] px-2 py-0.5 rounded font-bold">결제 10% 할인[span_72](end_span)</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">봉고 앤 앵커</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">카페/샌드위치</span>
+                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">유기농 메뉴와 감각적인 인테리어.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Vongo Anchor" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Timeless Chocolate</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">빈투바 초콜릿</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">타임리스 초콜릿</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">수제 초콜릿</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">카카오 본연의 맛을 살린 빈투바 초콜릿.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Timeless Chocolate" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">WaGyu Cafe Kapuka</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">브런치 카페</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">홀드 바이 핸드</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">감자튀김/소프트</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">단짠단짠의 정석, 감자튀김과 아이스크림.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Hold By Hand" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Mylo Plus Cafe</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">오션뷰 디저트</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">마일로 플러스 카페</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">스무디볼</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">사진 찍기 좋은 예쁜 스무디와 오션뷰.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/Mylo Plus" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">R Cafe</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">해변 카페</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">와규 카페 카푸카</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">브런치</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">화려한 비주얼의 브런치와 샐러드.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/WaGyu Cafe Kapuka" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
+
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-2">Chatan Coffee</h4>
-                    <span class="bg-slate-50 text-slate-600 text-[10px] px-2 py-0.5 rounded font-bold">핸드드립</span>
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-slate-800 text-lg">R Cafe</h4>
+                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="badge-food">카페</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">해변 산책로에 위치한 여유로운 카페.</p>
+                    <a href="http://googleusercontent.com/maps.google.com/R Cafe" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
                 </div>
             </div>
-        </div>
-
-        <div class="mt-12 p-5 bg-slate-100 rounded-2xl border border-slate-200">
-            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                <i data-lucide="info" class="w-5 h-5 text-slate-600"></i> 미식 가이드 용어 설명
-            </h3>
-            <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
-                <li><strong>아구 (Agu)</strong>: 오키나와 고유의 흑돼지 품종으로, 일반 돼지보다 단맛이 강하고 콜레스테롤이 낮은 고급 식재료입니다.</li>
-                <li><strong>아와모리 (Awamori)</strong>: 태국산 쌀과 흑누룩을 사용하여 만든 오키나와의 전통 증류주입니다.</li>
-                <li><strong>사타안다기 (Sata Andagi)</strong>: 밀가루와 설탕 등을 섞어 튀겨낸 오키나와식 도넛으로 겉은 바삭하고 속은 폭신한 것이 특징입니다.</li>
-                <li><strong>오무타코 (Omu-Taco)</strong>: 타코 라이스 위에 부드러운 오므라이스 계란을 얹은 퓨전 요리입니다.</li>
-            </ul>
         </div>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
     </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
 
     <script src="common.js"></script>
 </body>

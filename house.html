@@ -8,48 +8,13 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-color: #F8FAFC; 
-            color: #334155; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-        
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        button:active, a:active {
-            transform: scale(0.98);
-        }
-
-        /* Top 버튼 스타일 */
-        .top-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 50;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .top-btn.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        /* 네비게이션 활성화 스타일 */
-        .nav-link.active {
-            color: #EA580C; 
-            border-bottom-color: #EA580C;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        button:active, a:active { transform: scale(0.98); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -66,41 +31,21 @@
                 </div>
             </div>
         </div>
-        
         <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
-        <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
     </header>
 
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto">
             <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
-                </a>
-                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
-                </a>
-                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
-                </a>
-                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
-                </a>
-                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
-                </a>
-                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
-                </a>
-                <a href="house.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
-                </a>
-                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="car" class="w-4 h-4"></i> 렌트카
-                </a>
-                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
-                </a>
+                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표</a>
+                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드</a>
+                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="palmtree" class="w-4 h-4"></i> 관광지</a>
+                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="utensils" class="w-4 h-4"></i> 맛집</a>
+                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑</a>
+                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="scroll" class="w-4 h-4"></i> 십계명</a>
+                <a href="house.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="hotel" class="w-4 h-4"></i> 숙소</a>
+                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="car" class="w-4 h-4"></i> 렌트카</a>
+                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처</a>
             </div>
         </div>
     </nav>
@@ -154,7 +99,7 @@
                     </li>
                     <li class="flex items-start gap-2">
                         <i data-lucide="ticket" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
-                        <span>입장 시 입장 티켓이 필요합니다.</span>
+                        <span>입장 시 조식권 지참 필수 (성인/소인)</span>
                     </li>
                 </ul>
             </div>
@@ -166,11 +111,95 @@
                 <ul class="space-y-2 text-sm text-slate-600">
                     <li class="flex items-start gap-2">
                         <i data-lucide="map-pin" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
-                        <span>장소: 메인 건물 8층</span>
+                        <span>장소: 메인 건물 8층 (천연온천)</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <i data-lucide="clock" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
                         <span>시간: 06:00 ~ 10:00 / 15:00 ~ 01:00</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="info" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
+                        <span>투숙객 무료 이용 (객실 타월 지참)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="waves" class="w-4 h-4 text-slate-400"></i> 인피니티 풀 (유료)
+                </h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>장소: 메인 건물 8층 (옥상)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>기간: 3월 20일 ~ 10월 31일 (예정)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>시간: 08:00 ~ 20:00 (시기에 따라 변동)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="credit-card" class="w-4 h-4 text-sky-500 mt-0.5"></i> 
+                        <span>요금: 성인 2,000엔 / 소인 1,000엔 (1일)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="baby" class="w-4 h-4 text-slate-400"></i> 어린이 용품 대여
+                </h3>
+                <p class="text-xs text-slate-500 mb-2">* 수량 한정, 프론트에 사전 문의 필요</p>
+                <div class="grid grid-cols-2 gap-2 text-sm text-slate-600">
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 베이비 가드
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 아기 침대
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 유모차
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 기저귀 쓰레기통
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 아기 욕조
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded">
+                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i> 어린이 발받침
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-2">
+                    <i data-lucide="columns" class="w-4 h-4 text-slate-400"></i> 편의 시설
+                </h3>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="washing-machine" class="w-4 h-4 text-slate-500 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-slate-700">코인 세탁실</span>
+                            <p class="text-xs text-slate-400">24시간 이용 가능 (세제 자동 투입)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="cup-soda" class="w-4 h-4 text-slate-500 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-slate-700">자판기 & 제빙기</span>
+                            <p class="text-xs text-slate-400">각 층 엘리베이터 홀 근처</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="microwave" class="w-4 h-4 text-slate-500 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-slate-700">전자레인지</span>
+                            <p class="text-xs text-slate-400">공용 공간 비치 (이유식 데우기 등)</p>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -8,48 +8,13 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-color: #F8FAFC; 
-            color: #334155; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-        
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        /* Top 버튼 스타일 */
-        .top-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 50;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .top-btn.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        /* 네비게이션 활성화 스타일 */
-        .nav-link.active {
-            color: #EA580C; 
-            border-bottom-color: #EA580C;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        button:active, a:active { transform: scale(0.98); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -59,14 +24,13 @@
             <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
-                        행복한 여행을 위한<br>
-                        <span class="text-orange-400">여행</span> <span class="text-sky-400">십계명</span>
+                        우리 가족<br>
+                        <span class="text-orange-400">행복 여행</span> <span class="text-sky-400">십계명</span>
                     </h1>
-                    <p class="text-slate-400 text-xs mt-2">서로 배려하고 즐거운 추억을 만드는 약속</p>
+                    <p class="text-slate-400 text-xs mt-2">서로 배려하고 사랑만 남기는 여행 약속</p>
                 </div>
             </div>
         </div>
-        
         <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
         <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
     </header>
@@ -74,33 +38,15 @@
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto">
             <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
-                </a>
-                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
-                </a>
-                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
-                </a>
-                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
-                </a>
-                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
-                </a>
-                <a href="decalogue.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
-                </a>
-                <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
-                </a>
-                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="car" class="w-4 h-4"></i> 렌트카
-                </a>
-                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
-                </a>
+                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표</a>
+                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드</a>
+                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="palmtree" class="w-4 h-4"></i> 관광지</a>
+                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="utensils" class="w-4 h-4"></i> 맛집</a>
+                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑</a>
+                <a href="decalogue.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="scroll" class="w-4 h-4"></i> 십계명</a>
+                <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="hotel" class="w-4 h-4"></i> 숙소</a>
+                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="car" class="w-4 h-4"></i> 렌트카</a>
+                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처</a>
             </div>
         </div>
     </nav>
@@ -111,80 +57,80 @@
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">1</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">긍정적인 마음가짐 갖기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">예상치 못한 상황도 여행의 일부로 받아들이고 웃으며 넘깁니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">아프면 참지 말고 바로 말하기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">건강이 최우선! 컨디션이 안 좋으면 즉시 공유하고 쉬어갑니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">2</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">서로의 의견 존중하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">가고 싶은 곳이나 먹고 싶은 것이 다를 때 서로 조금씩 양보합니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">"덥다, 배고프다, 힘들다" 짜증 금지</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">부정적인 말보다는 "시원한 거 먹자!"처럼 긍정적으로 표현합니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">3</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">감사 표현 아끼지 않기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">운전하는 사람, 일정을 짠 사람에게 "고마워"라고 말해줍니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">운전기사(아빠)에게 감사하기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">목적지에 도착할 때마다 "운전하느라 고생했어, 고마워요" 말해주기.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">4</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">시간 약속 잘 지키기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">단체 행동 시 정해진 출발 시간을 지켜 서로 기다리지 않게 합니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">음식 투정하지 않고 맛있게 먹기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">입맛에 안 맞아도 "이것도 추억이다" 생각하며 웃으며 넘깁니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">5</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">불평 대신 대안 찾기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">음식이 입에 안 맞거나 줄이 길 때 짜증보다는 다른 즐거움을 찾습니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">서로 인생샷 열정적으로 찍어주기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">귀찮아하지 말고 서로의 가장 예쁜 모습을 남겨줍니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">6</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">건강 관리 유의하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">무리한 일정보다는 컨디션에 맞춰 휴식을 취하며 체력을 조절합니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">쇼핑할 때 재촉하지 않기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">가족이 물건을 고를 때 "빨리 가자" 하지 않고 느긋하게 기다려줍니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">7</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">현지 문화 존중하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">에티켓을 지키고 공공장소에서 예의를 갖추어 한국인의 품격을 유지합니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">스마트폰보다 가족 얼굴 보기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">이동 중이나 식사 시간에는 폰을 내려두고 대화를 많이 합니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">8</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">사진보다는 눈으로 담기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">스마트폰 렌즈를 통해서만 세상을 보지 말고 지금 이 순간을 만끽합니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">하루 3번 "사랑해" 표현하기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">쑥스러워하지 말고 아침, 점심, 저녁에 사랑을 표현합니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">9</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">준비물 꼼꼼히 챙기기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">자신의 짐은 스스로 챙기고, 공유 물품은 사용 후 제자리에 둡니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">계획대로 안 돼도 서로 탓하지 않기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">길을 잃거나 날씨가 안 좋아도 누구의 잘못도 아닙니다. 함께라서 좋습니다.</p>
                 </div>
             </div>
 
             <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
                 <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">10</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">오늘의 행복을 내일로 미루지 않기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">지금을 충분히 즐기고 사랑하며 최고의 추억을 만들어갑니다.</p>
+                    <h3 class="font-bold text-slate-800 text-lg">이 순간, 함께함에 감사하기</h3>
+                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">지금 우리 가족이 건강하게 여행할 수 있음에 감사합니다.</p>
                 </div>
             </div>
         </div>
