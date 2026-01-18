@@ -16,17 +16,17 @@
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
         
-        /* [NEW] 가독성 개선된 면세 뱃지 스타일 */
+        /* 가독성 개선된 면세 뱃지 스타일 */
         .badge-taxfree {
             background-color: #e11d48; /* Rose-600 */
             color: white;
             font-weight: 800;
-            font-size: 11px;
-            padding: 4px 8px;
-            border-radius: 6px;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 4px;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             letter-spacing: -0.5px;
         }
@@ -39,10 +39,10 @@
             <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
-                        관광지 &<br>
-                        <span class="text-orange-400">쇼핑</span> <span class="text-sky-400">가이드</span>
+                        지역별 관광지 &<br>
+                        <span class="text-orange-400">쇼핑</span> <span class="text-sky-400">핫플레이스</span>
                     </h1>
-                    <p class="text-slate-400 text-xs mt-2">필수 명소와 면세 꿀팁을 한눈에 확인하세요.</p>
+                    <p class="text-slate-400 text-xs mt-2">맵코드와 주차 정보까지 완벽 정리</p>
                 </div>
             </div>
         </div>
@@ -67,76 +67,104 @@
 
         <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100 mb-8 shadow-sm">
             <h3 class="font-bold text-indigo-800 text-lg mb-3 flex items-center gap-2">
-                <i data-lucide="receipt" class="w-5 h-5"></i> 일본 면세(Tax-Free) 체크포인트
+                <i data-lucide="receipt" class="w-5 h-5"></i> 면세(Tax-Free) 체크포인트
             </h3>
             <ul class="space-y-2 text-sm text-indigo-700">
                 <li class="flex items-start gap-2">
                     <i data-lucide="check" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
-                    <span><strong>대상 금액:</strong> 세금 포함 <span class="text-red-600 font-bold underline decoration-red-300">5,500엔 이상</span> 구매 시</span>
+                    <span><strong>기준:</strong> 세금 포함 <span class="text-red-600 font-bold underline decoration-red-300">5,500엔 이상</span> 구매 시</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <i data-lucide="check" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
-                    <span><strong>준비물:</strong> <span class="text-red-600 font-bold">여권 원본</span> (입국 스티커 필수)</span>
+                    <span><strong>필수:</strong> <span class="text-red-600 font-bold">여권 원본</span> (입국 스티커 확인)</span>
                 </li>
             </ul>
         </div>
-
-        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">주요 관광지</h2>
         
-        <div class="space-y-8">
-            <div>
+        <div class="space-y-10">
+            <section>
                 <h3 class="font-bold text-lg text-emerald-700 mb-3 flex items-center gap-2 border-b border-emerald-100 pb-2">
-                    <i data-lucide="trees" class="w-5 h-5"></i> 북부 (얀바루)
+                    <i data-lucide="trees" class="w-5 h-5"></i> 북부 (자연과 힐링)
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="hover:text-blue-600 flex items-center gap-1">츄라우미 수족관 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
+                            <h4 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="hover:text-blue-600 flex items-center gap-1">츄라우미 수족관 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('553 075 797')">MC: 553 075 797</button>
                         </div>
-                        <p class="text-sm text-slate-500">거대한 수조의 고래상어를 만날 수 있는 세계적인 수족관입니다.</p>
+                        <p class="text-sm text-slate-500">거대한 수조의 고래상어는 오키나와 여행의 필수 코스입니다.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start mb-2"><h4 class="font-bold">코우리 대교 & 섬</h4><button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('485 693 485*06')">MC: 485 693 485*06</button></div><p class="text-sm text-slate-500">에메랄드빛 바다 위를 달리는 드라이브 코스입니다.</p></div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start mb-2"><h4 class="font-bold">나고 파인애플 파크</h4><button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 716 467*82')">MC: 206 716 467*82</button></div><p class="text-sm text-slate-500">무인 카트를 타고 파인애플 농장을 탐험합니다.</p></div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">코우리 대교 & 섬</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('485 693 485*06')">MC: 485 693 485*06</button>
+                        </div>
+                        <p class="text-sm text-slate-500">에메랄드빛 바다 위를 달리는 환상적인 드라이브 코스입니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">나고 파인애플 파크</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 716 467*82')">MC: 206 716 467*82</button>
+                        </div>
+                        <p class="text-sm text-slate-500">귀여운 무인 카트를 타고 파인애플 농장을 탐험해보세요.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">네오 파크 오키나와</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 653 842*55')">MC: 206 653 842*55</button>
+                        </div>
+                        <p class="text-sm text-slate-500">새와 동물들을 가까이서 만나고 기차를 탈 수 있어 아이들에게 인기입니다.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <h3 class="font-bold text-lg text-orange-700 mb-3 flex items-center gap-2 border-b border-orange-100 pb-2">
-                    <i data-lucide="map" class="w-5 h-5"></i> 중부
+                    <i data-lucide="map" class="w-5 h-5"></i> 중부 (이국적인 매력)
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=만좌모" target="_blank" class="hover:text-blue-600 flex items-center gap-1">만좌모 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
+                            <h4 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지" target="_blank" class="hover:text-blue-600 flex items-center gap-1">아메리칸 빌리지 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 526 451*20')">MC: 33 526 451*20</button>
+                        </div>
+                        <p class="text-sm text-slate-500">쇼핑, 맛집, 야경이 어우러진 대형 복합 리조트 타운입니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">만좌모</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 312 097*55')">MC: 206 312 097*55</button>
                         </div>
-                        <p class="text-sm text-slate-500">코끼리 얼굴 모양의 절벽과 푸른 바다가 어우러진 명소입니다.</p>
+                        <p class="text-sm text-slate-500">코끼리 얼굴 모양의 침식 절벽과 푸른 바다의 조화가 절경입니다.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start mb-2"><h4 class="font-bold">아메리칸 빌리지</h4><button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 526 451*20')">MC: 33 526 451*20</button></div><p class="text-sm text-slate-500">이국적인 분위기의 대형 복합 단지입니다.</p></div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">잔파곶 등대</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('1005 685 326*43')">MC: 1005 685 326*43</button>
+                        </div>
+                        <p class="text-sm text-slate-500">웅장한 절벽과 하얀 등대가 있는 오키나와 최서단 곶입니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">류큐무라</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 033 065*25')">MC: 206 033 065*25</button>
+                        </div>
+                        <p class="text-sm text-slate-500">오키나와 전통 가옥과 문화를 체험할 수 있는 민속촌입니다.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <h3 class="font-bold text-lg text-rose-700 mb-3 flex items-center gap-2 border-b border-rose-100 pb-2">
-                    <i data-lucide="landmark" class="w-5 h-5"></i> 남부
+                    <i data-lucide="landmark" class="w-5 h-5"></i> 남부 (나하 & 역사)
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="hover:text-blue-600 flex items-center gap-1">오키나와 월드 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
-                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('232 495 330*83')">MC: 232 495 330*83</button>
-                        </div>
-                        <p class="text-sm text-slate-500">거대한 종유동굴과 전통 문화를 즐기는 테마파크입니다.</p>
-                    </div>
-
                     <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-md ring-1 ring-slate-100">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold"><a href="https://www.google.com/maps/search/?api=1&query=오키나와국제거리" target="_blank" class="hover:text-blue-600 flex items-center gap-1">국제거리 (Kokusai Dori) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
+                            <h4 class="font-bold text-slate-800"><a href="https://www.google.com/maps/search/?api=1&query=오키나와국제거리" target="_blank" class="hover:text-blue-600 flex items-center gap-1">국제거리 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></a></h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 157 382*41')">MC: 33 157 382*41</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-3">나하 시내 중심가로 다양한 상점과 맛집이 모여 있습니다.</p>
-                        
+                        <p class="text-sm text-slate-500 mb-3">기념품 가게와 맛집이 즐비한 나하 최대 번화가입니다.</p>
                         <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
                             <div class="flex justify-between items-center mb-1">
                                 <span class="text-xs font-bold text-slate-700 flex items-center gap-1"><i data-lucide="car" class="w-3 h-3"></i> 추천 주차장</span>
@@ -148,84 +176,112 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="bg-white p-4 rounded-xl border border-slate-200"><div class="flex justify-between items-start mb-2"><h4 class="font-bold">우미카지 테라스</h4><button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 002 602*06')">MC: 33 002 602*06</button></div><p class="text-sm text-slate-500">공항 근처 세나가섬에 위치한 지중해풍 단지입니다.</p></div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">오키나와 월드</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('232 495 330*83')">MC: 232 495 330*83</button>
+                        </div>
+                        <p class="text-sm text-slate-500">동양 최대 종유동굴인 '옥천동굴'과 전통 공예 마을이 있습니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">우미카지 테라스</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 002 602*06')">MC: 33 002 602*06</button>
+                        </div>
+                        <p class="text-sm text-slate-500">공항 근처, 비행기 이착륙을 보며 즐기는 하얀 테라스 상점가입니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">슈리성 공원</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 161 526*66')">MC: 33 161 526*66</button>
+                        </div>
+                        <p class="text-sm text-slate-500">류큐 왕국의 역사가 깃든 세계문화유산입니다.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <h3 class="font-bold text-lg text-indigo-700 mb-3 flex items-center gap-2 border-b border-indigo-100 pb-2">
-                    <i data-lucide="shopping-bag" class="w-5 h-5"></i> 대형 쇼핑몰
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i> 대형 쇼핑몰 & 아울렛
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">이온몰 라이카무</h4>
+                            <h4 class="font-bold text-slate-800">이온몰 라이카무 (중부)</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 530 406*45')">MC: 33 530 406*45</button>
                         </div>
                         <p class="text-sm text-slate-500 mb-2">오키나와 최대 규모의 리조트형 몰입니다.</p>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 2층/3층 카운터</div>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 2F/3F</div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">파르코 시티</h4>
+                            <h4 class="font-bold text-slate-800">파르코 시티 (중부)</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 341 124*74')">MC: 33 341 124*74</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-2">나하 인근 최신 몰로 1층에 통합 면세 카운터가 있습니다.</p>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 1층 통합 카운터</div>
+                        <p class="text-sm text-slate-500 mb-2">나하 인근, 바다가 보이는 최신 대형 쇼핑몰입니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 1F 통합카운터</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">아시비나 아울렛 (남부)</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('232 544 452*22')">MC: 232 544 452*22</button>
+                        </div>
+                        <p class="text-sm text-slate-500 mb-2">공항 근처, 명품 브랜드 및 스포츠 의류 아울렛입니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 매장별 상이</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-slate-800">이아스 오키나와 (남부)</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('232 543 400*25')">MC: 232 543 400*25</button>
+                        </div>
+                        <p class="text-sm text-slate-500 mb-2">DMM 카리유시 수족관이 있는 최신 복합 시설입니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 매장별 상이</div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div>
+            <section>
                 <h3 class="font-bold text-lg text-yellow-700 mb-3 flex items-center gap-2 border-b border-yellow-100 pb-2">
-                    <i data-lucide="package" class="w-5 h-5"></i> 편집샵 & 잡화
+                    <i data-lucide="gift" class="w-5 h-5"></i> 잡화 & 기념품
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">메가 돈키호테 기노완</h4>
+                            <h4 class="font-bold text-slate-800">메가 돈키호테 기노완</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 434 024*44')">MC: 33 434 024*44</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-2">주차가 편리한 대형 지점입니다.</p>
+                        <p class="text-sm text-slate-500 mb-2">국제거리점보다 주차가 편리하고 넓은 매장입니다.</p>
                         <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 전용 계산대</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">만화창고 (나하점)</h4>
+                            <h4 class="font-bold text-slate-800">만화창고 (나하점)</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 064 552*55')">MC: 33 064 552*55</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-2">피규어, 게임 등 보물찾기 가능한 중고샵입니다.</p>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 여권 지참 필수</div>
+                        <p class="text-sm text-slate-500 mb-2">피규어, 게임, 의류 등 보물찾기가 가능한 중고샵입니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 가능</div>
                     </div>
-                </div>
-            </div>
-
-             <div>
-                <h3 class="font-bold text-lg text-pink-700 mb-3 flex items-center gap-2 border-b border-pink-100 pb-2">
-                    <i data-lucide="gift" class="w-5 h-5"></i> 기념품 & 액세서리
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">오카시고텐 (요미탄점)</h4>
+                            <h4 class="font-bold text-slate-800">오카시고텐 (요미탄점)</h4>
                             <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('206 315 289*63')">MC: 206 315 289*63</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-2">자색고구마 타르트 원조 매장입니다.</p>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 전용 카운터</div>
+                        <p class="text-sm text-slate-500 mb-2">자색고구마 타르트 원조 매장으로 선물 구매에 좋습니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 가능</div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold">류큐 유리 마을</h4>
-                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('232 336 226*77')">MC: 232 336 226*77</button>
+                            <h4 class="font-bold text-slate-800">야치문 거리 (도자기)</h4>
+                            <button class="text-xs bg-slate-100 px-2 py-1 rounded font-mono text-blue-600 font-bold" onclick="copyToClipboard('33 158 123*44')">MC: 33 158 123*44</button>
                         </div>
-                        <p class="text-sm text-slate-500 mb-2">수제 유리 공예품을 구매할 수 있습니다.</p>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 직원 문의</div>
+                        <p class="text-sm text-slate-500 mb-2">오키나와 전통 도자기 공방이 모여있는 감성적인 거리입니다.</p>
+                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> TAX FREE: 매장별 상이</div>
                     </div>
                 </div>
-            </div>
-
+            </section>
         </div>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>

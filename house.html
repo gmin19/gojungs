@@ -35,18 +35,16 @@
     </header>
 
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표</a>
-                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드</a>
-                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="palmtree" class="w-4 h-4"></i> 관광지</a>
-                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="utensils" class="w-4 h-4"></i> 맛집</a>
-                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑</a>
-                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="scroll" class="w-4 h-4"></i> 십계명</a>
-                <a href="house.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="hotel" class="w-4 h-4"></i> 숙소</a>
-                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="car" class="w-4 h-4"></i> 렌트카</a>
-                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"><i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처</a>
-            </div>
+        <div class="max-w-4xl mx-auto flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
+            <a href="index.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">일정표</a>
+            <a href="mapcode.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">맵코드</a>
+            <a href="place.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">관광지</a>
+            <a href="dining.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">맛집</a>
+            <a href="shopping.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">쇼핑</a>
+            <a href="decalogue.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">십계명</a>
+            <a href="house.html" class="nav-link active flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">숙소</a>
+            <a href="car.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">렌트카</a>
+            <a href="emergency.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">긴급연락처</a>
         </div>
     </nav>
 
@@ -99,7 +97,7 @@
                     </li>
                     <li class="flex items-start gap-2">
                         <i data-lucide="ticket" class="w-4 h-4 text-purple-500 mt-0.5"></i> 
-                        <span>입장 시 조식권 지참 필수 (성인/소인)</span>
+                        <span>입장 시 <strong>조식 쿠폰</strong> 지참 필수 (성인/소인)</span>
                     </li>
                 </ul>
             </div>
@@ -118,8 +116,12 @@
                         <span>시간: 06:00 ~ 10:00 / 15:00 ~ 01:00</span>
                     </li>
                     <li class="flex items-start gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
+                        <span>입장 시 <strong>대욕장 티켓</strong> 지참 필수</span>
+                    </li>
+                    <li class="flex items-start gap-2">
                         <i data-lucide="info" class="w-4 h-4 text-blue-500 mt-0.5"></i> 
-                        <span>투숙객 무료 이용 (객실 타월 지참)</span>
+                        <span>객실 타월을 반드시 지참해 주세요.</span>
                     </li>
                 </ul>
             </div>
@@ -181,10 +183,17 @@
                 </h3>
                 <ul class="space-y-3 text-sm text-slate-600">
                     <li class="flex items-start gap-2">
+                        <i data-lucide="store" class="w-4 h-4 text-slate-500 mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-slate-700">로손 편의점</span>
+                            <p class="text-xs text-slate-400">장소: 1층 (24시간 운영)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-2">
                         <i data-lucide="washing-machine" class="w-4 h-4 text-slate-500 mt-0.5"></i>
                         <div>
                             <span class="font-bold text-slate-700">코인 세탁실</span>
-                            <p class="text-xs text-slate-400">24시간 이용 가능 (세제 자동 투입)</p>
+                            <p class="text-xs text-slate-400">장소: 2층 (24시간 이용, 세제 자동 투입)</p>
                         </div>
                     </li>
                     <li class="flex items-start gap-2">

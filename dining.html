@@ -16,10 +16,10 @@
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
         
-        /* 혜택 뱃지 스타일 */
-        .badge-benefit { background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; }
-        /* 음식 종류 뱃지 스타일 */
-        .badge-food { background-color: #F1F5F9; color: #475569; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        /* 뱃지 스타일 정의 */
+        .badge-benefit { background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; font-size: 10px; padding: 2px 5px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
+        .badge-food { background-color: #F1F5F9; color: #475569; font-size: 10px; padding: 2px 5px; border-radius: 4px; font-weight: 700; }
+        .badge-rating { background-color: #FEF3C7; color: #B45309; font-size: 10px; padding: 2px 5px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -60,7 +60,7 @@
                 <i data-lucide="credit-card" class="w-6 h-6 text-rose-600"></i> 호텔 카드키 특별 혜택
             </h3>
             <p class="text-sm text-slate-700 leading-relaxed">
-                <strong>레쿠 오키나와</strong> 또는 <strong>베셀 호텔 캄파나</strong>의 카드키를 제시하면 아래 <span class="badge-benefit">카드키 혜택</span> 뱃지가 있는 매장에서 특별 서비스를 받을 수 있습니다. (주문/결제 시 제시 필수)
+                <strong>레쿠 오키나와</strong> 또는 <strong>베셀 호텔 캄파나</strong>의 카드키를 제시하면 아래 <span class="badge-benefit">카드키 혜택</span> 뱃지가 있는 매장에서 특별 서비스를 받을 수 있습니다. (주문/결제 시 제시)
             </p>
         </div>
 
@@ -74,11 +74,14 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">블루 오션 스테이크</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">스테이크</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 웰컴 드링크 1잔</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 웰컴 드링크</span>
                     </div>
                     <p class="text-xs text-slate-500 mb-3">오션뷰와 함께 즐기는 최상급 와규 스테이크.</p>
                     <a href="http://googleusercontent.com/maps.google.com/Blue Ocean Steak" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
@@ -87,11 +90,14 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">야키니쿠 리키오</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.7</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">야키니쿠</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크 or 디저트</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 음료 or 디저트</span>
                     </div>
                     <p class="text-xs text-slate-500 mb-3">합리적인 가격의 이시가키규 숯불 구이.</p>
                     <a href="http://googleusercontent.com/maps.google.com/Yakiniku Rikio" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
@@ -100,9 +106,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">발리우드 드림즈</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.8</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">인도 커리</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
@@ -113,11 +122,14 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">솔리스 그란데</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">이탈리안</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 아이스크림 서비스</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 아이스크림</span>
                     </div>
                     <p class="text-xs text-slate-500 mb-3">바다 바로 앞 테라스에서 즐기는 화덕 피자.</p>
                     <a href="http://googleusercontent.com/maps.google.com/Solis Grande" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
@@ -125,12 +137,15 @@
 
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800 text-lg">키지무나 (데포아일랜드)</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <h4 class="font-bold text-slate-800 text-lg">키지무나</h4>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.4</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">타코라이스</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 소프트 드링크 1잔</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 음료 1잔</span>
                     </div>
                     <p class="text-xs text-slate-500 mb-3">오무타코(오므라이스+타코)의 원조 맛집.</p>
                     <a href="http://googleusercontent.com/maps.google.com/Kijimuna Depot Island" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
@@ -139,11 +154,14 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">아타비스 버거</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">수제버거</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 토핑 1개 추가</span>
+                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 토핑 1개</span>
                     </div>
                     <p class="text-xs text-slate-500 mb-3">육즙 가득한 패티가 일품인 수제버거.</p>
                     <a href="http://googleusercontent.com/maps.google.com/Atabii's" target="_blank" class="block w-full text-center bg-slate-50 text-blue-600 text-xs font-bold py-2 rounded hover:bg-slate-100">구글맵 보기</a>
@@ -152,9 +170,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">카메젠 식당</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.3</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">오키나와 소바</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 5% 할인</span>
                     </div>
@@ -165,9 +186,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">스테이크 하우스 88</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.2</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">스테이크</span>
                         <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크바 무료</span>
                     </div>
@@ -178,9 +202,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">피제리아 바 아리차</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">화덕 피자</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 드링크 할인</span>
                     </div>
@@ -191,9 +218,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">아구노카쿠레가</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.3</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">아구 샤브샤브</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
@@ -204,9 +234,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">점보 스테이크 HAN'S</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.1</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">스테이크</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
@@ -217,9 +250,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">차탄 하버 브루어리</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.4</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">수제 맥주</span>
                         <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
                     </div>
@@ -230,9 +266,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">자이 타이 (Jai Thai)</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.3</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">태국 요리</span>
                         <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 소프트 드링크 1잔</span>
                     </div>
@@ -243,9 +282,12 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">카프리쵸사</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 3분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.1</span>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mb-2">
+                    <div class="flex flex-wrap gap-1 mb-2">
                         <span class="badge-food">이탈리안</span>
                         <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 드링크 1잔 무료</span>
                     </div>
@@ -256,7 +298,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">미하마 톤톤 잭키</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">돈카츠</span></div>
                     <p class="text-xs text-slate-500 mb-3">인생 돈카츠라 불리는 두툼한 식감.</p>
@@ -266,7 +311,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">하마야 소바</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 15분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 15분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">소바</span></div>
                     <p class="text-xs text-slate-500 mb-3">맑은 국물과 연골 소바가 유명한 노포.</p>
@@ -276,7 +324,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">스시 젠 (Sushi Zen)</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">스시</span></div>
                     <p class="text-xs text-slate-500 mb-3">장인의 손길이 느껴지는 정통 초밥집.</p>
@@ -286,7 +337,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">라멘 가류야</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 10분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.4</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">라멘/츠케멘</span></div>
                     <p class="text-xs text-slate-500 mb-3">진한 닭육수 베이스의 츠케멘 맛집.</p>
@@ -296,7 +350,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">더 칼리프 키친</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">퓨전 브런치</span></div>
                     <p class="text-xs text-slate-500 mb-3">바다 전망이 훌륭한 캘리포니아 스타일 다이닝.</p>
@@ -306,7 +363,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">고디스 (Gordie's)</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 12분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2"><span class="badge-food">수제버거</span></div>
                     <p class="text-xs text-slate-500 mb-3">미국 빈티지 감성의 숯불 패티 버거.</p>
@@ -322,7 +382,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">시사이드 카페 하논</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">팬케이크</span>
@@ -335,7 +398,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">지바고 커피 로스터리</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">스페셜티 커피</span>
@@ -348,7 +414,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">KAME ANDAGI</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 1분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 1분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.3</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">사타안다기</span>
@@ -361,7 +430,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">블루씰 데포아일랜드점</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 4분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 4분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.4</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">아이스크림</span>
@@ -374,7 +446,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">봉고 앤 앵커</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">카페/샌드위치</span>
@@ -387,7 +462,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">타임리스 초콜릿</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 6분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">수제 초콜릿</span>
@@ -399,7 +477,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">홀드 바이 핸드</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 5분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.5</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">감자튀김/소프트</span>
@@ -411,7 +492,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">마일로 플러스 카페</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 8분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.6</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">스무디볼</span>
@@ -423,7 +507,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">와규 카페 카푸카</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.3</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">브런치</span>
@@ -435,7 +522,10 @@
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <div class="flex justify-between items-start mb-2">
                         <h4 class="font-bold text-slate-800 text-lg">R Cafe</h4>
-                        <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            <span class="text-[11px] font-bold text-emerald-600 flex items-center gap-1"><i data-lucide="footprints" class="w-3 h-3"></i> 7분</span>
+                            <span class="badge-rating"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.4</span>
+                        </div>
                     </div>
                     <div class="flex flex-wrap gap-1.5 mb-2">
                         <span class="badge-food">카페</span>

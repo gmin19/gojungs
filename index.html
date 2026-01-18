@@ -8,76 +8,14 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-color: #F8FAFC; 
-            color: #334155; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-        
-        /* 탭 전환 애니메이션 */
-        .day-content {
-            display: none;
-            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .day-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 24px;
-            top: 24px;
-            bottom: -24px;
-            width: 2px;
-            background-color: #E2E8F0;
-            z-index: 0;
-        }
-        .timeline-item:last-child .timeline-line {
-            display: none;
-        }
-        
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        button:active, .clickable-card:active {
-            transform: scale(0.98);
-            background-color: #F1F5F9;
-        }
-
-        /* Top 버튼 스타일 */
-        .top-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 50;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .top-btn.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        
-        /* 네비게이션 활성화 스타일 */
-        .nav-link.active {
-            color: #EA580C; 
-            border-bottom-color: #EA580C;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .timeline-line { position: absolute; left: 19px; top: 32px; bottom: -24px; width: 2px; background-color: #E2E8F0; z-index: 0; }
+        .last-item .timeline-line { display: none; }
+        .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -86,54 +24,24 @@
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6">
                 <div class="flex-1 pr-2">
-                    <div id="dday-badge" class="inline-flex items-center gap-1 bg-orange-500 text-white text-[11px] font-bold px-2 py-1 rounded-full mb-3 shadow-md">
-                        <i data-lucide="clock" class="w-3 h-3"></i> <span>D-DAY 계산 중</span>
-                    </div>
-                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                    <span class="text-orange-400 font-bold text-sm tracking-wider mb-1 block">FAMILY TRIP</span>
+                    <h1 class="text-3xl md:text-4xl font-black leading-tight tracking-tight">
                         오키나와<br>
-                        <span class="text-sky-400">가족여행</span> <span class="text-orange-400">2026</span>
+                        <span class="text-sky-400">3박 4일</span> 여행
                     </h1>
+                    <p class="text-slate-400 text-xs mt-2">2026.04.02 - 04.05</p>
                 </div>
-                <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="flex-none bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/10 w-[180px] shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none">
-                    <div class="flex justify-between items-center mb-2 pb-2 border-b border-white/10">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-sky-300 font-bold mb-0.5 flex items-center gap-1">오키나와(나하) <i data-lucide="external-link" class="w-2 h-2"></i></span>
-                            <span id="current-temp" class="text-3xl font-black text-white leading-none tracking-tighter">--°</span>
-                        </div>
-                        <div class="text-right flex flex-col items-end">
-                            <i data-lucide="cloud" class="w-6 h-6 text-yellow-400 mb-0.5" id="weather-icon-main"></i>
-                            <div class="text-[10px] text-slate-200 font-medium bg-white/10 px-1.5 py-0.5 rounded">
-                                <span id="today-range">--° / --°</span>
-                            </div>
-                        </div>
+                
+                <a href="https://tenki.jp/forecast/10/50/9110/47201/" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10 w-[120px] text-center shadow-lg hover:bg-white/20 transition-colors cursor-pointer block text-decoration-none">
+                    <span class="text-[10px] text-sky-300 font-bold mb-1 block flex justify-center items-center gap-1">나하 <i data-lucide="external-link" class="w-2 h-2"></i></span>
+                    <div class="flex justify-center items-center gap-2 mb-1">
+                        <i data-lucide="cloud" class="w-6 h-6 text-yellow-400" id="weather-icon-main"></i>
+                        <span id="current-temp" class="text-3xl font-black text-white tracking-tighter">--°</span>
                     </div>
-                    <div class="grid grid-cols-4 gap-1 text-center" id="forecast-grid">
-                        <div class="text-[10px] text-slate-400 col-span-4 py-1">예보 로딩...</div>
+                    <div class="text-[10px] text-slate-300 bg-white/10 rounded-full px-2 py-0.5 inline-block">
+                        <span id="today-range">--° / --°</span>
                     </div>
                 </a>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3 w-full">
-                <div class="bg-slate-800/80 backdrop-blur px-4 py-3 rounded-xl border border-slate-700 flex flex-col items-start">
-                    <div class="flex items-center gap-1.5 text-slate-400 mb-1">
-                        <i data-lucide="plane-takeoff" class="w-3.5 h-3.5"></i>
-                        <span class="text-[11px] font-medium">출국 (KE2147)</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium text-slate-300 text-xs">2026/04/02</span>
-                        <span class="font-black text-yellow-400 text-xl tracking-tight">09:10</span>
-                    </div>
-                </div>
-                <div class="bg-slate-800/80 backdrop-blur px-4 py-3 rounded-xl border border-slate-700 flex flex-col items-start">
-                    <div class="flex items-center gap-1.5 text-slate-400 mb-1">
-                        <i data-lucide="plane-landing" class="w-3.5 h-3.5"></i>
-                        <span class="text-[11px] font-medium">귀국 (OZ0171)</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium text-slate-300 text-xs">2026/04/05</span>
-                        <span class="font-black text-yellow-400 text-xl tracking-tight">18:00</span>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
@@ -141,117 +49,298 @@
     </header>
 
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
-                <a href="index.html" class="nav-link active flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="calendar-days" class="w-4 h-4"></i> 일정표
-                </a>
-                <a href="mapcode.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="map-pin" class="w-4 h-4"></i> 맵코드
-                </a>
-                <a href="place.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="palmtree" class="w-4 h-4"></i> 관광지
-                </a>
-                <a href="dining.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="utensils" class="w-4 h-4"></i> 맛집
-                </a>
-                <a href="shopping.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> 쇼핑
-                </a>
-                <a href="decalogue.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="scroll" class="w-4 h-4"></i> 십계명
-                </a>
-                <a href="house.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="hotel" class="w-4 h-4"></i> 숙소
-                </a>
-                <a href="car.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="car" class="w-4 h-4"></i> 렌트카
-                </a>
-                <a href="emergency.html" class="nav-link flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">
-                    <i data-lucide="siren" class="w-4 h-4"></i> 긴급연락처
-                </a>
-            </div>
+        <div class="max-w-4xl mx-auto flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">
+            <a href="index.html" class="nav-link active flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">일정표</a>
+            <a href="mapcode.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">맵코드</a>
+            <a href="place.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">관광지</a>
+            <a href="dining.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">맛집</a>
+            <a href="shopping.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">쇼핑</a>
+            <a href="decalogue.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">십계명</a>
+            <a href="house.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">숙소</a>
+            <a href="car.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">렌트카</a>
+            <a href="emergency.html" class="nav-link flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all">긴급연락처</a>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-8 pb-32 relative">
 
-        <div id="schedule-container">
-            <div class="flex justify-between items-end mb-6">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">상세 일정표</h2>
-                    <p class="text-slate-500 text-xs mt-1">장소명을 누르면 구글맵이 열립니다.</p>
-                </div>
-                <span class="text-[10px] font-medium text-rose-500 bg-rose-50 px-2 py-1 rounded-full border border-rose-100">변경 가능</span>
+        <div class="mb-12 relative">
+            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
+                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 1</span>
+                    4/2 (목) <span class="text-sm font-normal text-slate-500 ml-auto">공항 도착 & 북부 이동</span>
+                </h2>
             </div>
-
-            <div class="grid grid-cols-4 gap-2 mb-8">
-                <button onclick="switchDay(1)" id="day-btn-1" class="day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform hover:-translate-y-0.5">
-                    <span class="text-sm font-bold mb-0.5">1일차</span>
-                    <span class="text-[10px] opacity-80">4/2(목)</span>
-                </button>
-                <button onclick="switchDay(2)" id="day-btn-2" class="day-btn bg-white text-slate-500 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all">
-                    <span class="text-sm font-bold mb-0.5">2일차</span>
-                    <span class="text-[10px] opacity-80">4/3(금)</span>
-                </button>
-                <button onclick="switchDay(3)" id="day-btn-3" class="day-btn bg-white text-slate-500 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all">
-                    <span class="text-sm font-bold mb-0.5">3일차</span>
-                    <span class="text-[10px] opacity-80">4/4(토)</span>
-                </button>
-                <button onclick="switchDay(4)" id="day-btn-4" class="day-btn bg-white text-slate-500 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all">
-                    <span class="text-sm font-bold mb-0.5">4일차</span>
-                    <span class="text-[10px] opacity-80">4/5(일)</span>
-                </button>
-            </div>
-
-            <div id="day-content-1" class="day-content active space-y-0 relative">
-                <div class="timeline-item relative pl-14 pb-8">
+            
+            <div class="space-y-0">
+                <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600">
-                        <i data-lucide="flag" class="w-5 h-5"></i>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-blue-100 text-blue-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="plane-landing" class="w-5 h-5"></i></div>
                     </div>
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card">
-                        <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">06:00</span>
-                        <h3 class="font-bold text-lg text-slate-800 mb-1">
-                            <a href="https://www.google.com/maps/search/?api=1&query=인천공항 제2여객터미널" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">
-                                인천공항 집결 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i>
-                            </a>
-                        </h3>
-                        <p class="text-slate-500 text-sm leading-relaxed">제2여객터미널 3층 출국장 집결 및 대한항공 B,C 카운터 체크인입니다.</p>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-blue-600">12:30</span>
+                        <h3 class="text-lg font-bold text-slate-800">나하 공항 도착</h3>
+                        <p class="text-slate-500 text-sm mt-1">입국 심사 및 짐 찾기 (약 40~50분 소요 예상)</p>
                     </div>
                 </div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-sky-600"><i data-lucide="plane" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-1 rounded mb-2 inline-block">09:10</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=나하공항" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">인천 출발 & 오키나와 도착 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed">대한항공 KE2147 탑승합니다. 11:35 나하 공항 도착 예정입니다.</p></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-orange-600"><i data-lucide="car" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded mb-2 inline-block">13:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店 外車・輸入車専門" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">렌터카 인수 (유니버스) <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">셔틀이 없으므로 택시로 이동합니다. 카시트 2개 장착 여부를 꼭 확인하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 005 306*61')"><span class="text-xs font-mono text-slate-500">MC: 33 005 306*61</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="utensils" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">13:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=우미카지테라스" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">우미카지 테라스 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">공항 근처의 하얀 건물들이 예쁜 곳입니다. 자유롭게 점심을 즐기고 사진을 찍으세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 002 602*06')"><span class="text-xs font-mono text-slate-500">MC: 33 002 602*06</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-purple-600"><i data-lucide="bed-double" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">15:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">레쿠 오키나와 체크인 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">아메리칸 빌리지 내 호텔입니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span class="text-xs font-mono text-slate-500">MC: 33 525 594*3</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-indigo-600"><i data-lucide="sunset" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded mb-2 inline-block">17:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=아메리칸빌리지 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">아메리칸 빌리지 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">숙소 체크인 후 아메리칸 빌리지에서 자유식입니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 526 451*20')"><span class="text-xs font-mono text-slate-500">MC: 33 526 451*20</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-            </div>
 
-            <div id="day-content-2" class="day-content relative">
-                <div class="bg-red-50 p-4 rounded-xl border border-red-100 mb-6 flex items-start gap-3"><i data-lucide="alert-circle" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i><p class="text-red-700 text-sm font-medium">주의: 이동 거리가 긴 날입니다. 멀미약을 챙기세요.</p></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="car-front" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:00</span><h3 class="font-bold text-lg text-slate-800 mb-1">숙소 출발</h3><p class="text-slate-500 text-sm leading-relaxed">북부까지 이동 시간이 꽤 걸립니다. 조식 후 지체 없이 출발하는 것이 좋습니다.</p></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-emerald-600"><i data-lucide="mountain" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded mb-2 inline-block">10:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=만좌모" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">만좌모 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">바람이 강할 수 있으니 모자가 날아가지 않게 주의하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('206 312 097*55')"><span class="text-xs font-mono text-slate-500">MC: 206 312 097*55</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="utensils" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">11:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=우후야 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">점심: 우후야 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">예약 필수 맛집입니다. 고택의 분위기를 즐기며 아구돼지 요리를 맛보세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('206 745 056*67')"><span class="text-xs font-mono text-slate-500">MC: 206 745 056*67</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-blue-600"><i data-lucide="fish" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded mb-2 inline-block">13:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">츄라우미 수족관 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">오키짱 돌고래 쇼 시간(13:00 / 15:00)을 미리 확인하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('553 075 797')"><span class="text-xs font-mono text-slate-500">MC: 553 075 797</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-yellow-600"><i data-lucide="ice-cream" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded mb-2 inline-block">16:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=쿄다휴게소" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">쿄다 휴게소 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">옵빠 아이스크림과 갓 튀긴 튀김 간식이 유명합니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('206 476 706*66')"><span class="text-xs font-mono text-slate-500">MC: 206 476 706*66</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-purple-600"><i data-lucide="home" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">17:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">숙소 복귀 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">숙소 복귀 후 아메리칸 빌리지에서 자유식입니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span class="text-xs font-mono text-slate-500">MC: 33 525 594*3</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-            </div>
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-slate-100 text-slate-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="car" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">13:30</span>
+                        <h3 class="text-lg font-bold text-slate-800">렌터카 수령</h3>
+                        <p class="text-slate-500 text-sm mt-1">유니버스 렌터카 셔틀 탑승 및 차량 인수</p>
+                        <a href="car.html" class="inline-flex items-center gap-1 text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded mt-2 hover:bg-blue-100 transition-colors">가이드 확인 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
 
-            <div id="day-content-3" class="day-content relative">
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="car-front" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:30</span><h3 class="font-bold text-lg text-slate-800 mb-1">숙소 출발</h3><p class="text-slate-500 text-sm leading-relaxed">오늘은 비교적 여유로운 일정입니다. 조식을 든든히 먹고 출발하세요.</p></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-green-600"><i data-lucide="trees" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded mb-2 inline-block">10:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=동남식물원 오키나와" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">동남식물원 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">야외 활동이 많으니 자외선 차단제와 양산을 챙기세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 742 510*74')"><span class="text-xs font-mono text-slate-500">MC: 33 742 510*74</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-pink-600"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded mb-2 inline-block">12:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=이온몰 오키나와 라이카무" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">이온몰 라이카무 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">오키나와 최대 쇼핑몰입니다. 1층 수족관 앞에서 만나기로 약속 장소를 정하면 좋습니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 530 230*74')"><span class="text-xs font-mono text-slate-500">MC: 33 530 230*74</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-yellow-600"><i data-lucide="sun" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded mb-2 inline-block">15:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=아라하비치" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">아라하 비치 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">해질 무렵 석양이 아름다운 곳입니다. 해적선 놀이터가 있습니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 496 038*21')"><span class="text-xs font-mono text-slate-500">MC: 33 496 038*21</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-purple-600"><i data-lucide="bed-double" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded mb-2 inline-block">17:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=레쿠 오키나와 차탄 스파 리조트" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">숙소 복귀 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">숙소에서 잠시 휴식 및 재정비를 합니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 525 594*3')"><span class="text-xs font-mono text-slate-500">MC: 33 525 594*3</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="beer" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">18:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=야키니쿠 유메마루 차탄" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">저녁: 야키니쿠 유메마루 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">단체 예약이 필수입니다. 무한리필 이용 시간을 확인하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 526 452*52')"><span class="text-xs font-mono text-slate-500">MC: 33 526 452*52</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-            </div>
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-orange-100 text-orange-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="utensils" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">14:30</span>
+                        <h3 class="text-lg font-bold text-slate-800">점심 식사 (우후야)</h3>
+                        <p class="text-slate-500 text-sm mt-1">100년 된 고택에서 즐기는 아구 돼지 요리</p>
+                        <div class="mt-2 flex gap-2">
+                            <a href="mapcode.html" class="text-xs bg-slate-200 px-2 py-1 rounded text-slate-600 font-mono">MC: 206 745 056*67</a>
+                        </div>
+                    </div>
+                </div>
 
-            <div id="day-content-4" class="day-content relative">
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-slate-600"><i data-lucide="log-out" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded mb-2 inline-block">09:00</span><h3 class="font-bold text-lg text-slate-800 mb-1">체크아웃</h3></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-rose-600"><i data-lucide="landmark" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded mb-2 inline-block">10:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=오키나와월드" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">오키나와 월드 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">동굴 내부는 습하고 미끄러울 수 있으니 편안한 신발을 신으세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('232 495 330*83')"><span class="text-xs font-mono text-slate-500">MC: 232 495 330*83</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-pink-600"><i data-lucide="utensils" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded mb-2 inline-block">13:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=이아스 오키나와 토요사키" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">점심: 이아스 오키나와 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">공항 근처라 마지막 쇼핑과 식사를 해결하기 좋습니다.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('232 543 400*25')"><span class="text-xs font-mono text-slate-500">MC: 232 543 400*25</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14 pb-8"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-orange-600"><i data-lucide="car" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded mb-2 inline-block">15:00</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店 外車・輸入車専門" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">렌터카 반납 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed mb-3">반납 전 주유 필요 X. 렌터카 사무실에서 공항 택시 이동을 준비하세요.</p><button class="w-full flex justify-between items-center bg-slate-50 hover:bg-slate-100 p-3 rounded-lg border border-slate-200 transition-colors" onclick="copyToClipboard('33 005 306*61')"><span class="text-xs font-mono text-slate-500">MC: 33 005 306*61</span><span class="text-xs font-bold text-blue-600 flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i> 복사</span></button></div></div>
-                <div class="timeline-item relative pl-14"><div class="timeline-line"></div><div class="absolute left-0 top-0 w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center border-4 border-white shadow-sm z-10 text-sky-600"><i data-lucide="plane-takeoff" class="w-5 h-5"></i></div><div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 clickable-card"><span class="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-1 rounded mb-2 inline-block">15:30</span><h3 class="font-bold text-lg text-slate-800 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=나하공항" target="_blank" class="flex items-center gap-1 hover:text-blue-600 transition-colors">나하공항 출국 <i data-lucide="external-link" class="w-4 h-4 text-slate-400"></i></a></h3><p class="text-slate-500 text-sm leading-relaxed">국제선 터미널로 이동하여 수속을 밟습니다.</p></div></div>
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-cyan-100 text-cyan-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="fish" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">16:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">츄라우미 수족관</h3>
+                        <p class="text-slate-500 text-sm mt-1">고래상어 먹이주기 쇼 (17:00) 관람 추천</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative last-item">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-purple-100 text-purple-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="bed" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">19:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">레쿠 오키나와 체크인</h3>
+                        <p class="text-slate-500 text-sm mt-1">아메리칸 빌리지 내 호텔 도착 및 휴식</p>
+                        <a href="house.html" class="inline-flex items-center gap-1 text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded mt-2 hover:bg-purple-100 transition-colors">숙소 정보 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12 relative">
+            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
+                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 2</span>
+                    4/3 (금) <span class="text-sm font-normal text-slate-500 ml-auto">중부 핵심 관광</span>
+                </h2>
+            </div>
+            
+            <div class="space-y-0">
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-slate-100 text-slate-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="camera" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">10:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">만좌모</h3>
+                        <p class="text-slate-500 text-sm mt-1">코끼리 바위와 푸른 바다 절경 감상</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-pink-100 text-pink-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">12:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">이온몰 라이카무 점심 & 쇼핑</h3>
+                        <p class="text-slate-500 text-sm mt-1">오키나와 최대 규모 쇼핑몰. 포켓몬 센터 방문.</p>
+                        <a href="shopping.html" class="inline-flex items-center gap-1 text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded mt-2 hover:bg-pink-100 transition-colors">쇼핑 리스트 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-orange-100 text-orange-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="sunset" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">17:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">아메리칸 빌리지 & 선셋 비치</h3>
+                        <p class="text-slate-500 text-sm mt-1">이국적인 거리 산책 및 일몰 감상</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative last-item">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-red-100 text-red-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="utensils" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">19:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">저녁 식사 (야키니쿠)</h3>
+                        <p class="text-slate-500 text-sm mt-1">호텔 근처 야키니쿠 맛집에서 저녁</p>
+                        <a href="dining.html" class="inline-flex items-center gap-1 text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded mt-2 hover:bg-red-100 transition-colors">맛집 보기 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12 relative">
+            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
+                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 3</span>
+                    4/4 (토) <span class="text-sm font-normal text-slate-500 ml-auto">남부 투어 & 쇼핑</span>
+                </h2>
+            </div>
+            
+            <div class="space-y-0">
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-indigo-100 text-indigo-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="landmark" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">10:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">오키나와 월드</h3>
+                        <p class="text-slate-500 text-sm mt-1">옥천동굴 탐험 및 전통 공예 체험</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-sky-100 text-sky-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="coffee" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">13:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">우미카지 테라스</h3>
+                        <p class="text-slate-500 text-sm mt-1">하얀 건물과 푸른 바다가 어우러진 곳에서 점심</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-emerald-100 text-emerald-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="map" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">15:30</span>
+                        <h3 class="text-lg font-bold text-slate-800">국제거리</h3>
+                        <p class="text-slate-500 text-sm mt-1">나하 시내 구경 및 기념품 쇼핑 (돈키호테 등)</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative last-item">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-purple-100 text-purple-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="moon" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">19:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">호텔 복귀 및 온천</h3>
+                        <p class="text-slate-500 text-sm mt-1">레쿠 호텔 대욕장에서 피로 풀기</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8 relative">
+            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
+                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 4</span>
+                    4/5 (일) <span class="text-sm font-normal text-slate-500 ml-auto">귀국</span>
+                </h2>
+            </div>
+            
+            <div class="space-y-0">
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-slate-100 text-slate-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="log-out" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">11:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">체크아웃 & 점심</h3>
+                        <p class="text-slate-500 text-sm mt-1">호텔 체크아웃 후 근처 맛집에서 마지막 식사</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-indigo-100 text-indigo-600 p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="ticket" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-blue-600">15:30</span>
+                        <h3 class="text-lg font-bold text-slate-800">나하공항 도착 & 출국 수속</h3>
+                        <div class="bg-white border border-slate-200 rounded-lg p-3 mt-2 shadow-sm">
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mt-0.5"></i>
+                                    <span>렌터카 반납 후 셔틀 하차</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mt-0.5"></i>
+                                    <span>체크인 & 수하물 위탁 (국제선 3층)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mt-0.5"></i>
+                                    <span>보안 검색 및 출국 심사</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="shopping-bag" class="w-4 h-4 text-pink-500 mt-0.5"></i>
+                                    <span>면세점 쇼핑 (로이즈 초콜릿 등)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 relative last-item">
+                    <div class="timeline-line"></div>
+                    <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
+                        <div class="bg-blue-600 text-white p-2 rounded-full ring-4 ring-[#F8FAFC]"><i data-lucide="plane-takeoff" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="pb-8 flex-1">
+                        <span class="text-sm font-bold text-slate-500">18:00</span>
+                        <h3 class="text-lg font-bold text-slate-800">오키나와 출발 ✈️</h3>
+                        <p class="text-slate-500 text-sm mt-1 mb-3">즐거웠던 여행을 마치고 인천으로!</p>
+                        
+                        <div class="bg-gradient-to-r from-sky-50 to-blue-50 border border-blue-100 rounded-xl p-4 shadow-sm">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-400 mb-1">
+                                <span>나하 (OKA)</span>
+                                <span>비행시간 약 2시간 20분</span>
+                                <span>인천 (ICN)</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-800">
+                                <span class="text-2xl font-black">18:00</span>
+                                <div class="flex-1 border-t-2 border-dotted border-blue-300 mx-3 relative">
+                                    <i data-lucide="plane" class="w-4 h-4 text-blue-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-90"></i>
+                                </div>
+                                <span class="text-2xl font-black">20:20</span>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <span class="text-xs bg-white text-blue-600 border border-blue-200 px-2 py-0.5 rounded-full font-bold">귀국편</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -263,55 +352,6 @@
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
-        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
-        <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
-    </div>
-
     <script src="common.js"></script>
-    <script>
-        // Index 페이지 전용 로직 (D-Day, 탭 전환)
-        function switchDay(dayNum) {
-            document.querySelectorAll('.day-content').forEach(el => {
-                el.classList.remove('active');
-            });
-            const target = document.getElementById('day-content-' + dayNum);
-            if (target) {
-                target.classList.add('active');
-            }
-            
-            document.querySelectorAll('.day-btn').forEach(btn => {
-                btn.className = 'day-btn bg-white text-slate-600 border border-slate-200 rounded-xl py-3 px-1 flex flex-col items-center transition-all';
-            });
-            const activeBtn = document.getElementById('day-btn-' + dayNum);
-            if (activeBtn) {
-                activeBtn.className = 'day-btn bg-slate-800 text-white shadow-lg rounded-xl py-3 px-1 flex flex-col items-center transition-all transform -translate-y-0.5';
-            }
-            lucide.createIcons();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // D-Day 계산
-            const ddayTarget = new Date('2026-04-02T00:00:00');
-            const today = new Date();
-            const diff = Math.ceil((ddayTarget - today) / (1000 * 60 * 60 * 24));
-            const badge = document.getElementById('dday-badge');
-            badge.innerHTML = `<i data-lucide="clock" class="w-3 h-3"></i> <span>D-${diff > 0 ? diff : 'Day'}</span>`;
-
-            // 자동 일정 전환
-            const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const date = today.getDate();
-
-            if (year === 2026 && month === 4) {
-                if (date === 3) switchDay(2);
-                else if (date === 4) switchDay(3);
-                else if (date === 5) switchDay(4);
-                else switchDay(1); 
-            } else {
-                switchDay(1); 
-            }
-        });
-    </script>
 </body>
 </html>
