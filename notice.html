@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>관리자 공지 설정 (Firebase)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #1E293B; color: #F1F5F9; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="max-w-md w-full bg-slate-800 p-6 rounded-2xl shadow-2xl border border-slate-700">
+        <h1 class="text-2xl font-black mb-6 flex items-center gap-2 text-blue-400">
+            <i data-lucide="settings" class="w-6 h-6"></i> 공지사항 관리자
+        </h1>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">공지 제목</label>
+                <input type="text" id="noticeTitle" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="예: 📢 긴급 날씨 공지">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">공지 내용</label>
+                <textarea id="noticeMessage" rows="4" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none" placeholder="내용을 입력하세요."></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">종료 일시 (이 시간 이후 자동 꺼짐)</label>
+                <input type="datetime-local" id="noticeExpiry" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+                <input type="checkbox" id="isActive" class="w-5 h-5 accent-blue-500" checked>
+                <label for="isActive" class="text-sm font-bold text-slate-300">공지 띄우기 (체크 해제시 숨김)</label>
+            </div>
+        </div>
+
+        <hr class="border-slate-700 my-6">
+
+        <button id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+            <i data-lucide="save" class="w-5 h-5"></i> 공지사항 저장/게시
+        </button>
+        <p id="statusMsg" class="text-xs text-center mt-3 text-slate-500 min-h-[20px]"></p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTsBiqB4l1X-f_Bf7e0adCZtS_mmoYjWg",
+            authDomain: "okinawa-trip-2026-cdc54.firebaseapp.com",
+            projectId: "okinawa-trip-2026-cdc54",
+            storageBucket: "okinawa-trip-2026-cdc54.firebasestorage.app",
+            messagingSenderId: "775661354652",
+            appId: "1:775661354652:web:fb8f57bd60594a6d51f759",
+            measurementId: "G-KQSQPGBESP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 초기 날짜 설정
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const pad = (n) => n < 10 ? '0' + n : n;
+        const defaultDate = `${tomorrow.getFullYear()}-${pad(tomorrow.getMonth() + 1)}-${pad(tomorrow.getDate())}T00:00`;
+        
+        const titleEl = document.getElementById('noticeTitle');
+        const msgEl = document.getElementById('noticeMessage');
+        const expiryEl = document.getElementById('noticeExpiry');
+        const activeEl = document.getElementById('isActive');
+        const statusEl = document.getElementById('statusMsg');
+
+        // 1. 페이지 로드 시 현재 공지 불러오기
+        async function loadCurrentNotice() {
+            statusEl.innerText = "현재 공지 불러오는 중...";
+            try {
+                const docRef = doc(db, "notices", "latest");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    titleEl.value = data.title || '';
+                    msgEl.value = data.message ? data.message.replace(/<br>/g, '\n') : ''; // <br>을 줄바꿈으로 복원
+                    expiryEl.value = data.expiryDate || defaultDate;
+                    activeEl.checked = data.isActive;
+                    statusEl.innerText = "로드 완료!";
+                } else {
+                    expiryEl.value = defaultDate;
+                    statusEl.innerText = "저장된 공지가 없습니다.";
+                }
+            } catch (e) {
+                console.error(e);
+                statusEl.innerText = "불러오기 실패 (콘솔 확인)";
+            }
+        }
+
+        // 2. 저장 버튼 클릭 시 Firebase에 저장
+        document.getElementById('saveBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> 저장 중...`;
+
+            try {
+                const message = msgEl.value.replace(/\n/g, '<br>'); // 줄바꿈을 <br>로 변환
+                const newId = 'notice_' + new Date().getTime(); // 유니크 ID 생성
+
+                await setDoc(doc(db, "notices", "latest"), {
+                    title: titleEl.value,
+                    message: message,
+                    expiryDate: expiryEl.value,
+                    isActive: activeEl.checked,
+                    id: newId, // ID가 바뀌어야 사용자들이 다시 보게 됨
+                    updatedAt: new Date()
+                });
+
+                statusEl.className = "text-xs text-center mt-3 text-green-400 font-bold";
+                statusEl.innerText = "✅ 성공적으로 저장되었습니다! 모든 기기에 반영됩니다.";
+                setTimeout(() => statusEl.innerText = "", 3000);
+
+            } catch (e) {
+                console.error(e);
+                statusEl.className = "text-xs text-center mt-3 text-red-400 font-bold";
+                statusEl.innerText = "❌ 저장 실패: " + e.message;
+                // 권한 오류일 경우 힌트
+                if(e.code === 'permission-denied') {
+                    alert("권한 오류! Firebase 콘솔 > Firestore > 규칙(Rules) 탭에서 'allow read, write: if true;' 로 설정되어 있는지 확인하세요.");
+                }
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="save" class="w-5 h-5"></i> 공지사항 저장/게시`;
+            }
+        });
+
+        // 초기화 실행
+        loadCurrentNotice();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
