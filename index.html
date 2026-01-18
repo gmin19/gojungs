@@ -16,6 +16,10 @@
         .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
         .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        
+        /* Day 탭 활성화 스타일 */
+        .day-tab.active { background-color: #3B82F6; color: white; border-color: #3B82F6; }
+        .day-tab { transition: all 0.2s ease; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -62,16 +66,27 @@
         </div>
     </nav>
 
-    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-8 pb-32 relative">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
 
-        <div class="mb-12 relative">
-            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
-                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 1</span>
-                    4/2 (목) <span class="text-sm font-normal text-slate-500 ml-auto">공항 도착 & 북부 이동</span>
-                </h2>
-            </div>
-            
+        <div class="flex gap-2 mb-6 overflow-x-auto no-scrollbar pb-1">
+            <button onclick="switchDay(1)" id="tab-1" class="day-tab active flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                1일차<br><span class="text-[10px] font-normal opacity-80">도착/북부</span>
+            </button>
+            <button onclick="switchDay(2)" id="tab-2" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                2일차<br><span class="text-[10px] font-normal opacity-80">중부투어</span>
+            </button>
+            <button onclick="switchDay(3)" id="tab-3" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                3일차<br><span class="text-[10px] font-normal opacity-80">남부/쇼핑</span>
+            </button>
+            <button onclick="switchDay(4)" id="tab-4" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                4일차<br><span class="text-[10px] font-normal opacity-80">귀국</span>
+            </button>
+        </div>
+
+        <div id="day-1" class="day-content block">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-blue-500 rounded-full"></span> 4/2 (목) : 설레는 출발
+            </h3>
             <div class="space-y-0">
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
@@ -81,10 +96,9 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-blue-600">12:30</span>
                         <h3 class="text-lg font-bold text-slate-800">나하 공항 도착</h3>
-                        <p class="text-slate-500 text-sm mt-1">입국 심사 및 짐 찾기 (약 40~50분 소요 예상)</p>
+                        <p class="text-slate-500 text-sm mt-1">입국 심사 및 짐 찾기 (약 40~50분 소요)</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -94,10 +108,9 @@
                         <span class="text-sm font-bold text-slate-500">13:30</span>
                         <h3 class="text-lg font-bold text-slate-800">렌터카 수령</h3>
                         <p class="text-slate-500 text-sm mt-1">유니버스 렌터카 셔틀 탑승 및 차량 인수</p>
-                        <a href="car.html" class="inline-flex items-center gap-1 text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded mt-2 hover:bg-blue-100 transition-colors">가이드 확인 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                        <a href="car.html" class="inline-flex items-center gap-1 text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded mt-2 hover:bg-blue-100">가이드 확인 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -107,12 +120,9 @@
                         <span class="text-sm font-bold text-slate-500">14:30</span>
                         <h3 class="text-lg font-bold text-slate-800">점심 식사 (우후야)</h3>
                         <p class="text-slate-500 text-sm mt-1">100년 된 고택에서 즐기는 아구 돼지 요리</p>
-                        <div class="mt-2 flex gap-2">
-                            <a href="mapcode.html" class="text-xs bg-slate-200 px-2 py-1 rounded text-slate-600 font-mono">MC: 206 745 056*67</a>
-                        </div>
+                        <div class="mt-2"><a href="mapcode.html" class="text-xs bg-slate-200 px-2 py-1 rounded text-slate-600 font-mono">MC: 206 745 056*67</a></div>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -121,10 +131,9 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">16:00</span>
                         <h3 class="text-lg font-bold text-slate-800">츄라우미 수족관</h3>
-                        <p class="text-slate-500 text-sm mt-1">고래상어 먹이주기 쇼 (17:00) 관람 추천</p>
+                        <p class="text-slate-500 text-sm mt-1">고래상어 먹이주기 쇼 (17:00) 관람</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative last-item">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -134,20 +143,16 @@
                         <span class="text-sm font-bold text-slate-500">19:00</span>
                         <h3 class="text-lg font-bold text-slate-800">레쿠 오키나와 체크인</h3>
                         <p class="text-slate-500 text-sm mt-1">아메리칸 빌리지 내 호텔 도착 및 휴식</p>
-                        <a href="house.html" class="inline-flex items-center gap-1 text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded mt-2 hover:bg-purple-100 transition-colors">숙소 정보 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                        <a href="house.html" class="inline-flex items-center gap-1 text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded mt-2 hover:bg-purple-100">숙소 정보 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-12 relative">
-            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
-                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 2</span>
-                    4/3 (금) <span class="text-sm font-normal text-slate-500 ml-auto">중부 핵심 관광</span>
-                </h2>
-            </div>
-            
+        <div id="day-2" class="day-content hidden">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-orange-500 rounded-full"></span> 4/3 (금) : 중부 핵심 관광
+            </h3>
             <div class="space-y-0">
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
@@ -160,7 +165,6 @@
                         <p class="text-slate-500 text-sm mt-1">코끼리 바위와 푸른 바다 절경 감상</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -168,12 +172,11 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">12:00</span>
-                        <h3 class="text-lg font-bold text-slate-800">이온몰 라이카무 점심 & 쇼핑</h3>
-                        <p class="text-slate-500 text-sm mt-1">오키나와 최대 규모 쇼핑몰. 포켓몬 센터 방문.</p>
-                        <a href="shopping.html" class="inline-flex items-center gap-1 text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded mt-2 hover:bg-pink-100 transition-colors">쇼핑 리스트 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                        <h3 class="text-lg font-bold text-slate-800">이온몰 라이카무</h3>
+                        <p class="text-slate-500 text-sm mt-1">오키나와 최대 쇼핑몰. 점심 & 포켓몬센터</p>
+                        <a href="shopping.html" class="inline-flex items-center gap-1 text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded mt-2 hover:bg-pink-100">쇼핑 리스트 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -181,11 +184,10 @@
                     </div>
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:00</span>
-                        <h3 class="text-lg font-bold text-slate-800">아메리칸 빌리지 & 선셋 비치</h3>
-                        <p class="text-slate-500 text-sm mt-1">이국적인 거리 산책 및 일몰 감상</p>
+                        <h3 class="text-lg font-bold text-slate-800">아메리칸 빌리지</h3>
+                        <p class="text-slate-500 text-sm mt-1">이국적인 거리 산책 및 선셋 비치 일몰</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative last-item">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -195,20 +197,16 @@
                         <span class="text-sm font-bold text-slate-500">19:00</span>
                         <h3 class="text-lg font-bold text-slate-800">저녁 식사 (야키니쿠)</h3>
                         <p class="text-slate-500 text-sm mt-1">호텔 근처 야키니쿠 맛집에서 저녁</p>
-                        <a href="dining.html" class="inline-flex items-center gap-1 text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded mt-2 hover:bg-red-100 transition-colors">맛집 보기 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
+                        <a href="dining.html" class="inline-flex items-center gap-1 text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded mt-2 hover:bg-red-100">맛집 보기 <i data-lucide="chevron-right" class="w-3 h-3"></i></a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-12 relative">
-            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
-                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 3</span>
-                    4/4 (토) <span class="text-sm font-normal text-slate-500 ml-auto">남부 투어 & 쇼핑</span>
-                </h2>
-            </div>
-            
+        <div id="day-3" class="day-content hidden">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-rose-500 rounded-full"></span> 4/4 (토) : 남부 투어 & 쇼핑
+            </h3>
             <div class="space-y-0">
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
@@ -221,7 +219,6 @@
                         <p class="text-slate-500 text-sm mt-1">옥천동굴 탐험 및 전통 공예 체험</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -230,10 +227,9 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
                         <h3 class="text-lg font-bold text-slate-800">우미카지 테라스</h3>
-                        <p class="text-slate-500 text-sm mt-1">하얀 건물과 푸른 바다가 어우러진 곳에서 점심</p>
+                        <p class="text-slate-500 text-sm mt-1">하얀 건물과 푸른 바다, 비행기를 보며 점심</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -242,10 +238,9 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:30</span>
                         <h3 class="text-lg font-bold text-slate-800">국제거리</h3>
-                        <p class="text-slate-500 text-sm mt-1">나하 시내 구경 및 기념품 쇼핑 (돈키호테 등)</p>
+                        <p class="text-slate-500 text-sm mt-1">나하 시내 구경 및 돈키호테 쇼핑</p>
                     </div>
                 </div>
-
                 <div class="flex gap-4 relative last-item">
                     <div class="timeline-line"></div>
                     <div class="flex flex-col items-center flex-none w-10 pt-1 relative z-10">
@@ -254,20 +249,16 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">19:00</span>
                         <h3 class="text-lg font-bold text-slate-800">호텔 복귀 및 온천</h3>
-                        <p class="text-slate-500 text-sm mt-1">레쿠 호텔 대욕장에서 피로 풀기</p>
+                        <p class="text-slate-500 text-sm mt-1">레쿠 호텔 대욕장에서 여행 피로 풀기</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-8 relative">
-            <div class="sticky top-[50px] z-10 bg-[#F8FAFC]/95 backdrop-blur py-2 mb-4 border-b border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 flex items-center gap-2">
-                    <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Day 4</span>
-                    4/5 (일) <span class="text-sm font-normal text-slate-500 ml-auto">귀국</span>
-                </h2>
-            </div>
-            
+        <div id="day-4" class="day-content hidden">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+                <span class="w-2 h-6 bg-slate-500 rounded-full"></span> 4/5 (일) : 귀국
+            </h3>
             <div class="space-y-0">
                 <div class="flex gap-4 relative">
                     <div class="timeline-line"></div>
@@ -354,5 +345,23 @@
     </button>
 
     <script src="common.js"></script>
+    <script>
+        function switchDay(day) {
+            // 탭 스타일 초기화
+            document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active', 'bg-blue-500', 'text-white', 'border-blue-500'));
+            document.querySelectorAll('.day-tab').forEach(t => t.classList.add('bg-white', 'text-slate-500', 'border-slate-200'));
+            
+            // 선택된 탭 스타일 적용
+            const selectedTab = document.getElementById(`tab-${day}`);
+            selectedTab.classList.remove('bg-white', 'text-slate-500', 'border-slate-200');
+            selectedTab.classList.add('active', 'bg-blue-500', 'text-white', 'border-blue-500');
+
+            // 컨텐츠 표시/숨김
+            document.querySelectorAll('.day-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`day-${day}`).classList.remove('hidden');
+            
+            // 상단으로 스크롤하지 않음 (사용성 고려)
+        }
+    </script>
 </body>
 </html>
