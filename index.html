@@ -21,15 +21,15 @@
         .day-tab.active { background-color: #3B82F6; color: white; border-color: #3B82F6; }
         .day-tab { transition: all 0.2s ease; }
         
-        /* [수정됨] 맵코드 가독성 향상 (크기 확대) */
+        /* 맵코드 가독성 향상 */
         .mapcode { 
             font-family: monospace; 
-            font-size: 13px; /* 크기 확대 */
+            font-size: 13px; 
             background-color: #EFF6FF; 
             color: #1D4ED8; 
             padding: 4px 8px; 
             border-radius: 6px; 
-            font-weight: 800; /* 굵게 */
+            font-weight: 800; 
             display: inline-flex; 
             align-items: center; 
             gap: 4px; 
@@ -67,7 +67,7 @@
                     </h1>
                     <p class="text-slate-400 text-xs mt-2">2026.04.02(목) - 04.05(일)</p>
                 </div>
-                </div>
+            </div>
         </div>
         <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
     </header>
@@ -166,11 +166,15 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
                         <h3 class="text-lg font-bold text-slate-800">
-                            <a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                            <a href="maps.google.com/search" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 유니버스 렌터카 인수 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
                         </h3>
-                        <p class="text-slate-500 text-sm mt-1">공항 셔틀 탑승 후 영업소 이동</p>
+                        <p class="text-slate-500 text-sm mt-1">공항에서 <strong>점보택시</strong>로 이동하여 인수</p>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded p-2 mt-2 text-xs text-yellow-800">
+                            <span class="font-bold block mb-1 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> 점보택시 타는 곳</span>
+                            국제선 1층 도착 로비 밖 <strong>택시 승강장 (대형택시 구역)</strong>
+                        </div>
                         <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
@@ -436,7 +440,7 @@
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 block mb-1">옵션: 이토만 어시장 (차로 3분)</span>
                             <a href="https://www.google.com/maps/search/?api=1&query=Itoman+Fish+Market" target="_blank" class="text-xs text-blue-600 font-bold hover:underline flex items-center gap-1">이토만 어시장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></a>
-                            <span class="mapcode" style="font-size: 11px;" onclick="copyToClipboard('232 484 136*78')">MC: 232 484 136*78 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
+                            <span class="mapcode" style="font-size: 13px; font-weight:800;" onclick="copyToClipboard('232 484 136*78')">MC: 232 484 136*78 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
                 </div>
@@ -449,11 +453,11 @@
                     <div class="pb-8 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:00</span>
                         <h3 class="text-lg font-bold text-slate-800">
-                            <a href="https://www.google.com/maps/search/?api=1&query=ユニバースレンタカー那覇空港店" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
+                            <a href="maps.google.com/search" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 유니버스 렌터카 반납 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
                         </h3>
-                        <p class="text-slate-500 text-sm mt-1"><strong>주유 반납 불필요.</strong> 셔틀 타고 공항 이동.</p>
+                        <p class="text-slate-500 text-sm mt-1"><strong>주유 반납 불필요.</strong> 반납 후 택시로 공항 이동.</p>
                         <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-3 h-3"></i></span>
                     </div>
                 </div>
