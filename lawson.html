@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오키나와 가족 여행 - 로손 편의점</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        button:active, a:active { transform: scale(0.98); }
+        .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
+        .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        
+        /* 로손 브랜드 컬러 */
+        .bg-lawson-blue { background-color: #0068B7; }
+        .text-lawson-blue { color: #0068B7; }
+        .border-lawson-blue { border-color: #0068B7; }
+        
+        .badge-hot { background-color: #EF4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+        .badge-cold { background-color: #3B82F6; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+        .badge-okinawa { background-color: #F59E0B; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 2px; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-safe">
+
+    <header class="bg-lawson-blue text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex justify-between items-start mb-6 mt-8">
+                <div class="flex-1 pr-2">
+                    <span class="text-white/80 font-bold text-sm tracking-wider mb-1 block">CONVENIENCE STORE</span>
+                    <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
+                        로손(Lawson)<br>
+                        <span class="text-sky-300">쇼핑 리스트</span> & 팁
+                    </h1>
+                    <p class="text-white/70 text-xs mt-2">디저트 천국 로손 완벽 가이드</p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-2 flex">
+            <div class="h-full w-1/3 bg-[#E60012]"></div> <div class="h-full w-1/3 bg-white"></div>
+            <div class="h-full w-1/3 bg-[#0068B7]"></div>
+        </div>
+        <div class="absolute -right-4 -top-10 w-40 h-40 bg-white rounded-full opacity-10 blur-3xl"></div>
+    </header>
+
+    <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
+
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+
+        <section class="mb-10">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-orange-100 pb-2">
+                <i data-lucide="sun" class="w-5 h-5 text-orange-500"></i> 오키나와 로손 한정판
+            </h3>
+            <div class="grid grid-cols-1 gap-3">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-slate-800">포크 타마고 오니기리</h4>
+                            <span class="text-xs font-bold text-slate-500">약 250엔~</span>
+                        </div>
+                        <span class="badge-okinawa mb-1"><i data-lucide="map-pin" class="w-2 h-2"></i> 지역한정</span>
+                        <p class="text-xs text-slate-500 mt-1">오키나와 소울푸드! 스팸과 계란이 들어간 주먹밥. 아침 식사 대용으로 최고입니다.</p>
+                        <p class="text-[10px] text-slate-400 mt-1">* 튜나 마요, 아부라 미소 등 다양한 맛이 있음</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-slate-800">오리온 맥주 & 츄하이</h4>
+                            <span class="text-xs font-bold text-slate-500">약 230엔~</span>
+                        </div>
+                        <span class="badge-okinawa mb-1"><i data-lucide="map-pin" class="w-2 h-2"></i> 지역한정</span>
+                        <p class="text-xs text-slate-500 mt-1">오키나와 대표 맥주 오리온. 'WATTA'라는 패션후르츠/시콰사 맛 츄하이도 강력 추천.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-pink-100 pb-2">
+                <i data-lucide="cake" class="w-5 h-5 text-pink-500"></i> Uchi Café 디저트 (필수)
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="badge-cold mb-2">냉장</span>
+                    <h4 class="font-bold text-slate-800 text-sm">프리미엄 롤케이크</h4>
+                    <p class="text-[10px] text-slate-400 mb-1">Premium Roll Cake</p>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-xs text-slate-500">크림 가득<br>부동의 1위</span>
+                        <span class="font-bold text-lawson-blue text-sm">194엔</span>
+                    </div>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="badge-cold mb-2">냉장</span>
+                    <h4 class="font-bold text-slate-800 text-sm">모찌 식감 롤</h4>
+                    <p class="text-[10px] text-slate-400 mb-1">Mochi Texture Roll</p>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-xs text-slate-500">쫀득한 식감<br>한국인 최애</span>
+                        <span class="font-bold text-lawson-blue text-sm">397엔</span>
+                    </div>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="badge-cold mb-2">냉장</span>
+                    <h4 class="font-bold text-slate-800 text-sm">바스크 치즈케이크</h4>
+                    <p class="text-[10px] text-slate-400 mb-1">Baschee</p>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-xs text-slate-500">진하고 꾸덕한<br>치즈 풍미</span>
+                        <span class="font-bold text-lawson-blue text-sm">265엔</span>
+                    </div>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="badge-cold mb-2">냉장</span>
+                    <h4 class="font-bold text-slate-800 text-sm">더블 슈크림</h4>
+                    <p class="text-[10px] text-slate-400 mb-1">Double Cream Puff</p>
+                    <div class="flex justify-between items-end mt-2">
+                        <span class="text-xs text-slate-500">생크림+커스터드<br>가성비 갑</span>
+                        <span class="font-bold text-lawson-blue text-sm">170엔</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-red-100 pb-2">
+                <i data-lucide="flame" class="w-5 h-5 text-red-500"></i> 계산대 옆 핫 스낵
+            </h3>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-3">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                            카라아게쿤 (Karaage-kun) <span class="badge-hot">HOT</span>
+                        </h4>
+                        <p class="text-sm text-slate-600 mt-1">로손의 상징! 한 입 크기 순살 치킨 (5개입)</p>
+                    </div>
+                    <span class="font-bold text-lawson-blue text-lg">248엔</span>
+                </div>
+                <div class="mt-3 grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-red-50 p-2 rounded text-xs text-red-700 font-bold border border-red-100">
+                        레귤러<br>(기본)
+                    </div>
+                    <div class="bg-red-100 p-2 rounded text-xs text-red-800 font-bold border border-red-200">
+                        레드<br>(매운맛)🔥
+                    </div>
+                    <div class="bg-yellow-50 p-2 rounded text-xs text-yellow-700 font-bold border border-yellow-100">
+                        치즈<br>(치즈맛)
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex justify-between items-center">
+                    <h4 class="font-bold text-slate-800">L-치키 (L-Chiki)</h4>
+                    <span class="font-bold text-lawson-blue text-sm">235엔~</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">넓적다리 살로 만든 쥬시한 프라이드 치킨.</p>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2 border-b-2 border-slate-100 pb-2">
+                <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500"></i> 로손 이용 꿀팁
+            </h3>
+            
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-3">
+                <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <i data-lucide="coffee" class="w-4 h-4 text-slate-600"></i> Machi Café 커피 주문
+                </h4>
+                <p class="text-sm text-slate-600 leading-relaxed mb-2">
+                    계산대에서 직접 주문합니다. 직원이 컵을 주면 기계에서 셀프로 내리거나, 직원이 내려주는 방식(점포별 상이)입니다.
+                </p>
+                <div class="bg-white p-3 rounded border border-slate-200 text-xs space-y-1">
+                    <p>☕ <strong>아이스 코-히- (S/M/L)</strong> : 아이스 아메리카노</p>
+                    <p>🥛 <strong>아이스 라떼 (M)</strong> : 우유 맛이 진하고 맛있음!</p>
+                    <p>🥤 <strong>메가 사이즈</strong> : 기본 M사이즈의 2배 (가성비)</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <i data-lucide="wallet" class="w-4 h-4 text-slate-600"></i> 계산 & 기타
+                </h4>
+                <ul class="text-sm text-slate-600 space-y-2">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-3 h-3 mt-1 text-green-500"></i>
+                        <span><strong>셀프 계산대:</strong> 화면에서 '한국어' 선택 가능. 동전 처리하기 좋음.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-3 h-3 mt-1 text-green-500"></i>
+                        <span><strong>비닐봉투:</strong> 유료(3~5엔). "후쿠로와 이리마셍(봉투 필요 없어요)"</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check" class="w-3 h-3 mt-1 text-green-500"></i>
+                        <span><strong>화장실:</strong> 대부분 무료 개방이나 사용 전 직원에게 눈인사 추천.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
+
+    </main>
+
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script src="common.js"></script>
+</body>
+</html>
