@@ -14,7 +14,8 @@ const menuItems = [
     { name: '쇼핑', url: 'shopping.html', icon: 'shopping-bag' },
     { name: '십계명', url: 'decalogue.html', icon: 'scroll' },
     { name: '숙소', url: 'house.html', icon: 'hotel' },
-    { name: '로손', url: 'lawson.html', icon: 'store' }, // [수정됨] 숙소 다음 위치에 추가
+    { name: '로손', url: 'lawson.html', icon: 'store' },
+    { name: '일본어', url: 'talk.html', icon: 'message-circle' }, // [수정됨] 로손 뒤에 일본어 탭 추가
     { name: '렌트카', url: 'car.html', icon: 'car' },
     { name: '긴급연락처', url: 'emergency.html', icon: 'siren' },
 ];
