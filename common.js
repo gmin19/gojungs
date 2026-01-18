@@ -4,7 +4,7 @@
  */
 
 // ==========================================
-// 1. 네비게이션 메뉴 데이터 & 렌더링 (NEW)
+// 1. 네비게이션 메뉴 데이터 & 렌더링
 // ==========================================
 const menuItems = [
     { name: '일정표', url: 'index.html', icon: 'calendar-days' },
@@ -14,9 +14,9 @@ const menuItems = [
     { name: '쇼핑', url: 'shopping.html', icon: 'shopping-bag' },
     { name: '십계명', url: 'decalogue.html', icon: 'scroll' },
     { name: '숙소', url: 'house.html', icon: 'hotel' },
+    { name: '로손', url: 'lawson.html', icon: 'store' }, // [수정됨] 숙소 다음 위치에 추가
     { name: '렌트카', url: 'car.html', icon: 'car' },
     { name: '긴급연락처', url: 'emergency.html', icon: 'siren' },
-    // 나중에 여기에 { name: '로손', url: 'lawson.html', icon: 'store' } 만 추가하면 됨
 ];
 
 function renderNavigation() {
@@ -33,7 +33,6 @@ function renderNavigation() {
 
     menuItems.forEach(item => {
         // 현재 페이지와 URL이 같으면 active 클래스 적용
-        // 긴급연락처(emergency.html)는 붉은색 스타일 적용 예외 처리 가능
         const isActive = currentPath === item.url;
         let activeClass = isActive ? 'active' : '';
         let extraStyle = '';
@@ -94,7 +93,7 @@ function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
     }
 }
 
-// 앱 실행 함수들 (카카오T, 우버, 파파고, 구글번역) - 기존과 동일
+// 앱 실행 함수들 (카카오T, 우버, 파파고, 구글번역)
 function openKakaoT() {
     openApp(
         /android/i.test(navigator.userAgent) ? "intent://#Intent;scheme=kakaot;package=com.kakao.taxi;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.kakao.taxi;end" : "kakaot://", 
@@ -246,7 +245,7 @@ window.addEventListener('scroll', () => {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    renderNavigation(); // [NEW] 네비게이션 자동 생성
+    renderNavigation();
     renderGlobalApps();
     updateWeather();
     if (window.lucide) window.lucide.createIcons();
