@@ -60,9 +60,6 @@
         }
         .mapcode-label { display: block; font-size: 10px; color: #94A3B8; font-weight: 700; margin-bottom: 2px; }
         .mapcode-text { display: block; font-family: monospace; font-size: 18px; font-weight: 900; color: #1E293B; letter-spacing: -0.5px; }
-
-        /* 카테고리 아이콘 */
-        .cat-icon { width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 2px; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -117,38 +114,38 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 데이터 베이스 (모든 장소 통합)
+        // 데이터 베이스 (구글맵 쿼리 수정됨)
         const locations = [
             // [숙소 & 렌터카]
-            { name: "레쿠 오키나와 (숙소)", category: "숙소", region: "central", mapcode: "33 525 594*3", googleId: "1" },
-            { name: "유니버스 렌터카", category: "렌터카", region: "south", mapcode: "33 005 306*61", googleId: "12" },
+            { name: "레쿠 오키나와 (숙소)", category: "숙소", region: "central", mapcode: "33 525 594*3", googleQuery: "Lequ Okinawa Chatan Spa & Resort" },
+            { name: "유니버스 렌터카", category: "렌터카", region: "south", mapcode: "33 005 306*61", googleQuery: "ユニバースレンタカー那覇空港店 外車・輸入車専門" },
 
             // [북부 관광지]
-            { name: "츄라우미 수족관", category: "관광", region: "north", mapcode: "553 075 797", googleId: "14" },
-            { name: "코우리 오션타워", category: "관광", region: "north", mapcode: "485 693 485*06", googleId: "19" },
-            { name: "나고 파인애플 파크", category: "관광", region: "north", mapcode: "206 716 467*82", googleId: "20" },
-            { name: "네오 파크 오키나와", category: "관광", region: "north", mapcode: "206 653 842*55", googleId: "21" },
-            { name: "만좌모", category: "관광", region: "north", mapcode: "206 312 097*55", googleId: "18" },
+            { name: "츄라우미 수족관", category: "관광", region: "north", mapcode: "553 075 797", googleQuery: "Okinawa Churaumi Aquarium" },
+            { name: "코우리 오션타워", category: "관광", region: "north", mapcode: "485 693 485*06", googleQuery: "Kouri Ocean Tower" },
+            { name: "나고 파인애플 파크", category: "관광", region: "north", mapcode: "206 716 467*82", googleQuery: "Nago Pineapple Park" },
+            { name: "네오 파크 오키나와", category: "관광", region: "north", mapcode: "206 653 842*55", googleQuery: "Neo Park Okinawa" },
+            { name: "만좌모", category: "관광", region: "north", mapcode: "206 312 097*55", googleQuery: "Manzamo" },
 
             // [중부 관광지 & 쇼핑]
-            { name: "아메리칸 빌리지", category: "관광", region: "central", mapcode: "33 526 451*20", googleId: "22" },
-            { name: "이온몰 라이카무", category: "쇼핑", region: "central", mapcode: "33 530 406*45", googleId: "29" },
-            { name: "파르코 시티", category: "쇼핑", region: "central", mapcode: "33 341 124*74", googleId: "30" },
-            { name: "동남식물원", category: "관광", region: "central", mapcode: "33 742 510*74", googleId: "23" },
-            { name: "메가 돈키호테 기노완", category: "쇼핑", region: "central", mapcode: "33 434 024*44", googleId: "32" },
-            { name: "오카시고텐 (요미탄)", category: "쇼핑", region: "central", mapcode: "206 315 289*63", googleId: "34" },
-            { name: "잔파곶 등대", category: "관광", region: "central", mapcode: "1005 685 326*43", googleId: "24" },
-            { name: "류큐무라", category: "관광", region: "central", mapcode: "206 033 065*25", googleId: "25" },
+            { name: "아메리칸 빌리지", category: "관광", region: "central", mapcode: "33 526 451*20", googleQuery: "American Village Okinawa" },
+            { name: "이온몰 라이카무", category: "쇼핑", region: "central", mapcode: "33 530 406*45", googleQuery: "AEON MALL Okinawa Rycom" },
+            { name: "파르코 시티", category: "쇼핑", region: "central", mapcode: "33 341 124*74", googleQuery: "San-A Urasoe West Coast PARCO CITY" },
+            { name: "동남식물원", category: "관광", region: "central", mapcode: "33 742 510*74", googleQuery: "Southeast Botanical Gardens" },
+            { name: "메가 돈키호테 기노완", category: "쇼핑", region: "central", mapcode: "33 434 024*44", googleQuery: "MEGA Don Quijote Ginowan" },
+            { name: "오카시고텐 (요미탄)", category: "쇼핑", region: "central", mapcode: "206 315 289*63", googleQuery: "Okashigoten Yomitan Main Shop" },
+            { name: "잔파곶 등대", category: "관광", region: "central", mapcode: "1005 685 326*43", googleQuery: "Cape Zanpa Lighthouse" },
+            { name: "류큐무라", category: "관광", region: "central", mapcode: "206 033 065*25", googleQuery: "Ryukyu Mura" },
 
             // [남부 관광지 & 쇼핑]
-            { name: "우미카지 테라스", category: "관광", region: "south", mapcode: "33 002 602*06", googleId: "26" },
-            { name: "오키나와 월드", category: "관광", region: "south", mapcode: "232 495 330*83", googleId: "27" },
-            { name: "국제거리 (주차장)", category: "관광", region: "south", mapcode: "33 157 403*33", googleId: "17" },
-            { name: "아시비나 아울렛", category: "쇼핑", region: "south", mapcode: "232 544 452*22", googleId: "31" },
-            { name: "이아스 오키나와", category: "쇼핑", region: "south", mapcode: "232 543 400*25", googleId: "9" },
-            { name: "만화창고 (나하점)", category: "쇼핑", region: "south", mapcode: "33 064 552*55", googleId: "33" },
-            { name: "슈리성 공원", category: "관광", region: "south", mapcode: "33 161 526*66", googleId: "28" },
-            { name: "야치문 거리", category: "쇼핑", region: "south", mapcode: "33 158 123*44", googleId: "35" },
+            { name: "우미카지 테라스", category: "관광", region: "south", mapcode: "33 002 602*06", googleQuery: "Senagajima Umikaji Terrace" },
+            { name: "오키나와 월드", category: "관광", region: "south", mapcode: "232 495 330*83", googleQuery: "Okinawa World" },
+            { name: "국제거리 (주차장)", category: "관광", region: "south", mapcode: "33 157 403*33", googleQuery: "Technical Park Makishi 3rd" },
+            { name: "아시비나 아울렛", category: "쇼핑", region: "south", mapcode: "232 544 452*22", googleQuery: "Okinawa Outlet Mall Ashibinaa" },
+            { name: "이아스 오키나와", category: "쇼핑", region: "south", mapcode: "232 543 400*25", googleQuery: "iias Okinawa Toyosaki" },
+            { name: "만화창고 (나하점)", category: "쇼핑", region: "south", mapcode: "33 064 552*55", googleQuery: "Manga Souko Naha" },
+            { name: "슈리성 공원", category: "관광", region: "south", mapcode: "33 161 526*66", googleQuery: "Shurijo Castle Park" },
+            { name: "야치문 거리", category: "쇼핑", region: "south", mapcode: "33 158 123*44", googleQuery: "Tsuboya Yachimun Street" },
         ];
 
         function renderMapcodes(filter) {
@@ -167,7 +164,7 @@
                 else { regionLabel = '남부'; regionClass = 'tag-south'; }
 
                 const html = `
-                    <div class="place-item" onclick="window.open('http://googleusercontent.com/maps.google.com/${item.googleId}', '_blank')">
+                    <div class="place-item" onclick="window.open('https://www.google.com/maps/search/${encodeURIComponent(item.googleQuery)}', '_blank')">
                         <div>
                             <div class="flex justify-between items-start mb-1">
                                 <span class="badge-tag ${regionClass}">${regionLabel}</span>
