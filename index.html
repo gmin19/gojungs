@@ -54,17 +54,21 @@
             vertical-align: middle;
         }
         
-        /* 이동 시간 뱃지 스타일 */
-        .travel-time {
-            font-size: 12px;
-            color: #2563EB; /* Blue-600 */
-            font-weight: normal;
-            background-color: #EFF6FF;
-            padding: 2px 6px;
-            border-radius: 9999px;
-            margin-left: 4px;
-            white-space: nowrap;
+        /* [NEW] 이동 시간 뱃지 스타일 */
+        .badge-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e40af; /* Blue 800 */
+            background-color: #dbeafe; /* Blue 100 */
+            padding: 2px 8px;
+            border-radius: 9999px; /* 알약 모양 */
+            margin-left: 6px;
             vertical-align: middle;
+            border: 1px solid #bfdbfe;
+            letter-spacing: -0.5px;
         }
     </style>
 </head>
@@ -170,7 +174,7 @@
                             <a href="maps.google.com/search" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 유니버스 렌터카 인수 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(택시로 15분)</span>
+                            <span class="badge-time"><i data-lucide="car-taxi-front" class="w-3 h-3"></i> 택시 15분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">공항에서 <strong>점보택시</strong>로 이동하여 인수</p>
                         <div class="bg-yellow-50 border border-yellow-200 rounded p-2 mt-2 text-xs text-yellow-800">
@@ -192,7 +196,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Umikaji+Terrace" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 우미카지 테라스 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 15분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 15분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">공항 근처 하얀 테라스에서 바다 보며 산책</p>
                         <span class="mapcode" onclick="copyToClipboard('33 002 602*06')">MC: 33 002 602*06 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -210,7 +214,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 레쿠 오키나와 체크인 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 40분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 40분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">아메리칸 빌리지 내 위치, 짐 풀기</p>
                         <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -260,7 +264,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Manzamo" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 만좌모 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(숙소에서 45분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 45분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">코끼리 바위와 푸른 바다 절경 감상</p>
                         <span class="mapcode" onclick="copyToClipboard('206 312 097*55')">MC: 206 312 097*55 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -278,7 +282,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Ufuya+Okinawa" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 백년고택 우후야 (점심) <span class="badge-reservation">예약필수</span> <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 40분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 40분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">분위기 좋은 고택에서 즐기는 아구 돼지 요리</p>
                         <span class="mapcode" onclick="copyToClipboard('206 745 056*67')">MC: 206 745 056*67 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -296,7 +300,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Churaumi+Aquarium" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 츄라우미 수족관 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 30분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 30분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">고래상어와 오키짱 돌고래쇼 관람</p>
                         <span class="mapcode" onclick="copyToClipboard('553 075 797')">MC: 553 075 797 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -314,7 +318,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Kyoda+Rest+Area" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 쿄다 휴게소 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 50분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 50분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">옵빠 아이스크림 등 간식 타임</p>
                         <span class="mapcode" onclick="copyToClipboard('206 476 706*66')">MC: 206 476 706*66 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -332,7 +336,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 50분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 50분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">18:30부터 자유롭게 저녁 식사 및 휴식</p>
                         <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -368,7 +372,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Southeast+Botanical+Gardens" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 동남식물원 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(숙소에서 30분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 30분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">이국적인 식물과 동물 먹이주기 체험</p>
                         <span class="mapcode" onclick="copyToClipboard('33 742 510*74')">MC: 33 742 510*74 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -386,7 +390,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Aeon+Mall+Okinawa+Rycom" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 이온몰 라이카무 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 20분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 20분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">쇼핑 및 <strong>개별 점심 식사</strong></p>
                         <p class="text-blue-600 text-xs mt-1 bg-blue-50 px-2 py-1 rounded inline-block"><i data-lucide="info" class="w-3 h-3 inline"></i> 팁: 1층 대형 수족관 앞에서 만남</p>
@@ -406,7 +410,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Araha+Beach" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 아라하 비치 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 20분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 20분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">해적선 놀이터가 있어 아이들이 놀기 좋습니다.</p>
                         <span class="mapcode" onclick="copyToClipboard('33 496 038*21')">MC: 33 496 038*21 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -424,7 +428,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Lequ+Okinawa+Chatan+Spa+Resort" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 10분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 10분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">잠시 휴식 후 저녁 식사 이동</p>
                         <span class="mapcode" onclick="copyToClipboard('33 525 594*3')">MC: 33 525 594*3 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -477,7 +481,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+World" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 오키나와 월드 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(숙소에서 50분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 50분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">옥천동굴 탐험 및 에이서 공연 관람</p>
                         <span class="mapcode" onclick="copyToClipboard('232 495 330*83')">MC: 232 495 330*83 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -495,7 +499,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query=iias+Okinawa+Toyosaki" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 이아스 오키나와 & 점심 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 30분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 30분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">쇼핑몰 내 개별 식사</p>
                         <span class="mapcode" onclick="copyToClipboard('232 543 400*25')">MC: 232 543 400*25 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -519,7 +523,7 @@
                             <a href="maps.google.com/search" target="_blank" class="hover:text-blue-600 flex items-center gap-1">
                                 유니버스 렌터카 반납 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </a>
-                            <span class="travel-time">(차로 15분)</span>
+                            <span class="badge-time"><i data-lucide="car" class="w-3 h-3"></i> 15분</span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1"><strong>주유 반납 불필요.</strong> 반납 후 택시로 공항 이동.</p>
                         <span class="mapcode" onclick="copyToClipboard('33 005 306*61')">MC: 33 005 306*61 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -535,7 +539,7 @@
                         <span class="text-sm font-bold text-blue-600">15:30</span>
                         <h3 class="text-lg font-bold text-slate-800">
                             나하공항 도착 & 수속
-                            <span class="travel-time">(택시로 15분)</span>
+                            <span class="badge-time"><i data-lucide="car-taxi-front" class="w-3 h-3"></i> 택시 15분</span>
                         </h3>
                         <div class="bg-white border border-slate-200 rounded-lg p-3 mt-2 shadow-sm">
                             <h4 class="text-xs font-bold text-slate-700 mb-1 flex items-center gap-1"><i data-lucide="check-square" class="w-3 h-3 text-indigo-500"></i> 귀국 준비 체크</h4>
