@@ -25,11 +25,11 @@
         .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         
-        /* 탭 버튼 (맛집 탭과 동일) */
+        /* 탭 버튼 */
         .filter-btn { border: 1px solid #E2E8F0; color: #64748B; background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; white-space: nowrap; transition: all 0.2s; }
         .filter-btn.active { background-color: #0D9488; color: white; border-color: #0D9488; } /* Teal-600 */
 
-        /* 카드 스타일 (맛집 탭과 동일 구조) */
+        /* 카드 스타일 */
         .place-item {
             background-color: white;
             border: 1px solid #E2E8F0;
@@ -49,10 +49,10 @@
         .bg-planned { background-color: #EFF6FF; color: #2563EB; } /* 일정포함: 파랑 */
         .bg-option { background-color: #F1F5F9; color: #64748B; } /* 추천옵션: 회색 */
         
-        /* 지역별 색상 */
-        .tag-north { color: #059669; background-color: #ECFDF5; } /* 북부: 초록 */
-        .tag-central { color: #EA580C; background-color: #FFF7ED; } /* 중부: 주황 */
-        .tag-south { color: #2563EB; background-color: #EFF6FF; } /* 남부: 파랑 */
+        /* 지역별 뱃지 색상 */
+        .tag-north { color: #059669; background-color: #ECFDF5; border: 1px solid #A7F3D0; }
+        .tag-central { color: #EA580C; background-color: #FFF7ED; border: 1px solid #FED7AA; }
+        .tag-south { color: #2563EB; background-color: #EFF6FF; border: 1px solid #BFDBFE; }
 
         /* 면세 뱃지 */
         .badge-taxfree { 
@@ -125,57 +125,76 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 데이터 정의
+        // [데이터 정의]
+        // category: 'sightseeing'(관광), 'mall'(쇼핑몰), 'gift'(기념품)
+        // region: 'north'(북부), 'central'(중부), 'south'(남부)
+        // -> 필터링 시 category와 region을 각각 체크합니다.
+        
         const places = [
-            // [북부]
-            { type: 'north', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: '14', region: '북부', status: 'planned' },
-            { type: 'north', name: '만좌모', desc: '코끼리 얼굴 모양의 침식 절벽.', mapcode: '206 312 097*55', mapUrl: '18', region: '북부', status: 'planned' },
-            { type: 'north', name: '코우리 대교 & 섬', desc: '에메랄드빛 바다 위를 달리는 드라이브.', mapcode: '485 693 485*06', mapUrl: '19', region: '북부', status: 'option' },
-            { type: 'north', name: '나고 파인애플 파크', desc: '귀여운 무인 카트를 타고 농장 탐험.', mapcode: '206 716 467*82', mapUrl: '20', region: '북부', status: 'option' },
-            { type: 'north', name: '네오 파크 오키나와', desc: '새와 동물을 가까이서 만나는 곳.', mapcode: '206 653 842*55', mapUrl: '21', region: '북부', status: 'option' },
+            // --- 북부 (North) ---
+            { region: 'north', category: 'sightseeing', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: '14', status: 'planned' },
+            { region: 'north', category: 'sightseeing', name: '만좌모', desc: '코끼리 얼굴 모양의 침식 절벽.', mapcode: '206 312 097*55', mapUrl: '18', status: 'planned' },
+            { region: 'north', category: 'sightseeing', name: '코우리 대교 & 섬', desc: '에메랄드빛 바다 위를 달리는 드라이브.', mapcode: '485 693 485*06', mapUrl: '19', status: 'option' },
+            { region: 'north', category: 'sightseeing', name: '나고 파인애플 파크', desc: '귀여운 무인 카트를 타고 농장 탐험.', mapcode: '206 716 467*82', mapUrl: '20', status: 'option' },
+            { region: 'north', category: 'sightseeing', name: '네오 파크 오키나와', desc: '새와 동물을 가까이서 만나는 곳.', mapcode: '206 653 842*55', mapUrl: '21', status: 'option' },
 
-            // [중부]
-            { type: 'central', name: '아메리칸 빌리지', desc: '숙소 앞! 쇼핑, 맛집, 야경의 랜드마크.', mapcode: '33 526 451*20', mapUrl: '22', region: '중부', status: 'planned' },
-            { type: 'central', name: '동남식물원', desc: '이국적인 야자수와 귀여운 동물 체험.', mapcode: '33 742 510*74', mapUrl: '23', region: '중부', status: 'planned' },
-            { type: 'central', name: '잔파곶 등대', desc: '웅장한 절벽과 하얀 등대.', mapcode: '1005 685 326*43', mapUrl: '24', region: '중부', status: 'option' },
-            { type: 'central', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: '25', region: '중부', status: 'option' },
+            // --- 중부 (Central) ---
+            { region: 'central', category: 'sightseeing', name: '아메리칸 빌리지', desc: '숙소 앞! 쇼핑, 맛집, 야경의 랜드마크.', mapcode: '33 526 451*20', mapUrl: '22', status: 'planned' },
+            { region: 'central', category: 'sightseeing', name: '동남식물원', desc: '이국적인 야자수와 귀여운 동물 체험.', mapcode: '33 742 510*74', mapUrl: '23', status: 'planned' },
+            { region: 'central', category: 'sightseeing', name: '잔파곶 등대', desc: '웅장한 절벽과 하얀 등대.', mapcode: '1005 685 326*43', mapUrl: '24', status: 'option' },
+            { region: 'central', category: 'sightseeing', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: '25', status: 'option' },
+            
+            // 중부 쇼핑 & 기념품 (다중 분류)
+            { region: 'central', category: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: '29', status: 'planned', taxfree: '1F 면세카운터 / 각 매장' },
+            { region: 'central', category: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰.', mapcode: '33 341 124*74', mapUrl: '30', status: 'option', taxfree: '1F 그린존 통합 카운터' },
+            { region: 'central', category: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: '32', status: 'option', taxfree: '면세 전용 계산대' },
+            { region: 'central', category: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: '34', status: 'option', taxfree: '면세 전용 카운터' },
 
-            // [남부]
-            { type: 'south', name: '우미카지 테라스', desc: '공항 근처, 비행기가 보이는 하얀 테라스.', mapcode: '33 002 602*06', mapUrl: '26', region: '남부', status: 'planned' },
-            { type: 'south', name: '오키나와 월드', desc: '동양 최대 종유동굴과 전통 공연.', mapcode: '232 495 330*83', mapUrl: '27', region: '남부', status: 'planned' },
-            { type: 'south', name: '국제거리', desc: '나하 최대 번화가. (추천주차: 마키시 제3)', mapcode: '33 157 403*33', mapUrl: '17', region: '남부', status: 'option' },
-            { type: 'south', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: '28', region: '남부', status: 'option' },
+            // --- 남부 (South) ---
+            { region: 'south', category: 'sightseeing', name: '우미카지 테라스', desc: '공항 근처, 비행기가 보이는 하얀 테라스.', mapcode: '33 002 602*06', mapUrl: '26', status: 'planned' },
+            { region: 'south', category: 'sightseeing', name: '오키나와 월드', desc: '동양 최대 종유동굴과 전통 공연.', mapcode: '232 495 330*83', mapUrl: '27', status: 'planned' },
+            { region: 'south', category: 'sightseeing', name: '국제거리', desc: '나하 최대 번화가. (추천주차: 마키시 제3)', mapcode: '33 157 403*33', mapUrl: '17', status: 'option' },
+            { region: 'south', category: 'sightseeing', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: '28', status: 'option' },
 
-            // [쇼핑몰]
-            { type: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: '29', region: '중부', status: 'planned', taxfree: '1F 면세카운터 / 각 매장' },
-            { type: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰.', mapcode: '33 341 124*74', mapUrl: '30', region: '중부', status: 'option', taxfree: '1F 그린존 통합 카운터' },
-            { type: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: '31', region: '남부', status: 'option', taxfree: '각 매장 계산대' },
-            { type: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: '9', region: '남부', status: 'planned', taxfree: '매장별 상이' },
-
-            // [기념품]
-            { type: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: '32', region: '중부', status: 'option', taxfree: '면세 전용 계산대' },
-            { type: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: '33', region: '남부', status: 'option', taxfree: '면세 가능' },
-            { type: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: '34', region: '중부', status: 'option', taxfree: '면세 전용 카운터' },
-            { type: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: '35', region: '남부', status: 'option', taxfree: '매장별 상이' },
+            // 남부 쇼핑 & 기념품
+            { region: 'south', category: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: '31', status: 'option', taxfree: '각 매장 계산대' },
+            { region: 'south', category: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: '9', status: 'planned', taxfree: '매장별 상이' },
+            { region: 'south', category: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: '33', status: 'option', taxfree: '면세 가능' },
+            { region: 'south', category: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: '35', status: 'option', taxfree: '매장별 상이' },
         ];
 
-        function renderPlaces(filterType) {
+        function renderPlaces(filterKey) {
             const container = document.getElementById('content-area');
             container.innerHTML = '';
 
-            const filtered = filterType === 'all' ? places : places.filter(p => p.type === filterType);
+            const filtered = places.filter(place => {
+                if (filterKey === 'all') return true;
+                
+                // 지역 필터 (north, central, south)
+                if (['north', 'central', 'south'].includes(filterKey)) {
+                    return place.region === filterKey;
+                }
+                // 카테고리 필터 (mall, gift)
+                if (['mall', 'gift'].includes(filterKey)) {
+                    return place.category === filterKey;
+                }
+                return false;
+            });
 
             filtered.forEach(place => {
-                // 뱃지 설정
+                // 지역 뱃지 렌더링
+                let regionLabel = '';
                 let regionClass = '';
-                if(place.region === '북부') regionClass = 'tag-north';
-                else if(place.region === '중부') regionClass = 'tag-central';
-                else regionClass = 'tag-south';
+                if(place.region === 'north') { regionLabel = '북부'; regionClass = 'tag-north'; }
+                else if(place.region === 'central') { regionLabel = '중부'; regionClass = 'tag-central'; }
+                else { regionLabel = '남부'; regionClass = 'tag-south'; }
 
+                // 일정 상태 뱃지
                 let statusBadge = place.status === 'planned' 
                     ? `<span class="badge-tag bg-planned">🗓️ 일정포함</span>` 
                     : `<span class="badge-tag bg-option">✨ 추천옵션</span>`;
 
+                // 면세 뱃지
                 let taxFreeBadge = place.taxfree 
                     ? `<span class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> ${place.taxfree}</span>` 
                     : '';
@@ -185,7 +204,7 @@
                         <div>
                             <div class="flex justify-between items-start mb-1">
                                 <div class="flex gap-1">
-                                    <span class="badge-tag ${regionClass}">${place.region}</span>
+                                    <span class="badge-tag ${regionClass}">${regionLabel}</span>
                                     ${statusBadge}
                                 </div>
                             </div>
@@ -209,10 +228,10 @@
             if (window.lucide) window.lucide.createIcons();
         }
 
-        function filterContent(type) {
+        function filterContent(key) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${type}`).classList.add('active');
-            renderPlaces(type);
+            document.getElementById(`btn-${key}`).classList.add('active');
+            renderPlaces(key);
         }
 
         // 초기 렌더링
