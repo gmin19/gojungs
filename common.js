@@ -1,14 +1,12 @@
 /**
- * 오키나와 가족 여행 공통 스크립트 (Firebase 연동 버전)
- * - 네비게이션, 날씨, 앱 연동
- * - ★실시간 공지사항 팝업★
+ * 오키나와 가족 여행 공통 스크립트 (Firebase 연동 + 앱 실행 개선 버전)
  */
 
-// 1. Firebase 라이브러리 가져오기 (CDN)
+// 1. Firebase 라이브러리 가져오기
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 2. Firebase 설정 (보내주신 코드)
+// 2. Firebase 설정
 const firebaseConfig = {
     apiKey: "AIzaSyCTsBiqB4l1X-f_Bf7e0adCZtS_mmoYjWg",
     authDomain: "okinawa-trip-2026-cdc54.firebaseapp.com",
@@ -70,30 +68,24 @@ function renderNavigation() {
 }
 
 // ==========================================
-// B. Firebase 실시간 공지사항 팝업 (핵심)
+// B. Firebase 실시간 공지사항 팝업
 // ==========================================
 async function checkAndShowNotice() {
     try {
-        // Firestore에서 'notices' 컬렉션의 'latest' 문서를 가져옴
         const docRef = doc(db, "notices", "latest");
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-
-            // 1. 활성화 여부 체크
             if (!data.isActive) return;
 
-            // 2. 만료 시간 체크
             const now = new Date();
             const expiry = new Date(data.expiryDate);
             if (now > expiry) return;
 
-            // 3. '오늘 하루 안 보기' 체크 (로컬 스토리지에 저장된 ID와 비교)
             const hiddenUntil = localStorage.getItem(`hide_${data.id}`);
             if (hiddenUntil && now < new Date(hiddenUntil)) return;
 
-            // 4. 팝업 띄우기
             showNoticePopup(data);
         }
     } catch (error) {
@@ -102,7 +94,6 @@ async function checkAndShowNotice() {
 }
 
 function showNoticePopup(data) {
-    // 이미 떠있으면 중복 방지
     if (document.getElementById('common-notice-popup')) return;
 
     const popupHtml = `
@@ -144,7 +135,6 @@ function showNoticePopup(data) {
     }, 10);
 }
 
-// 팝업 닫기 (전역 함수로 등록)
 window.closeNoticePopup = function() {
     const el = document.getElementById('common-notice-popup');
     if (el) {
@@ -153,55 +143,98 @@ window.closeNoticePopup = function() {
     }
 };
 
-// 오늘 하루 안 보기 (전역 함수로 등록)
 window.closeNoticeToday = function(noticeId) {
     const now = new Date();
-    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); // 내일 자정
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     localStorage.setItem(`hide_${noticeId}`, tomorrow);
     window.closeNoticePopup();
 };
 
 // ==========================================
-// C. 앱 실행 & 유틸리티
+// C. [개선됨] 앱 실행 로직 (Deep Link)
 // ==========================================
-// (type="module"에서는 onclick에서 함수를 못 찾으므로 window 객체에 등록해야 합니다)
+function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+    const isAndroid = /android/.test(userAgent);
 
-function openApp(urlScheme, storeUrlAndroid, storeUrlIOS, webFallback) {
-    const userAgent = navigator.userAgent;
-    const isAndroid = /android/i.test(userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+    if (isIOS) {
+        // [iOS 개선 로직 적용]
+        // 1. 앱 실행 시도
+        window.location.href = scheme;
 
-    if (isAndroid) {
-        if (urlScheme.startsWith('intent:')) {
-            window.location.href = urlScheme;
+        // 2. 실행 감지 및 타이머 설정
+        const clickedAt = +new Date();
+        
+        // 페이지가 숨겨지거나 포커스를 잃으면(앱이 열리면) 타이머 해제
+        const clearTimers = () => {
+            clearTimeout(timer);
+            window.removeEventListener('pagehide', clearTimers);
+            window.removeEventListener('blur', clearTimers);
+        };
+        
+        window.addEventListener('pagehide', clearTimers);
+        window.addEventListener('blur', clearTimers);
+
+        const timer = setTimeout(function() {
+            // 앱 실행으로 화면이 숨겨졌다면 스토어로 이동하지 않음
+            if (document.hidden || document.webkitHidden) {
+                return;
+            }
+            // 시간차 체크 (시스템 팝업 등으로 지연된 경우 방지)
+            if (+new Date() - clickedAt < 2500) { 
+                window.location.href = storeUrlIOS;
+            }
+        }, 2000);
+
+    } else if (isAndroid) {
+        // [Android] Intent 방식 사용 (가장 확실함)
+        // Intent URL이 있으면 사용, 없으면 스키마 시도
+        if (intentUrlAndroid) {
+            window.location.href = intentUrlAndroid;
         } else {
-            const now = new Date().getTime();
-            setTimeout(() => {
-                if (new Date().getTime() - now < 2500) window.location.href = storeUrlAndroid;
-            }, 2000);
-            window.location.href = urlScheme;
+            window.location.href = scheme;
         }
-    } else if (isIOS) {
-        const now = new Date().getTime();
-        window.location.href = urlScheme;
-        setTimeout(() => {
-            if (new Date().getTime() - now < 3000) window.location.href = storeUrlIOS;
-        }, 2500);
     } else {
-        window.open(webFallback);
+        // [PC/기타] 웹 버전으로 이동
+        window.open(webFallback, "_blank");
     }
 }
 
-// 전역 함수로 등록
-window.openKakaoT = () => openApp(/android/i.test(navigator.userAgent) ? "intent://#Intent;scheme=kakaot;package=com.kakao.taxi;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.kakao.taxi;end" : "kakaot://", "https://play.google.com/store/apps/details?id=com.kakao.taxi", "https://apps.apple.com/app/id981110422", "https://www.kakaocorp.com/service/KakaoT");
-window.openUber = () => openApp(/android/i.test(navigator.userAgent) ? "intent://#Intent;scheme=uber;package=com.ubercab;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.ubercab;end" : "uber://", "https://play.google.com/store/apps/details?id=com.ubercab", "https://apps.apple.com/app/id368677368", "https://m.uber.com/ul");
-window.openPapago = () => openApp(/android/i.test(navigator.userAgent) ? "intent://#Intent;scheme=papago;package=com.naver.labs.translator;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.naver.labs.translator;end" : "papago://", "https://play.google.com/store/apps/details?id=com.naver.labs.translator", "https://apps.apple.com/app/id1147246415", "https://papago.naver.com/");
-window.openGoogleTranslate = () => openApp(/android/i.test(navigator.userAgent) ? "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.google.android.apps.translate;end" : "googletranslate://", "https://play.google.com/store/apps/details?id=com.google.android.apps.translate", "https://apps.apple.com/app/id414706506", "https://translate.google.com/");
+// 각 앱별 실행 정보 설정 및 전역 등록
+window.openPapago = () => openApp(
+    "papago://", 
+    "https://apps.apple.com/app/id1147246415", 
+    "intent://#Intent;scheme=papago;package=com.naver.labs.translator;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.naver.labs.translator;end", 
+    "https://papago.naver.com/"
+);
+
+window.openGoogleTranslate = () => openApp(
+    "googletranslate://", 
+    "https://apps.apple.com/app/id414706506", 
+    "intent://#Intent;package=com.google.android.apps.translate;scheme=googletranslate;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.google.android.apps.translate;end", 
+    "https://translate.google.com/"
+);
+
+window.openKakaoT = () => openApp(
+    "kakaot://", 
+    "https://apps.apple.com/app/id981110422", 
+    "intent://#Intent;scheme=kakaot;package=com.kakao.taxi;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.kakao.taxi;end", 
+    "https://www.kakaocorp.com/service/KakaoT"
+);
+
+window.openUber = () => openApp(
+    "uber://", 
+    "https://apps.apple.com/app/id368677368", 
+    "intent://#Intent;scheme=uber;package=com.ubercab;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.ubercab;end", 
+    "https://m.uber.com/ul"
+);
+
+// 유틸리티
 window.copyToClipboard = (text) => {
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(window.showToast);
     } else {
-        // 구형 방식 백업
         const t = document.createElement("textarea");
         t.value = text;
         t.style.position="fixed"; t.style.left="-9999px";
@@ -305,6 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNavigation();
     renderGlobalApps();
     updateWeather();
-    checkAndShowNotice(); // [NEW] Firebase 공지 확인
+    checkAndShowNotice();
     if (window.lucide) window.lucide.createIcons();
 });
