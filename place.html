@@ -25,50 +25,57 @@
         .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         
+        /* 탭 버튼 (맛집 탭과 동일) */
+        .filter-btn { border: 1px solid #E2E8F0; color: #64748B; background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; white-space: nowrap; transition: all 0.2s; }
+        .filter-btn.active { background-color: #0D9488; color: white; border-color: #0D9488; } /* Teal-600 */
+
+        /* 카드 스타일 (맛집 탭과 동일 구조) */
+        .place-item {
+            background-color: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            height: 100%;
+        }
+        .place-item:active { transform: scale(0.98); background-color: #F0FDFA; }
+
         /* 뱃지 스타일 */
-        .badge-planned { background-color: #EFF6FF; color: #2563EB; border: 1px solid #DBEAFE; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 2px; }
-        .badge-option { background-color: #F1F5F9; color: #64748B; border: 1px solid #E2E8F0; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 2px; }
+        .badge-tag { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 2px; }
+        .bg-planned { background-color: #EFF6FF; color: #2563EB; } /* 일정포함: 파랑 */
+        .bg-option { background-color: #F1F5F9; color: #64748B; } /* 추천옵션: 회색 */
         
-        /* 면세 뱃지 (구체적 정보) */
+        /* 지역별 색상 */
+        .tag-north { color: #059669; background-color: #ECFDF5; } /* 북부: 초록 */
+        .tag-central { color: #EA580C; background-color: #FFF7ED; } /* 중부: 주황 */
+        .tag-south { color: #2563EB; background-color: #EFF6FF; } /* 남부: 파랑 */
+
+        /* 면세 뱃지 */
         .badge-taxfree { 
             background-color: #FFF1F2; color: #BE123C; border: 1px solid #FECDD3; 
-            font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; 
-            display: flex; align-items: center; gap: 4px; width: fit-content; margin-top: 4px;
-        }
-        
-        /* 지역 뱃지 */
-        .loc-north { background-color: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
-        .loc-central { background-color: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA; font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
-        .loc-south { background-color: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
-
-        /* 필터 버튼 */
-        .filter-btn { padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1px solid #E2E8F0; background-color: white; color: #64748B; white-space: nowrap; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-        .filter-btn.active { background-color: #0F766E; color: white; border-color: #0F766E; box-shadow: 0 2px 4px rgba(15, 118, 110, 0.3); }
-
-        /* 카드 스타일 */
-        .place-card { background-color: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s; }
-        .place-card:active { transform: scale(0.99); }
-
-        /* 맵코드 박스 (보여주기용) */
-        .mapcode-box {
-            background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px;
-            padding: 8px 12px; text-align: center; flex: 1.2;
-            display: flex; flex-direction: column; justify-content: center;
+            font-size: 10px; font-weight: 800; padding: 3px 6px; border-radius: 4px; 
+            display: inline-block; margin-top: 6px;
         }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <header class="bg-teal-700 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+    <header class="bg-teal-600 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
-                    <span class="text-teal-200 font-bold text-xs mb-1 block">일정 변경 시 참고하세요</span>
+                    <span class="text-teal-200 font-bold text-xs mb-1 block">어디로 갈까?</span>
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
-                        지역별 관광지 &<br>
+                        관광지 &<br>
                         <span class="text-yellow-300">쇼핑</span> <span class="text-teal-200">핫플레이스</span>
                     </h1>
-                    <p class="text-teal-100 text-xs mt-2">맵코드를 보고 내비게이션에 입력하세요</p>
+                    <p class="text-teal-100 text-xs mt-2 flex items-center gap-1">
+                        <i data-lucide="map-pin" class="w-3 h-3"></i> 지역별 명소 및 맵코드 완벽 정리
+                    </p>
                 </div>
             </div>
         </div>
@@ -79,18 +86,16 @@
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
 
-        <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 mb-6 shadow-sm flex items-start gap-3">
-            <div class="bg-white p-2 rounded-lg text-indigo-600 shadow-sm"><i data-lucide="receipt" class="w-5 h-5"></i></div>
-            <div>
-                <h3 class="font-bold text-indigo-800 text-sm mb-1">면세(Tax-Free) 체크포인트</h3>
-                <p class="text-xs text-indigo-700 leading-relaxed">
-                    세금 포함 <span class="text-red-600 font-bold">5,500엔 이상</span> 구매 시 가능.<br>
-                    반드시 <span class="font-bold">여권 원본</span>(입국 스티커) 지참!
-                </p>
+        <div class="bg-slate-800 text-white p-4 rounded-xl shadow-sm mb-6 flex items-center gap-3">
+            <div class="bg-white/10 p-2 rounded-full"><i data-lucide="receipt" class="w-5 h-5 text-yellow-400"></i></div>
+            <div class="text-xs leading-relaxed">
+                <span class="text-yellow-400 font-bold">TAX FREE Tip:</span><br>
+                세금 포함 <span class="font-bold underline">5,500엔 이상</span> 구매 시 면세 가능.<br>
+                반드시 <span class="font-bold text-yellow-200">여권 원본</span>을 지참하세요!
             </div>
         </div>
 
-        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 sticky top-[55px] z-40 bg-[#F8FAFC] pt-2">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 sticky top-[57px] z-40 bg-[#F8FAFC] pt-2">
             <button onclick="filterContent('all')" class="filter-btn active" id="btn-all">전체</button>
             <button onclick="filterContent('north')" class="filter-btn" id="btn-north">🌊 북부</button>
             <button onclick="filterContent('central')" class="filter-btn" id="btn-central">🎡 중부</button>
@@ -99,362 +104,120 @@
             <button onclick="filterContent('gift')" class="filter-btn" id="btn-gift">🎁 기념품</button>
         </div>
         
-        <div class="space-y-8" id="content-area">
-            
-            <section id="sec-north" class="content-section">
-                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2 pl-1">
-                    <span class="w-1.5 h-5 bg-emerald-500 rounded-full"></span> 북부 (자연과 힐링)
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">츄라우미 수족관</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">거대한 수조의 고래상어는 오키나와 필수 코스.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">553 075 797</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=츄라우미수족관" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">만좌모</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">코끼리 얼굴 모양의 침식 절벽과 푸른 바다.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">206 312 097*55</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Manzamo" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">코우리 대교 & 섬</h4>
-                            <span class="badge-option">✨ 추천옵션</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">에메랄드빛 바다 위를 달리는 환상적인 드라이브.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">485 693 485*06</span>
-                            </div>
-                            <a href="https://maps.app.goo.gl/uX3QyQyQyQyQyQyQ" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">나고 파인애플 파크</h4>
-                            <span class="badge-option">✨ 추천옵션</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">귀여운 무인 카트를 타고 파인애플 농장 탐험.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">206 716 467*82</span>
-                            </div>
-                            <a href="https://maps.app.goo.gl/pineapple" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-central" class="content-section">
-                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2 pl-1">
-                    <span class="w-1.5 h-5 bg-orange-500 rounded-full"></span> 중부 (이국적인 매력)
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">아메리칸 빌리지</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">숙소 바로 앞! 쇼핑, 맛집, 야경이 있는 랜드마크.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 526 451*20</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=American+Village+Okinawa" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">동남식물원</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">이국적인 야자수와 귀여운 동물 체험.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 742 510*74</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Southeast+Botanical+Gardens" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">잔파곶 등대</h4>
-                            <span class="badge-option">✨ 추천옵션</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">웅장한 절벽과 하얀 등대. 석양이 아름다운 곳.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">1005 685 326*43</span>
-                            </div>
-                            <a href="https://maps.app.goo.gl/zanpa" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-south" class="content-section">
-                <h3 class="font-bold text-lg text-slate-800 mb-3 flex items-center gap-2 pl-1">
-                    <span class="w-1.5 h-5 bg-blue-500 rounded-full"></span> 남부 (나하 & 역사)
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">우미카지 테라스</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">공항 근처, 비행기 이착륙을 보는 하얀 테라스.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 002 602*06</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Umikaji+Terrace" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">오키나와 월드</h4>
-                            <span class="badge-planned">🗓️ 일정포함</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">동양 최대 종유동굴(옥천동굴)과 전통 공연.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드 (내비 입력)</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">232 495 330*83</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Okinawa+World" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-slate-800 text-lg">국제거리</h4>
-                            <span class="badge-option">✨ 추천옵션</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-3">기념품 가게와 맛집이 즐비한 나하 최대 번화가.</p>
-                        <div class="bg-orange-50 p-2 rounded-lg border border-orange-100 mb-3">
-                            <span class="text-[10px] text-orange-600 font-bold block mb-1">🚗 추천 주차장: 마키시 제3 주차장</span>
-                            <span class="font-mono text-orange-800 font-black text-xs block">33 157 403*33</span>
-                        </div>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">거리 맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 157 382*41</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=오키나와국제거리" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-mall" class="content-section">
-                <h3 class="font-bold text-lg text-indigo-700 mb-3 flex items-center gap-2 pl-1">
-                    <span class="w-1.5 h-5 bg-indigo-500 rounded-full"></span> 대형 쇼핑몰 & 아울렛
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <div class="flex gap-1">
-                                <span class="loc-central">🎡 중부</span>
-                                <span class="badge-planned">🗓️ 일정포함</span>
-                            </div>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">이온몰 라이카무</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 1F 면세카운터 / 각 매장</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">오키나와 최대 규모 리조트형 몰 (수조 있음).</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 530 406*45</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Araha+Beach3" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <div class="flex gap-1">
-                                <span class="loc-central">🎡 중부</span>
-                                <span class="badge-option">✨ 추천옵션</span>
-                            </div>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">파르코 시티</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 1F 그린존 통합 카운터</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">나하 인근, 바다가 보이는 최신 대형 쇼핑몰.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 341 124*74</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Araha+Beach8" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <div class="flex gap-1">
-                                <span class="loc-south">✈️ 남부</span>
-                                <span class="badge-option">✨ 추천옵션</span>
-                            </div>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">아시비나 아울렛</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 각 매장 계산대에서 바로</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">공항 근처, 명품 브랜드 및 스포츠 의류 아울렛.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">232 544 452*22</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Araha+Beach9" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <div class="flex gap-1">
-                                <span class="loc-south">✈️ 남부</span>
-                                <span class="badge-planned">🗓️ 일정포함</span>
-                            </div>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">이아스 오키나와</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 매장별 상이 (확인 필요)</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">DMM 카리유시 수족관이 있는 최신 복합 시설.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">232 543 400*25</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Kokusai+Dori" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="sec-gift" class="content-section">
-                <h3 class="font-bold text-lg text-yellow-700 mb-3 flex items-center gap-2 pl-1">
-                    <span class="w-1.5 h-5 bg-yellow-500 rounded-full"></span> 잡화 & 기념품
-                </h3>
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="loc-central">🎡 중부</span>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">메가 돈키호테 기노완</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 면세 전용 계산대 (여권필수)</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">국제거리점보다 주차가 편리하고 쾌적한 매장.</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">33 434 024*44</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Umikaji+Terrace0" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                    <div class="place-card">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="loc-central">🎡 중부</span>
-                        </div>
-                        <h4 class="font-bold text-slate-800 text-lg mt-1">오카시고텐 (요미탄점)</h4>
-                        <div class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> 면세 전용 카운터 (별도 표기)</div>
-                        <p class="text-xs text-slate-500 mb-3 mt-2">자색고구마 타르트 원조 매장 (선물 구매 추천).</p>
-                        <div class="flex gap-2 items-stretch">
-                            <div class="mapcode-box">
-                                <span class="text-[10px] text-slate-400 font-bold mb-0.5">맵코드</span>
-                                <span class="font-mono text-slate-800 font-black text-sm tracking-tight">206 315 289*63</span>
-                            </div>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Umikaji+Terrace2" target="_blank" class="flex-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-lg text-center flex flex-col items-center justify-center gap-1 border border-blue-100">
-                                <i data-lucide="map" class="w-4 h-4"></i> 구글맵
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="content-area">
+            </div>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
 
     </main>
 
-    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-teal-700 text-white p-3 rounded-full shadow-xl hover:bg-teal-800 transition-colors">
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-teal-600 text-white p-3 rounded-full shadow-xl hover:bg-teal-700 transition-colors">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+        <span class="font-bold text-sm">맵코드가 복사되었습니다!</span>
+    </div>
 
     <script type="module" src="common.js"></script>
     
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 필터링 기능
+        // 데이터 정의
+        const places = [
+            // [북부]
+            { type: 'north', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: '14', region: '북부', status: 'planned' },
+            { type: 'north', name: '만좌모', desc: '코끼리 얼굴 모양의 침식 절벽.', mapcode: '206 312 097*55', mapUrl: '18', region: '북부', status: 'planned' },
+            { type: 'north', name: '코우리 대교 & 섬', desc: '에메랄드빛 바다 위를 달리는 드라이브.', mapcode: '485 693 485*06', mapUrl: '19', region: '북부', status: 'option' },
+            { type: 'north', name: '나고 파인애플 파크', desc: '귀여운 무인 카트를 타고 농장 탐험.', mapcode: '206 716 467*82', mapUrl: '20', region: '북부', status: 'option' },
+            { type: 'north', name: '네오 파크 오키나와', desc: '새와 동물을 가까이서 만나는 곳.', mapcode: '206 653 842*55', mapUrl: '21', region: '북부', status: 'option' },
+
+            // [중부]
+            { type: 'central', name: '아메리칸 빌리지', desc: '숙소 앞! 쇼핑, 맛집, 야경의 랜드마크.', mapcode: '33 526 451*20', mapUrl: '22', region: '중부', status: 'planned' },
+            { type: 'central', name: '동남식물원', desc: '이국적인 야자수와 귀여운 동물 체험.', mapcode: '33 742 510*74', mapUrl: '23', region: '중부', status: 'planned' },
+            { type: 'central', name: '잔파곶 등대', desc: '웅장한 절벽과 하얀 등대.', mapcode: '1005 685 326*43', mapUrl: '24', region: '중부', status: 'option' },
+            { type: 'central', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: '25', region: '중부', status: 'option' },
+
+            // [남부]
+            { type: 'south', name: '우미카지 테라스', desc: '공항 근처, 비행기가 보이는 하얀 테라스.', mapcode: '33 002 602*06', mapUrl: '26', region: '남부', status: 'planned' },
+            { type: 'south', name: '오키나와 월드', desc: '동양 최대 종유동굴과 전통 공연.', mapcode: '232 495 330*83', mapUrl: '27', region: '남부', status: 'planned' },
+            { type: 'south', name: '국제거리', desc: '나하 최대 번화가. (추천주차: 마키시 제3)', mapcode: '33 157 403*33', mapUrl: '17', region: '남부', status: 'option' },
+            { type: 'south', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: '28', region: '남부', status: 'option' },
+
+            // [쇼핑몰]
+            { type: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: '29', region: '중부', status: 'planned', taxfree: '1F 면세카운터 / 각 매장' },
+            { type: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰.', mapcode: '33 341 124*74', mapUrl: '30', region: '중부', status: 'option', taxfree: '1F 그린존 통합 카운터' },
+            { type: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: '31', region: '남부', status: 'option', taxfree: '각 매장 계산대' },
+            { type: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: '9', region: '남부', status: 'planned', taxfree: '매장별 상이' },
+
+            // [기념품]
+            { type: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: '32', region: '중부', status: 'option', taxfree: '면세 전용 계산대' },
+            { type: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: '33', region: '남부', status: 'option', taxfree: '면세 가능' },
+            { type: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: '34', region: '중부', status: 'option', taxfree: '면세 전용 카운터' },
+            { type: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: '35', region: '남부', status: 'option', taxfree: '매장별 상이' },
+        ];
+
+        function renderPlaces(filterType) {
+            const container = document.getElementById('content-area');
+            container.innerHTML = '';
+
+            const filtered = filterType === 'all' ? places : places.filter(p => p.type === filterType);
+
+            filtered.forEach(place => {
+                // 뱃지 설정
+                let regionClass = '';
+                if(place.region === '북부') regionClass = 'tag-north';
+                else if(place.region === '중부') regionClass = 'tag-central';
+                else regionClass = 'tag-south';
+
+                let statusBadge = place.status === 'planned' 
+                    ? `<span class="badge-tag bg-planned">🗓️ 일정포함</span>` 
+                    : `<span class="badge-tag bg-option">✨ 추천옵션</span>`;
+
+                let taxFreeBadge = place.taxfree 
+                    ? `<span class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> ${place.taxfree}</span>` 
+                    : '';
+
+                const html = `
+                    <div class="place-item" onclick="window.open('http://googleusercontent.com/maps.google.com/${place.mapUrl}', '_blank')">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div class="flex gap-1">
+                                    <span class="badge-tag ${regionClass}">${place.region}</span>
+                                    ${statusBadge}
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-sm mt-1">${place.name}</h3>
+                            <p class="text-xs text-slate-500 mt-1 line-clamp-2">${place.desc}</p>
+                            ${taxFreeBadge}
+                        </div>
+                        <div class="mt-3 pt-3 border-t border-slate-50 flex items-center justify-between gap-2">
+                            <button class="flex-1 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-bold py-2 rounded-lg hover:bg-slate-100 transition-colors" onclick="event.stopPropagation(); copyToClipboard('${place.mapcode}')">
+                                MC: ${place.mapcode}
+                            </button>
+                            <span class="text-[11px] font-bold text-blue-500 flex items-center gap-1">
+                                구글맵 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+            
+            if (window.lucide) window.lucide.createIcons();
+        }
+
         function filterContent(type) {
-            // 버튼 스타일 초기화 및 활성화
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${type}`).classList.add('active');
-
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(sec => {
-                if (type === 'all') {
-                    sec.style.display = 'block';
-                } else {
-                    if (sec.id === `sec-${type}`) {
-                        sec.style.display = 'block';
-                    } else {
-                        sec.style.display = 'none';
-                    }
-                }
-            });
+            renderPlaces(type);
         }
+
+        // 초기 렌더링
+        renderPlaces('all');
     </script>
+
 </body>
 </html>
