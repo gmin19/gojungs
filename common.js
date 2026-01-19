@@ -1,5 +1,9 @@
 /**
- * 오키나와 가족 여행 공통 스크립트 (Firebase 연동 + 앱 실행 개선 버전)
+ * 오키나와 가족 여행 공통 스크립트 (최종 버전)
+ * - Firebase 공지사항 (실시간)
+ * - 네비게이션 자동 생성
+ * - 날씨 위젯
+ * - 앱 실행 오류 개선 (iOS 타이머/Android Intent)
  */
 
 // 1. Firebase 라이브러리 가져오기
@@ -22,7 +26,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // ==========================================
-// A. 네비게이션 메뉴
+// A. 네비게이션 메뉴 설정
 // ==========================================
 const menuItems = [
     { name: '일정표', url: 'index.html', icon: 'calendar-days' },
@@ -89,7 +93,7 @@ async function checkAndShowNotice() {
             showNoticePopup(data);
         }
     } catch (error) {
-        console.error("공지사항 불러오기 실패:", error);
+        console.error("공지사항 로드 실패:", error);
     }
 }
 
@@ -135,6 +139,7 @@ function showNoticePopup(data) {
     }, 10);
 }
 
+// 전역 함수 등록 (HTML에서 onclick으로 호출하기 위함)
 window.closeNoticePopup = function() {
     const el = document.getElementById('common-notice-popup');
     if (el) {
@@ -159,14 +164,12 @@ function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
     const isAndroid = /android/.test(userAgent);
 
     if (isIOS) {
-        // [iOS 개선 로직 적용]
-        // 1. 앱 실행 시도
+        // [iOS] 타이머 기반 실행 확인 로직
         window.location.href = scheme;
 
-        // 2. 실행 감지 및 타이머 설정
         const clickedAt = +new Date();
         
-        // 페이지가 숨겨지거나 포커스를 잃으면(앱이 열리면) 타이머 해제
+        // 페이지가 숨겨지거나(앱 열림) 포커스 잃으면 타이머 해제
         const clearTimers = () => {
             clearTimeout(timer);
             window.removeEventListener('pagehide', clearTimers);
@@ -177,31 +180,30 @@ function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
         window.addEventListener('blur', clearTimers);
 
         const timer = setTimeout(function() {
-            // 앱 실행으로 화면이 숨겨졌다면 스토어로 이동하지 않음
+            // 앱 실행으로 인해 브라우저가 백그라운드로 갔다면 이동하지 않음
             if (document.hidden || document.webkitHidden) {
                 return;
             }
-            // 시간차 체크 (시스템 팝업 등으로 지연된 경우 방지)
+            // 2.5초 내에 반응이 없으면 스토어로 이동
             if (+new Date() - clickedAt < 2500) { 
                 window.location.href = storeUrlIOS;
             }
         }, 2000);
 
     } else if (isAndroid) {
-        // [Android] Intent 방식 사용 (가장 확실함)
-        // Intent URL이 있으면 사용, 없으면 스키마 시도
+        // [Android] Intent 방식 우선 사용
         if (intentUrlAndroid) {
             window.location.href = intentUrlAndroid;
         } else {
             window.location.href = scheme;
         }
     } else {
-        // [PC/기타] 웹 버전으로 이동
+        // [PC/기타] 웹사이트로 이동
         window.open(webFallback, "_blank");
     }
 }
 
-// 각 앱별 실행 정보 설정 및 전역 등록
+// 각 앱별 실행 함수 (전역 등록)
 window.openPapago = () => openApp(
     "papago://", 
     "https://apps.apple.com/app/id1147246415", 
@@ -230,7 +232,7 @@ window.openUber = () => openApp(
     "https://m.uber.com/ul"
 );
 
-// 유틸리티
+// 유틸리티 함수
 window.copyToClipboard = (text) => {
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(window.showToast);
@@ -251,7 +253,7 @@ window.scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
 
 // ==========================================
-// D. 초기화 & 렌더링 실행
+// D. 초기화 & 화면 렌더링
 // ==========================================
 function renderGlobalApps() {
     const container = document.getElementById('global-apps-container');
@@ -279,7 +281,7 @@ function renderGlobalApps() {
     `;
 }
 
-// 날씨 (기존 코드 유지)
+// 날씨 위젯
 const weatherIconMap = { 0: 'sun', 1: 'sun', 2: 'cloud-sun', 3: 'cloud', 45: 'cloud-fog', 48: 'cloud-fog', 51: 'cloud-drizzle', 53: 'cloud-drizzle', 55: 'cloud-drizzle', 61: 'cloud-rain', 63: 'cloud-rain', 65: 'cloud-rain', 80: 'cloud-rain', 81: 'cloud-rain', 82: 'cloud-rain', 95: 'cloud-lightning', 96: 'cloud-lightning', 99: 'cloud-lightning' };
 async function updateWeather() {
     const headerFlex = document.querySelector('header .max-w-4xl .flex.justify-between');
@@ -300,10 +302,13 @@ async function updateWeather() {
             </a>`;
         headerFlex.insertAdjacentHTML('beforeend', weatherHtml);
     }
+    
+    // 플로팅 홈 버튼
     if (!document.querySelector('.fixed.bottom-\\[90px\\]')) {
         const homeBtnHtml = `<a href="index.html" class="fixed bottom-[90px] right-[24px] z-50 bg-slate-900/80 backdrop-blur-md text-white p-3 rounded-full shadow-2xl hover:bg-slate-900 transition-all flex items-center justify-center border border-white/10"><i data-lucide="home" class="w-6 h-6"></i></a>`;
         document.body.insertAdjacentHTML('beforeend', homeBtnHtml);
     }
+
     try {
         const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=5");
         const data = await res.json();

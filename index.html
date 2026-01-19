@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>오키나와 가족 여행 - 일정표</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -593,6 +603,8 @@
     </div>
 
     <script type="module" src="common.js"></script>
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
+    
     <script>
         function switchDay(day) {
             document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active', 'bg-blue-500', 'text-white', 'border-blue-500'));

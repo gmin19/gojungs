@@ -3,133 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 - 여행 십계명</title>
+    <title>오키나와 가족 여행 - 십계명</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        button:active, a:active { transform: scale(0.98); }
+        
+        /* 십계명 카드 스타일 */
+        .rule-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: flex-start; /* 텍스트 길어질 경우 상단 정렬 */
+            gap: 12px;
+            transition: transform 0.2s;
+        }
+        .rule-card:active { transform: scale(0.98); }
+        
+        .rule-num {
+            font-family: 'Nanum Pen Script', cursive;
+            font-size: 20px;
+            color: #EA580C; /* Orange-600 */
+            background-color: #FFF7ED; /* Orange-50 */
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px; /* 텍스트 줄맞춤 */
+        }
+        
+        .rule-text { font-size: 15px; font-weight: 800; color: #1E293B; word-break: keep-all; margin-bottom: 4px; }
+        .rule-desc { font-size: 12px; color: #64748B; font-weight: 400; line-height: 1.4; word-break: keep-all; }
+
         .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <header class="bg-slate-900 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+    <header class="bg-orange-500 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
                         우리 가족<br>
-                        <span class="text-orange-400">행복 여행</span> <span class="text-sky-400">십계명</span>
+                        <span class="text-yellow-200">여행 십계명</span>
                     </h1>
-                    <p class="text-slate-400 text-xs mt-2">서로 배려하고 사랑만 남기는 여행 약속</p>
+                    <p class="text-orange-100 text-xs mt-2">즐거운 여행을 위한 10가지 약속 🤙</p>
                 </div>
             </div>
         </div>
-        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
-        <div class="absolute -left-4 -top-10 w-40 h-40 bg-sky-500 rounded-full opacity-10 blur-3xl"></div>
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-400 rounded-full opacity-30 blur-3xl"></div>
     </header>
 
     <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
 
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
 
-    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-8 pb-32 relative">
-
-        <div class="space-y-4">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">1</div>
+        <div class="space-y-1">
+            
+            <div class="rule-card">
+                <div class="rule-num">1</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">아프면 참지 말고 바로 말하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">건강이 최우선! 컨디션이 안 좋으면 즉시 공유하고 쉬어갑니다.</p>
+                    <div class="rule-text">아프면 참지 말고 바로 말하기</div>
+                    <div class="rule-desc">건강이 최우선! 컨디션이 안 좋으면 즉시 공유하고 쉬어갑니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">2</div>
+            <div class="rule-card">
+                <div class="rule-num">2</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">"덥다, 배고프다, 힘들다" 짜증 금지</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">부정적인 말보다는 "시원한 거 먹자!"처럼 긍정적으로 표현합니다.</p>
+                    <div class="rule-text">"덥다, 배고프다, 힘들다" 짜증 금지</div>
+                    <div class="rule-desc">부정적인 말보다는 "시원한 거 먹자!"처럼 긍정적으로 표현합니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">3</div>
+            <div class="rule-card">
+                <div class="rule-num">3</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">모든 결정에 긍정적으로 호응하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">식당이나 장소를 정할 때 "아무거나" 대신 "좋아! 맛있겠다!"라고 힘차게 반응해 줍니다.</p>
+                    <div class="rule-text">모든 결정에 긍정적으로 호응하기</div>
+                    <div class="rule-desc">식당이나 장소를 정할 때 "아무거나" 대신 "좋아! 맛있겠다!"라고 힘차게 반응해 줍니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">4</div>
+            <div class="rule-card">
+                <div class="rule-num">4</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">음식 투정하지 않고 맛있게 먹기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">입맛에 안 맞아도 "이것도 추억이다" 생각하며 웃으며 넘깁니다.</p>
+                    <div class="rule-text">음식 투정하지 않고 맛있게 먹기</div>
+                    <div class="rule-desc">입맛에 안 맞아도 "이것도 추억이다" 생각하며 웃으며 넘깁니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">5</div>
+            <div class="rule-card">
+                <div class="rule-num">5</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">서로 인생샷 열정적으로 찍어주기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">귀찮아하지 말고 서로의 가장 예쁜 모습을 남겨줍니다.</p>
+                    <div class="rule-text">서로 인생샷 열정적으로 찍어주기</div>
+                    <div class="rule-desc">귀찮아하지 말고 서로의 가장 예쁜 모습을 남겨줍니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">6</div>
+            <div class="rule-card">
+                <div class="rule-num">6</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">쇼핑할 때 재촉하지 않기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">가족이 물건을 고를 때 "빨리 가자" 하지 않고 느긋하게 기다려줍니다.</p>
+                    <div class="rule-text">쇼핑할 때 재촉하지 않기</div>
+                    <div class="rule-desc">가족이 물건을 고를 때 "빨리 가자" 하지 않고 느긋하게 기다려줍니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">7</div>
+            <div class="rule-card">
+                <div class="rule-num">7</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">스마트폰보다 가족 얼굴 보기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">이동 중이나 식사 시간에는 폰을 내려두고 대화를 많이 합니다.</p>
+                    <div class="rule-text">스마트폰보다 가족 얼굴 보기</div>
+                    <div class="rule-desc">이동 중이나 식사 시간에는 폰을 내려두고 대화를 많이 합니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">8</div>
+            <div class="rule-card">
+                <div class="rule-num">8</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">하루의 끝은 칭찬 릴레이로 마무리하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">잠들기 전, 오늘 가족들이 잘한 점이나 고마웠던 점을 하나씩 이야기하고 잠듭니다.</p>
+                    <div class="rule-text">하루의 끝은 칭찬 릴레이로 마무리하기</div>
+                    <div class="rule-desc">잠들기 전, 오늘 가족들이 잘한 점이나 고마웠던 점을 하나씩 이야기하고 잠듭니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">9</div>
+            <div class="rule-card">
+                <div class="rule-num">9</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">계획대로 안 돼도 서로 탓하지 않기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">길을 잃거나 날씨가 안 좋아도 누구의 잘못도 아닙니다. 함께라서 좋습니다.</p>
+                    <div class="rule-text">계획대로 안 돼도 서로 탓하지 않기</div>
+                    <div class="rule-desc">길을 잃거나 날씨가 안 좋아도 누구의 잘못도 아닙니다. 함께라서 좋습니다.</div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div class="bg-orange-100 text-orange-600 font-black text-xl w-10 h-10 rounded-full flex items-center justify-center flex-none">10</div>
+            <div class="rule-card border-orange-200 bg-orange-50/50">
+                <div class="rule-num bg-orange-200 text-orange-700">10</div>
                 <div>
-                    <h3 class="font-bold text-slate-800 text-lg">이 순간, 함께함에 감사하기</h3>
-                    <p class="text-slate-500 text-sm mt-1 leading-relaxed">지금 우리 가족이 건강하게 여행할 수 있음에 감사합니다.</p>
+                    <div class="rule-text text-orange-800">이 순간, 함께함에 감사하기</div>
+                    <div class="rule-desc text-orange-600">지금 우리 가족이 건강하게 여행할 수 있음에 감사합니다.</div>
                 </div>
             </div>
+
         </div>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
 
     </main>
 
-    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-600 text-white p-3 rounded-full shadow-xl hover:bg-orange-700 transition-colors">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
 
     <script type="module" src="common.js"></script>
+    
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
+
 </body>
 </html>

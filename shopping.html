@@ -3,356 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 - 쇼핑 가이드</title>
+    <title>오키나와 가족 여행 - 아메리칸 빌리지 쇼핑</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.gstatic.com">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        button:active, a:active { transform: scale(0.98); }
+        
+        /* 건물 그룹 스타일 */
+        .building-group { margin-bottom: 24px; }
+        .building-title { 
+            font-size: 14px; font-weight: 800; color: #475569; 
+            margin-bottom: 8px; padding-left: 4px; border-left: 4px solid #D946EF; 
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        /* 쇼핑 아이템 카드 */
+        .shop-item {
+            background-color: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .shop-item:active { transform: scale(0.98); background-color: #FDF4FF; }
+
+        /* 뱃지 스타일 */
+        .badge-product { 
+            background-color: #F3E8FF; color: #7E22CE; border: 1px solid #E9D5FF;
+            font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+            display: inline-flex; align-items: center; gap: 3px; margin-right: 4px; margin-bottom: 4px;
+        }
+        
+        /* [수정됨] 혜택 뱃지: 아이콘 제거 */
+        .badge-cardkey { 
+            background-color: #FFF1F2; color: #BE123C; border: 1px solid #FECDD3;
+            font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px;
+            display: inline-block; margin-top: 8px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
+        
+        .rating-text { font-size: 11px; font-weight: 800; color: #EAB308; }
+
         .top-btn { position: fixed; bottom: 24px; right: 24px; z-index: 50; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
         .top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
-        
-        /* 뱃지 스타일 */
-        .badge-benefit { background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; }
-        .badge-item { background-color: #F1F5F9; color: #475569; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; display: inline-block; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
 
-    <header class="bg-slate-900 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
+    <header class="bg-fuchsia-600 text-white pt-10 pb-6 px-5 relative overflow-hidden shadow-xl z-20">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="flex justify-between items-start mb-6 mt-8">
                 <div class="flex-1 pr-2">
+                    <span class="text-fuchsia-200 font-bold text-xs mb-1 block">아메리칸 빌리지 도보 쇼핑</span>
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
-                        아메리칸 빌리지<br>
-                        <span class="text-orange-400">쇼핑</span> <span class="text-sky-400">컬렉션</span>
+                        평점 4.5+<br>
+                        <span class="text-yellow-300">인생템</span> 쇼핑 가이드
                     </h1>
-                    <p class="text-slate-400 text-xs mt-2">투숙객 혜택이 가득한 인기 매장 30선</p>
+                    <p class="text-fuchsia-100 text-xs mt-2 flex items-center gap-1">
+                        <i data-lucide="map" class="w-3 h-3"></i> 건물별 정리 & 호텔 혜택 확인
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-orange-500 rounded-full opacity-20 blur-3xl"></div>
+        <div class="absolute -right-4 -bottom-16 w-48 h-48 bg-fuchsia-500 rounded-full opacity-30 blur-3xl"></div>
     </header>
 
     <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
 
-
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
 
-        <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 mb-8 shadow-sm">
-            <h3 class="font-bold text-rose-800 text-lg mb-2 flex items-center gap-2">
-                <i data-lucide="credit-card" class="w-6 h-6 text-rose-600"></i> 호텔 카드키 특별 혜택
-            </h3>
-            <p class="text-sm text-slate-700 leading-relaxed">
-                <strong>레쿠 오키나와</strong> 또는 <strong>베셀 호텔 캄파나</strong>의 카드키를 제시하면 아래 <span class="badge-benefit">카드키 혜택</span> 뱃지가 있는 매장에서 할인 및 사은품을 받으실 수 있습니다.
+        <div class="mb-6 bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+            <h4 class="font-bold text-sm text-slate-800 mb-2 flex items-center gap-2">
+                <i data-lucide="credit-card" class="w-4 h-4 text-rose-500"></i> 호텔 카드키 혜택 (레쿠/베셀)
+            </h4>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                계산 시 <span class="font-bold text-slate-700">객실 카드키</span>를 제시하세요. 매장마다 혜택이 다릅니다. 아래처럼 <span class="text-rose-600 font-bold bg-rose-50 px-1 rounded">분홍색 뱃지</span> 내용을 확인하세요!
             </p>
         </div>
 
-        <div class="mb-10">
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-orange-500 pl-3">데포 아일랜드 (Depot Island)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">SuiSavon-수리소석-</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">천연 비누</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 스킨케어 샘플 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=SuiSavon American Village Okinawa" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">장칠옥 (Choshichiya)</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">호타루 유리</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 4천엔↑ 책갈피 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Choshichiya Depot Island Okinawa" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">RUN OKI</h4>
-                        <span class="text-[10px] text-slate-400">B동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">오리지널 티셔츠</span>
-                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=RUN OKI American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">OKICHU (섬쪼리)</h4>
-                        <span class="text-[10px] text-slate-400">E동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">커스텀 샌들</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 키홀더 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=OKICHU American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Hat Store Flava</h4>
-                        <span class="text-[10px] text-slate-400">C동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">모자 전문점</span>
-                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Hat Store Flava American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Habu Box</h4>
-                        <span class="text-[10px] text-slate-400">C동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">유니크 티셔츠</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Habu Box American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">T-SHIRT-YA.COM</h4>
-                        <span class="text-[10px] text-slate-400">C동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">오키나와 티셔츠</span>
-                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 2점↑ 5% 할인</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=T-SHIRT-YA.COM American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Depot Island Shop</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">아메리칸 캐주얼</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 잡화 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Depot Island Shop American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
+        <div id="shop-container">
             </div>
-        </div>
-
-        <div class="mb-10">
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-sky-500 pl-3">아메리칸 데포 (American Depot)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">American Depot</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">빈티지 의류/잡화</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 굿즈 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=American Depot Okinawa" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">SOHO</h4>
-                        <span class="text-[10px] text-slate-400">C동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">밀리터리/수입</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 굿즈 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=SOHO American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">오키나와야 (OKINAWAYA)</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">특산품/과자</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 1천엔↑ 별모래 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Okinawaya American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">아와모리구라</h4>
-                        <span class="text-[10px] text-slate-400">A동</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">아와모리 소주</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 미니보틀</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Awamorigura American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-rose-500 pl-3">디스토션 & 시사이드 빌딩</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Splash Okinawa</h4>
-                        <span class="text-[10px] text-slate-400">패션빌딩</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">바다 소품/액세서리</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 잡화 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Splash Okinawa American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Southern Deli AGOO</h4>
-                        <span class="text-[10px] text-slate-400">시사이드</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">캐릭터 티셔츠</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 3천엔↑ 엽서 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Southern Deli AGOO American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Dazzle</h4>
-                        <span class="text-[10px] text-slate-400">패션빌딩</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">여성 패션</span>
-                        <span class="badge-benefit"><i data-lucide="percent" class="w-3 h-3"></i> 결제 10% 할인</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Dazzle American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Poka Poka</h4>
-                        <span class="text-[10px] text-slate-400">시사이드</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">핸드메이드 악세서리</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Poka Poka American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-emerald-500 pl-3">센트럴 & 대형 쇼핑몰</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Ryu Spa</h4>
-                        <span class="text-[10px] text-slate-400">센트럴</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">오키나와 코스메틱</span>
-                        <span class="badge-benefit"><i data-lucide="gift" class="w-3 h-3"></i> 1100엔↑ 팩 증정</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Ryu Spa American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">AEON 이온몰 차탄점</h4>
-                        <span class="text-[10px] text-slate-400">입구</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">대형마트/기념품</span>
-                        <span class="badge-benefit"><i data-lucide="receipt" class="w-3 h-3"></i> 면세 가능</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=AEON Chatan" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">다이코쿠 드럭스토어</h4>
-                        <span class="text-[10px] text-slate-400">관람차 근처</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">의약품/과자</span>
-                        <span class="badge-benefit"><i data-lucide="dollar-sign" class="w-3 h-3"></i> 저렴한 가격</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Daikoku Drug American Village" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="flex justify-between items-start mb-1">
-                        <h4 class="font-bold text-slate-800">Village Vanguard</h4>
-                        <span class="text-[10px] text-slate-400">이온몰 2F</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="badge-item">이색 잡화/도서</span>
-                    </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Village Vanguard AEON Chatan" target="_blank" class="text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <h3 class="font-black text-lg text-slate-800 mb-4 border-l-4 border-purple-500 pl-3">패션 & 인기 브랜드</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">ABC MART</h4>
-                    <span class="badge-item mb-2">신발/스니커즈</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=ABC MART American Village" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">Dr. Martens</h4>
-                    <span class="badge-item mb-2">부츠/슈즈</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Dr Martens American Village" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">Oakley</h4>
-                    <span class="badge-item mb-2">선글라스/스포츠</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Oakley American Village" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">Sanrio Gift Gate</h4>
-                    <span class="badge-item mb-2">캐릭터 굿즈</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Sanrio AEON Chatan" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">Billabong</h4>
-                    <span class="badge-item mb-2">서핑/비치웨어</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Billabong American Village" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-1">Crocs</h4>
-                    <span class="badge-item mb-2">편한 신발/지비츠</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Crocs American Village" target="_blank" class="block text-xs text-blue-600 font-bold hover:underline">구글맵 보기 &rarr;</a>
-                </div>
-            </div>
-        </div>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
 
     </main>
 
-    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-fuchsia-600 text-white p-3 rounded-full shadow-xl hover:bg-fuchsia-700 transition-colors">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
 
     <script type="module" src="common.js"></script>
+    
+    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
+
+    <script>
+        // 데이터베이스: 아메리칸 빌리지 내 평점 4.5 이상 주요 상점
+        const shopData = [
+            {
+                building: "데포 아일랜드 (Depot Island)",
+                desc: "가장 중심이 되는 알록달록한 건물들",
+                shops: [
+                    { name: "하부박스 (Habu Box)", product: "티셔츠, 잡화", rating: "4.7", benefit: "10% 할인", desc: "오키나와 감성의 유니크한 티셔츠와 양말." },
+                    { name: "오키추 (Okichu)", product: "커스텀 쪼리", rating: "4.8", benefit: "5% 할인", desc: "발바닥, 끈 색상을 내 맘대로 조합하는 시마조리." },
+                    { name: "닥터마틴 오키나와", product: "신발, 부츠", rating: "4.6", benefit: "5% 할인", desc: "한정판 모델이나 면세 혜택 가능." },
+                    { name: "스플래쉬 (Splash)", product: "액세서리, 소품", rating: "4.5", benefit: null, desc: "여성분들이 좋아하는 조개/바다 테마 소품샵." }
+                ]
+            },
+            {
+                building: "디스토션 씨사이드 (Distortion Seaside)",
+                desc: "바다가 보이는 해안가 건물",
+                shops: [
+                    { name: "크리스마스 랜드", product: "크리스마스 소품", rating: "4.6", benefit: "오리지널 스티커 증정", desc: "1년 365일 크리스마스 분위기. 오너먼트 추천." },
+                    { name: "필버트 (Filbert)", product: "가죽 공예", rating: "4.9", benefit: "5% 할인", desc: "장인이 직접 만드는 고퀄리티 가죽 제품." },
+                    { name: "블루씰 데포 아일랜드", product: "굿즈, 아이스크림", rating: "4.5", benefit: null, desc: "아이스크림뿐만 아니라 귀여운 굿즈도 판매." }
+                ]
+            },
+            {
+                building: "아메리칸 데포 (American Depot)",
+                desc: "입구 쪽 빈티지한 대형 건물",
+                shops: [
+                    { name: "소호 (SOHO)", product: "수입 의류, 밀리터리", rating: "4.5", benefit: "10% 할인", desc: "지하에 엄청난 규모의 수입/빈티지 의류 매장." },
+                    { name: "아메리칸 데포 B동", product: "빈티지 소품", rating: "4.4", benefit: "10% 할인", desc: "미국 감성 가득한 빈티지 장난감과 소품." }
+                ]
+            },
+            {
+                building: "이온 차탄점 (Aeon Chatan)",
+                desc: "도보 5분 거리 대형 마트",
+                shops: [
+                    { name: "이온 슈퍼마켓", product: "식료품, 회, 맥주", rating: "4.3", benefit: null, desc: "밤에 야식(회, 초밥)과 오리온 맥주 사기 좋음." },
+                    { name: "베스트 전기", product: "전자제품", rating: "4.0", benefit: "5% 할인 (면세 중복가능)", desc: "2층에 위치. 급하게 필요한 전자제품 구매." }
+                ]
+            }
+        ];
+
+        function renderShops() {
+            const container = document.getElementById('shop-container');
+            let html = '';
+
+            shopData.forEach(group => {
+                let shopsHtml = '';
+                group.shops.forEach(shop => {
+                    // [수정됨] 혜택 뱃지: 아이콘 제거하고 텍스트만 표시
+                    const benefitHtml = shop.benefit 
+                        ? `<span class="badge-cardkey">${shop.benefit}</span>` 
+                        : '';
+                    
+                    shopsHtml += `
+                        <div class="shop-item" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('아메리칸빌리지 ' + shop.name)}', '_blank')">
+                            <div class="flex justify-between items-start mb-1">
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="badge-product">${shop.product}</span>
+                                </div>
+                                <span class="rating-text flex items-center gap-1">
+                                    <i data-lucide="star" class="w-3 h-3 fill-current text-yellow-400"></i> ${shop.rating}
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-sm">${shop.name}</h3>
+                            <p class="text-xs text-slate-500 mt-1">${shop.desc}</p>
+                            ${benefitHtml}
+                            <div class="mt-2 pt-2 border-t border-slate-50 flex justify-end">
+                                <span class="text-[10px] font-bold text-blue-500 flex items-center gap-1">구글맵 보기 <i data-lucide="arrow-up-right" class="w-3 h-3"></i></span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                    <div class="building-group">
+                        <div class="building-title">
+                            <span>${group.building}</span>
+                            <span class="text-[10px] font-normal text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">${group.desc}</span>
+                        </div>
+                        <div class="grid grid-cols-1 gap-2">
+                            ${shopsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            
+            // 아이콘 새로고침
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        // 초기 렌더링
+        renderShops();
+    </script>
+
 </body>
 </html>
