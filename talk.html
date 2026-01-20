@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://www.gstatic.com">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
@@ -48,7 +47,6 @@
     <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
 
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
-
         <section class="mb-8">
             <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2 border-l-4 border-indigo-500 pl-3">
                 🙏 이것만은 꼭! (기본)
@@ -105,11 +103,12 @@
                 🚗 운전 & 🏪 편의점
             </h3>
             <div class="grid grid-cols-1 gap-3">
-                <button onclick="showModal('レギュラー満タンで', '일반 휘발유 가득이요 (주유소)', '레규라-, 만탄데')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-left hover:bg-slate-50 transition-colors">
-                    <span class="text-xs text-slate-500 font-bold block mb-1">주유소: 레귤러 가득이요</span>
-                    <span class="text-2xl font-black text-slate-800 block font-jp">レギュラー満タンで</span>
-                    <span class="text-sm text-slate-600 mt-1 block">레규라-, 만탄데</span>
+                <button onclick="showModal('駐車場はどこですか？', '주차장은 어디인가요?', '츄-샤죠-와 도코데스까?')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-left hover:bg-slate-50 transition-colors">
+                    <span class="text-xs text-slate-500 font-bold block mb-1">주차장 어디에요?</span>
+                    <span class="text-2xl font-black text-slate-800 block font-jp">駐車場はどこですか？</span>
+                    <span class="text-sm text-slate-600 mt-1 block">츄-샤죠-와 도코데스까?</span>
                 </button>
+                
                 <button onclick="showModal('袋はいらないです', '봉투는 필요 없어요', '후쿠로와 이라나이데스')" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-left hover:bg-slate-50 transition-colors">
                     <span class="text-xs text-slate-500 font-bold block mb-1">편의점: 봉투 필요 없어요</span>
                     <span class="text-2xl font-black text-slate-800 block font-jp">袋はいらないです</span>
@@ -119,7 +118,6 @@
         </section>
 
         <div id="global-apps-container" class="mt-8 pt-6 border-t border-slate-200 pb-10"></div>
-
     </main>
 
     <div id="talk-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex flex-col items-center justify-center p-6 text-center" onclick="closeModal()">
@@ -136,7 +134,6 @@
     </button>
 
     <script type="module" src="common.js"></script>
-    
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>

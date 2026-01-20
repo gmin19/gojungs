@@ -203,14 +203,12 @@ function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
     }
 }
 
-// 각 앱별 실행 함수 (전역 등록)
-window.openPapago = () => openApp(
-    "papago://", 
-    "https://apps.apple.com/app/id1147246415", 
-    "intent://#Intent;scheme=papago;package=com.naver.labs.translator;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.naver.labs.translator;end", 
-    "https://papago.naver.com/"
-);
+// [수정됨] 파파고는 무조건 웹으로 실행
+window.openPapago = () => {
+    window.open("https://papago.naver.com/", "_blank");
+};
 
+// 나머지 앱은 기존 로직 유지
 window.openGoogleTranslate = () => openApp(
     "googletranslate://", 
     "https://apps.apple.com/app/id414706506", 
