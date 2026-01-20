@@ -1,9 +1,9 @@
 /**
  * 오키나와 가족 여행 공통 스크립트 (최종 버전)
  * - Firebase 공지사항 (실시간)
- * - 네비게이션 자동 생성
+ * - 네비게이션 자동 생성 (긴급연락처 우측 고정)
  * - 날씨 위젯
- * - 앱 실행 오류 개선 (iOS 타이머/Android Intent)
+ * - 앱 실행 오류 개선 (파파고 웹 강제 실행)
  */
 
 // 1. Firebase 라이브러리 가져오기
@@ -47,27 +47,60 @@ function renderNavigation() {
     if (!navContainer) return;
 
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    let navHtml = `<div class="max-w-4xl mx-auto"><div class="flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1">`;
 
-    menuItems.forEach(item => {
+    // [수정됨] 일반 메뉴와 긴급연락처 분리
+    const normalItems = menuItems.filter(item => item.url !== 'emergency.html');
+    const emergencyItem = menuItems.find(item => item.url === 'emergency.html');
+
+    // 1. 전체 컨테이너 (Flex로 좌측 스크롤영역 / 우측 고정영역 나눔)
+    let navHtml = `<div class="max-w-4xl mx-auto flex items-center bg-white/95 backdrop-blur">`;
+
+    // 2. 좌측 스크롤 영역 (일반 메뉴)
+    navHtml += `<div class="flex-1 flex overflow-x-auto no-scrollbar py-0 px-2 space-x-1" id="nav-scroll-area">`;
+    normalItems.forEach(item => {
         const isActive = currentPath === item.url;
-        let activeClass = isActive ? 'active' : '';
-        let extraStyle = '';
-        if (item.url === 'emergency.html') {
-            extraStyle = isActive 
-                ? 'color: #DC2626; border-bottom-color: #DC2626; background-color: #FEF2F2; font-weight: 900;' 
-                : 'color: #EF4444; font-weight: 800;';
-        }
+        const activeClass = isActive ? 'active' : '';
         navHtml += `
             <a href="${item.url}" 
-               class="nav-link ${activeClass} flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all"
-               style="${extraStyle}">
+               class="nav-link ${activeClass} flex items-center gap-1.5 flex-none py-3 px-3 text-sm font-bold border-b-2 border-transparent text-slate-500 transition-all whitespace-nowrap">
                 <i data-lucide="${item.icon}" class="w-4 h-4"></i>
                 ${item.name}
             </a>`;
     });
-    navHtml += `</div></div>`;
+    navHtml += `</div>`;
+
+    // 3. 우측 고정 영역 (긴급연락처) - 항상 보임
+    if (emergencyItem) {
+        const isActive = currentPath === emergencyItem.url;
+        // 긴급연락처 전용 스타일 (빨간색 강조)
+        const extraStyle = isActive 
+            ? 'color: #DC2626; border-bottom-color: #DC2626; background-color: #FEF2F2; font-weight: 900;' 
+            : 'color: #EF4444; font-weight: 800;';
+
+        // 구분감을 위한 좌측 그림자 및 보더 추가
+        navHtml += `
+            <div class="flex-none z-10 pl-1 border-l border-slate-100 shadow-[-4px_0_8px_-4px_rgba(0,0,0,0.1)] bg-white">
+                <a href="${emergencyItem.url}" 
+                   class="nav-link flex items-center gap-1.5 py-3 px-3 text-sm border-b-2 border-transparent transition-all whitespace-nowrap"
+                   style="${extraStyle}">
+                    <i data-lucide="${emergencyItem.icon}" class="w-4 h-4"></i>
+                    ${emergencyItem.name}
+                </a>
+            </div>
+        `;
+    }
+
+    navHtml += `</div>`;
     navContainer.innerHTML = navHtml;
+
+    // 4. 활성화된 탭이 있으면 자동으로 가운데로 스크롤 (UX 개선)
+    setTimeout(() => {
+        const activeLink = document.querySelector('#nav-scroll-area .nav-link.active');
+        if (activeLink) {
+            activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+    }, 100);
+
     if (window.lucide) window.lucide.createIcons();
 }
 
