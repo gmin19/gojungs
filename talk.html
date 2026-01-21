@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 - 여행 회화</title>
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5"> <title>오키나와 가족 여행 - 여행 회화</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,9 +132,14 @@
         <p class="text-white/50 text-xs mt-8">화면을 터치하면 닫힙니다</p>
     </div>
 
-    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-orange-500 text-white p-3 rounded-full shadow-xl hover:bg-orange-600 transition-colors">
+    <button onclick="scrollToTop()" id="top-btn" class="top-btn bg-indigo-600 text-white p-3 rounded-full shadow-xl hover:bg-indigo-700 transition-colors">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
+
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-[100]">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-400"></i>
+        <span class="font-bold text-sm">복사되었습니다!</span>
+    </div>
 
     <script type="module" src="common.js"></script>
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>

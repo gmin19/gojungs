@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>오키나와 가족 여행 - 전체 맵코드</title>
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5"> <title>오키나와 가족 여행 - 전체 맵코드</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,7 +117,7 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 데이터 베이스 (구글맵 쿼리 수정됨)
+        // 데이터 베이스
         const locations = [
             // [숙소 & 렌터카]
             { name: "레쿠 오키나와 (숙소)", category: "숙소", region: "central", mapcode: "33 525 594*3", googleQuery: "Lequ Okinawa Chatan Spa & Resort" },
@@ -163,8 +166,11 @@
                 else if (item.region === 'central') { regionLabel = '중부'; regionClass = 'tag-central'; }
                 else { regionLabel = '남부'; regionClass = 'tag-south'; }
 
+                // [수정됨] 구글맵 검색 URL 수정
+                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.googleQuery)}`;
+
                 const html = `
-                    <div class="place-item" onclick="window.open('https://www.google.com/maps/search/${encodeURIComponent(item.googleQuery)}', '_blank')">
+                    <div class="place-item" onclick="window.open('${googleMapUrl}', '_blank')">
                         <div>
                             <div class="flex justify-between items-start mb-1">
                                 <span class="badge-tag ${regionClass}">${regionLabel}</span>

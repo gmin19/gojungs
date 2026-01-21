@@ -1,9 +1,10 @@
 /**
  * 오키나와 가족 여행 공통 스크립트 (최종 버전)
  * - Firebase 공지사항 (실시간)
- * - 네비게이션 자동 생성 (긴급연락처 우측 고정)
- * - 날씨 위젯
+ * - 네비게이션 자동 생성 (홈 탭 추가, 긴급연락처 우측 고정)
+ * - 날씨 위젯 & 플로팅 홈 버튼
  * - 앱 실행 오류 개선 (파파고 웹 강제 실행)
+ * - PWA 서비스 워커 등록
  */
 
 // 1. Firebase 라이브러리 가져오기
@@ -26,10 +27,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // ==========================================
-// A. 네비게이션 메뉴 설정
+// A. 네비게이션 메뉴 설정 (수정됨)
 // ==========================================
 const menuItems = [
-    { name: '일정표', url: 'index.html', icon: 'calendar-days' },
+    { name: '홈', url: 'index.html', icon: 'home' },           // [추가됨] 메인 홈
+    { name: '일정표', url: 'schedule.html', icon: 'calendar-days' }, // [변경됨] 파일명 schedule.html
     { name: '맵코드', url: 'mapcode.html', icon: 'map-pin' },
     { name: '관광지', url: 'place.html', icon: 'palmtree' },
     { name: '맛집', url: 'dining.html', icon: 'utensils' },
@@ -39,7 +41,7 @@ const menuItems = [
     { name: '로손', url: 'lawson.html', icon: 'store' },
     { name: '일본어', url: 'talk.html', icon: 'message-circle' },
     { name: '렌트카', url: 'car.html', icon: 'car' },
-    { name: '긴급연락처', url: 'emergency.html', icon: 'siren' },
+    { name: '긴급연락처', url: 'emergency.html', icon: 'siren' }, // 항상 우측 고정
 ];
 
 function renderNavigation() {
@@ -48,7 +50,7 @@ function renderNavigation() {
 
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
 
-    // [수정됨] 일반 메뉴와 긴급연락처 분리
+    // 일반 메뉴와 긴급연락처 분리
     const normalItems = menuItems.filter(item => item.url !== 'emergency.html');
     const emergencyItem = menuItems.find(item => item.url === 'emergency.html');
 
@@ -72,12 +74,10 @@ function renderNavigation() {
     // 3. 우측 고정 영역 (긴급연락처) - 항상 보임
     if (emergencyItem) {
         const isActive = currentPath === emergencyItem.url;
-        // 긴급연락처 전용 스타일 (빨간색 강조)
         const extraStyle = isActive 
             ? 'color: #DC2626; border-bottom-color: #DC2626; background-color: #FEF2F2; font-weight: 900;' 
             : 'color: #EF4444; font-weight: 800;';
 
-        // 구분감을 위한 좌측 그림자 및 보더 추가
         navHtml += `
             <div class="flex-none z-10 pl-1 border-l border-slate-100 shadow-[-4px_0_8px_-4px_rgba(0,0,0,0.1)] bg-white">
                 <a href="${emergencyItem.url}" 
@@ -93,7 +93,7 @@ function renderNavigation() {
     navHtml += `</div>`;
     navContainer.innerHTML = navHtml;
 
-    // 4. 활성화된 탭이 있으면 자동으로 가운데로 스크롤 (UX 개선)
+    // 4. 활성화된 탭이 있으면 자동으로 가운데로 스크롤
     setTimeout(() => {
         const activeLink = document.querySelector('#nav-scroll-area .nav-link.active');
         if (activeLink) {
@@ -172,7 +172,6 @@ function showNoticePopup(data) {
     }, 10);
 }
 
-// 전역 함수 등록 (HTML에서 onclick으로 호출하기 위함)
 window.closeNoticePopup = function() {
     const el = document.getElementById('common-notice-popup');
     if (el) {
@@ -189,7 +188,7 @@ window.closeNoticeToday = function(noticeId) {
 };
 
 // ==========================================
-// C. [개선됨] 앱 실행 로직 (Deep Link)
+// C. 앱 실행 로직 (Deep Link)
 // ==========================================
 function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -197,51 +196,38 @@ function openApp(scheme, storeUrlIOS, intentUrlAndroid, webFallback) {
     const isAndroid = /android/.test(userAgent);
 
     if (isIOS) {
-        // [iOS] 타이머 기반 실행 확인 로직
         window.location.href = scheme;
-
         const clickedAt = +new Date();
-        
-        // 페이지가 숨겨지거나(앱 열림) 포커스 잃으면 타이머 해제
         const clearTimers = () => {
             clearTimeout(timer);
             window.removeEventListener('pagehide', clearTimers);
             window.removeEventListener('blur', clearTimers);
         };
-        
         window.addEventListener('pagehide', clearTimers);
         window.addEventListener('blur', clearTimers);
-
         const timer = setTimeout(function() {
-            // 앱 실행으로 인해 브라우저가 백그라운드로 갔다면 이동하지 않음
-            if (document.hidden || document.webkitHidden) {
-                return;
-            }
-            // 2.5초 내에 반응이 없으면 스토어로 이동
+            if (document.hidden || document.webkitHidden) return;
             if (+new Date() - clickedAt < 2500) { 
                 window.location.href = storeUrlIOS;
             }
         }, 2000);
-
     } else if (isAndroid) {
-        // [Android] Intent 방식 우선 사용
         if (intentUrlAndroid) {
             window.location.href = intentUrlAndroid;
         } else {
             window.location.href = scheme;
         }
     } else {
-        // [PC/기타] 웹사이트로 이동
         window.open(webFallback, "_blank");
     }
 }
 
-// [수정됨] 파파고는 무조건 웹으로 실행
+// 파파고 웹 실행
 window.openPapago = () => {
     window.open("https://papago.naver.com/", "_blank");
 };
 
-// 나머지 앱은 기존 로직 유지
+// 나머지 앱
 window.openGoogleTranslate = () => openApp(
     "googletranslate://", 
     "https://apps.apple.com/app/id414706506", 
@@ -334,8 +320,9 @@ async function updateWeather() {
         headerFlex.insertAdjacentHTML('beforeend', weatherHtml);
     }
     
-    // 플로팅 홈 버튼
-    if (!document.querySelector('.fixed.bottom-\\[90px\\]')) {
+    // [수정됨] 홈(index.html)에서는 플로팅 홈 버튼 숨김, 서브 페이지에서만 표시
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    if (currentPath !== 'index.html' && !document.querySelector('.fixed.bottom-\\[90px\\]')) {
         const homeBtnHtml = `<a href="index.html" class="fixed bottom-[90px] right-[24px] z-50 bg-slate-900/80 backdrop-blur-md text-white p-3 rounded-full shadow-2xl hover:bg-slate-900 transition-all flex items-center justify-center border border-white/10"><i data-lucide="home" class="w-6 h-6"></i></a>`;
         document.body.insertAdjacentHTML('beforeend', homeBtnHtml);
     }
@@ -370,14 +357,6 @@ window.addEventListener('scroll', () => {
     if (b) window.scrollY > 300 ? b.classList.add('visible') : b.classList.remove('visible');
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderNavigation();
-    renderGlobalApps();
-    updateWeather();
-    checkAndShowNotice();
-    if (window.lucide) window.lucide.createIcons();
-});
-
 // ==========================================
 // E. PWA 서비스 워커 등록
 // ==========================================
@@ -392,3 +371,11 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderNavigation();
+    renderGlobalApps();
+    updateWeather();
+    checkAndShowNotice();
+    if (window.lucide) window.lucide.createIcons();
+});
