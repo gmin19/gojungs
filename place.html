@@ -13,8 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://www.gstatic.com">
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
@@ -127,39 +126,41 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
+        // 관광지 데이터에 네이버 블로그 검색 URL 추가 완료
         const places = [
             // --- 북부 (North) ---
-            { region: 'north', category: 'sightseeing', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: 'Okinawa Churaumi Aquarium', status: 'planned' },
-            { region: 'north', category: 'sightseeing', name: '만좌모', desc: '코끼리 얼굴 모양의 침식 절벽.', mapcode: '206 312 097*55', mapUrl: 'Manzamo', status: 'planned' },
-            { region: 'north', category: 'sightseeing', name: '코우리 대교 & 섬', desc: '에메랄드빛 바다 위를 달리는 드라이브.', mapcode: '485 693 485*06', mapUrl: 'Kouri Bridge', status: 'option' },
-            { region: 'north', category: 'sightseeing', name: '나고 파인애플 파크', desc: '귀여운 무인 카트를 타고 농장 탐험.', mapcode: '206 716 467*82', mapUrl: 'Nago Pineapple Park', status: 'option' },
-            { region: 'north', category: 'sightseeing', name: '네오 파크 오키나와', desc: '새와 동물을 가까이서 만나는 곳.', mapcode: '206 653 842*55', mapUrl: 'Neo Park Okinawa', status: 'option' },
-            { region: 'north', category: 'sightseeing', name: '열대드림센터', desc: '다양한 난초와 이국적인 열대 식물을 만날 수 있는 해양박 공원 내 식물원.', mapcode: '553 075 797', mapUrl: 'Tropical Dream Center Okinawa', status: 'option' },
+            { region: 'north', category: 'sightseeing', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: 'Okinawa Churaumi Aquarium', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+츄라우미+수족관' },
+            { region: 'north', category: 'sightseeing', name: '만좌모', desc: '코끼리 얼굴 모양의 침식 절벽.', mapcode: '206 312 097*55', mapUrl: 'Manzamo', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+만좌모' },
+            { region: 'north', category: 'sightseeing', name: '코우리 대교 & 섬', desc: '에메랄드빛 바다 위를 달리는 드라이브.', mapcode: '485 693 485*06', mapUrl: 'Kouri Bridge', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+코우리대교' },
+            { region: 'north', category: 'sightseeing', name: '나고 파인애플 파크', desc: '귀여운 무인 카트를 타고 농장 탐험.', mapcode: '206 716 467*82', mapUrl: 'Nago Pineapple Park', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+나고+파인애플+파크' },
+            { region: 'north', category: 'sightseeing', name: '네오 파크 오키나와', desc: '새와 동물을 가까이서 만나는 곳.', mapcode: '206 653 842*55', mapUrl: 'Neo Park Okinawa', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+네오파크' },
+            { region: 'north', category: 'sightseeing', name: '열대드림센터', desc: '다양한 난초와 이국적인 열대 식물을 만날 수 있는 해양박 공원 내 식물원.', mapcode: '553 075 797', mapUrl: 'Tropical Dream Center Okinawa', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+열대드림센터' },
 
             // --- 중부 (Central) ---
-            { region: 'central', category: 'sightseeing', name: '아메리칸 빌리지', desc: '숙소 앞! 쇼핑, 맛집, 야경의 랜드마크.', mapcode: '33 526 451*20', mapUrl: 'American Village Okinawa', status: 'planned' },
-            { region: 'central', category: 'sightseeing', name: '동남식물원', desc: '이국적인 야자수와 귀여운 동물 체험.', mapcode: '33 742 510*74', mapUrl: 'Southeast Botanical Gardens', status: 'option' },
-            { region: 'central', category: 'sightseeing', name: '잔파곶 등대', desc: '웅장한 절벽과 하얀 등대.', mapcode: '1005 685 326*43', mapUrl: 'Cape Zanpa Lighthouse', status: 'option' },
-            { region: 'central', category: 'sightseeing', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: 'Ryukyu Mura', status: 'planned' },
-            { region: 'central', category: 'sightseeing', name: '낚고 찾아내는 모험의 나라', desc: '비 오는 날에도 즐기기 좋은 실내 낚시 & 보물찾기 체험.', mapcode: '206 069 262*13', mapUrl: '釣って見つけるぼうけんの国 沖縄', status: 'planned' },
+            { region: 'central', category: 'sightseeing', name: '아메리칸 빌리지', desc: '숙소 앞! 쇼핑, 맛집, 야경의 랜드마크.', mapcode: '33 526 451*20', mapUrl: 'American Village Okinawa', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+아메리칸+빌리지' },
+            { region: 'central', category: 'sightseeing', name: '동남식물원', desc: '이국적인 야자수와 귀여운 동물 체험.', mapcode: '33 742 510*74', mapUrl: 'Southeast Botanical Gardens', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+동남식물원' },
+            { region: 'central', category: 'sightseeing', name: '잔파곶 등대', desc: '웅장한 절벽과 하얀 등대.', mapcode: '1005 685 326*43', mapUrl: 'Cape Zanpa Lighthouse', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+잔파곶' },
+            { region: 'central', category: 'sightseeing', name: '호시노 리조트 반타카페', desc: '절벽 위에서 바다를 조망하는 압도적인 스케일의 절경 카페.', mapcode: '33 881 273*06', mapUrl: 'Hoshino Resorts Banta Cafe', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+반타카페' },
+            { region: 'central', category: 'sightseeing', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: 'Ryukyu Mura', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+류큐무라' },
+            { region: 'central', category: 'sightseeing', name: '낚고 찾아내는 모험의 나라', desc: '비 오는 날에도 즐기기 좋은 실내 낚시 & 보물찾기 체험.', mapcode: '206 069 262*13', mapUrl: '釣って見つけるぼうけんの国 沖縄', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+낚고+찾아내는+모험의+나라' },
             
             // 중부 쇼핑 & 기념품 (다중 분류)
-            { region: 'central', category: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: 'AEON MALL Okinawa Rycom', status: 'planned', taxfree: '1F 면세카운터 / 각 매장' },
-            { region: 'central', category: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰. (우천 시 예비)', mapcode: '33 341 124*74', mapUrl: 'San-A Urasoe West Coast PARCO CITY', status: 'option', taxfree: '1F 그린존 통합 카운터' },
-            { region: 'central', category: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: 'MEGA Don Quijote Ginowan', status: 'planned', taxfree: '면세 전용 계산대' },
-            { region: 'central', category: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: 'Okashigoten Yomitan Main Shop', status: 'option', taxfree: '면세 전용 카운터' },
+            { region: 'central', category: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: 'AEON MALL Okinawa Rycom', status: 'planned', taxfree: '1F 면세카운터 / 각 매장', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이온몰+라이카무' },
+            { region: 'central', category: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰. (우천 시 예비)', mapcode: '33 341 124*74', mapUrl: 'San-A Urasoe West Coast PARCO CITY', status: 'option', taxfree: '1F 그린존 통합 카운터', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+파르코시티' },
+            { region: 'central', category: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: 'MEGA Don Quijote Ginowan', status: 'planned', taxfree: '면세 전용 계산대', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+메가돈키호테+기노완' },
+            { region: 'central', category: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: 'Okashigoten Yomitan Main Shop', status: 'option', taxfree: '면세 전용 카운터', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+오카시고텐+요미탄' },
 
             // --- 남부 (South) ---
-            { region: 'south', category: 'sightseeing', name: '우미카지 테라스', desc: '공항 근처, 비행기가 보이는 하얀 테라스.', mapcode: '33 002 602*06', mapUrl: 'Senagajima Umikaji Terrace', status: 'planned' },
-            { region: 'south', category: 'sightseeing', name: '오키나와 월드', desc: '동양 최대 종유동굴과 전통 공연. (남부 예비 일정)', mapcode: '232 495 330*83', mapUrl: 'Okinawa World', status: 'option' },
-            { region: 'south', category: 'sightseeing', name: '국제거리 (주차장)', desc: '나하 최대 번화가. (목적지: 마키시 제3 주차장)', mapcode: '33 157 403*33', mapUrl: 'テクニカルパーク牧志第3', status: 'planned' },
-            { region: 'south', category: 'sightseeing', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: 'Shurijo Castle Park', status: 'option' },
+            { region: 'south', category: 'sightseeing', name: '우미카지 테라스', desc: '공항 근처, 비행기가 보이는 하얀 테라스.', mapcode: '33 002 602*06', mapUrl: 'Senagajima Umikaji Terrace', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+우미카지테라스' },
+            { region: 'south', category: 'sightseeing', name: '오키나와 월드', desc: '동양 최대 종유동굴과 전통 공연. (남부 예비 일정)', mapcode: '232 495 330*83', mapUrl: 'Okinawa World', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+오키나와월드' },
+            { region: 'south', category: 'sightseeing', name: '국제거리 (주차장)', desc: '나하 최대 번화가. (목적지: 마키시 제3 주차장)', mapcode: '33 157 403*33', mapUrl: 'テクニカルパーク牧志第3', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+국제거리' },
+            { region: 'south', category: 'sightseeing', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: 'Shurijo Castle Park', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+슈리성' },
 
             // 남부 쇼핑 & 기념품
-            { region: 'south', category: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: 'Okinawa Outlet Mall Ashibinaa', status: 'option', taxfree: '각 매장 계산대' },
-            { region: 'south', category: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: 'iias Okinawa Toyosaki', status: 'planned', taxfree: '매장별 상이' },
-            { region: 'south', category: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: 'Manga Souko Naha', status: 'option', taxfree: '면세 가능' },
-            { region: 'south', category: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: 'Tsuboya Yachimun Street', status: 'option', taxfree: '매장별 상이' },
+            { region: 'south', category: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: 'Okinawa Outlet Mall Ashibinaa', status: 'option', taxfree: '각 매장 계산대', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+아시비나+아울렛' },
+            { region: 'south', category: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: 'iias Okinawa Toyosaki', status: 'planned', taxfree: '매장별 상이', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이아스' },
+            { region: 'south', category: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: 'Manga Souko Naha', status: 'option', taxfree: '면세 가능', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+만화창고' },
+            { region: 'south', category: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: 'Tsuboya Yachimun Street', status: 'option', taxfree: '매장별 상이', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+야치문거리' },
         ];
 
         function renderPlaces(filterKey) {
@@ -198,7 +199,7 @@
                     ? `<span class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> ${place.taxfree}</span>` 
                     : '';
 
-                // [수정됨] 실제 작동하는 구글맵 공식 검색 URL 적용 (https://www.google.com/maps/search/?api=1&query=...)
+                // 구글맵 공식 검색 URL 적용 완료 및 네이버 블로그 리뷰 버튼 추가
                 const html = `
                     <div class="place-item" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapUrl)}', '_blank')">
                         <div>
@@ -212,11 +213,14 @@
                             <p class="text-xs text-slate-500 mt-1 line-clamp-2">${place.desc}</p>
                             ${taxFreeBadge}
                         </div>
-                        <div class="mt-3 pt-3 border-t border-slate-50 flex items-center justify-between gap-2">
-                            <button class="flex-1 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-bold py-2 rounded-lg hover:bg-slate-100 transition-colors" onclick="event.stopPropagation(); copyToClipboard('${place.mapcode}')">
+                        <div class="mt-3 pt-3 border-t border-slate-50 flex items-center justify-between gap-1.5">
+                            <button class="flex-1 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-bold py-1.5 rounded-md hover:bg-slate-100 transition-colors" onclick="event.stopPropagation(); copyToClipboard('${place.mapcode}')">
                                 MC: ${place.mapcode}
                             </button>
-                            <span class="text-[11px] font-bold text-blue-500 flex items-center gap-1">
+                            <a href="${place.blogUrl}" target="_blank" onclick="event.stopPropagation();" class="flex-1 bg-green-50 border border-green-200 text-green-700 text-[11px] font-bold py-1.5 rounded-md hover:bg-green-100 transition-colors text-center flex justify-center items-center">
+                                리뷰보기
+                            </a>
+                            <span class="text-[11px] font-bold text-blue-500 flex items-center gap-0.5 whitespace-nowrap px-1">
                                 구글맵 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                             </span>
                         </div>

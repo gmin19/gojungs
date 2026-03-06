@@ -42,6 +42,7 @@
             margin-bottom: 10px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             transition: transform 0.2s;
+            cursor: pointer;
         }
         .shop-item:active { transform: scale(0.98); background-color: #FDF4FF; }
 
@@ -115,41 +116,41 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 데이터베이스: 아메리칸 빌리지 내 평점 4.5 이상 주요 상점
+        // 데이터베이스: 구글맵 지점명 및 네이버 블로그 검색어 추가 완료
         const shopData = [
             {
                 building: "데포 아일랜드 (Depot Island)",
                 desc: "가장 중심이 되는 알록달록한 건물들",
                 shops: [
-                    { name: "하부박스 (Habu Box)", product: "티셔츠, 잡화", rating: "4.7", benefit: "10% 할인", desc: "오키나와 감성의 유니크한 티셔츠와 양말." },
-                    { name: "오키추 (Okichu)", product: "커스텀 쪼리", rating: "4.8", benefit: "5% 할인", desc: "발바닥, 끈 색상을 내 맘대로 조합하는 시마조리." },
-                    { name: "닥터마틴 오키나와", product: "신발, 부츠", rating: "4.6", benefit: "5% 할인", desc: "한정판 모델이나 면세 혜택 가능." },
-                    { name: "스플래쉬 (Splash)", product: "액세서리, 소품", rating: "4.5", benefit: null, desc: "여성분들이 좋아하는 조개/바다 테마 소품샵." }
+                    { name: "하부박스 (Habu Box)", product: "티셔츠, 잡화", rating: "4.7", benefit: "10% 할인", desc: "오키나와 감성의 유니크한 티셔츠와 양말.", map: "Habu Box American Village", blogQuery: "오키나와+하부박스" },
+                    { name: "오키추 (Okichu)", product: "커스텀 쪼리", rating: "4.8", benefit: "5% 할인", desc: "발바닥, 끈 색상을 내 맘대로 조합하는 시마조리.", map: "Okichu American Village", blogQuery: "오키나와+오키추" },
+                    { name: "닥터마틴 오키나와", product: "신발, 부츠", rating: "4.6", benefit: "5% 할인", desc: "한정판 모델이나 면세 혜택 가능.", map: "Dr. Martens Okinawa American Village", blogQuery: "오키나와+아메리칸빌리지+닥터마틴" },
+                    { name: "스플래쉬 (Splash)", product: "액세서리, 소품", rating: "4.5", benefit: null, desc: "여성분들이 좋아하는 조개/바다 테마 소품샵.", map: "Splash Okinawa American Village", blogQuery: "오키나와+스플래쉬" }
                 ]
             },
             {
                 building: "디스토션 씨사이드 (Distortion Seaside)",
                 desc: "바다가 보이는 해안가 건물",
                 shops: [
-                    { name: "크리스마스 랜드", product: "크리스마스 소품", rating: "4.6", benefit: "오리지널 스티커 증정", desc: "1년 365일 크리스마스 분위기. 오너먼트 추천." },
-                    { name: "필버트 (Filbert)", product: "가죽 공예", rating: "4.9", benefit: "5% 할인", desc: "장인이 직접 만드는 고퀄리티 가죽 제품." },
-                    { name: "블루씰 데포 아일랜드", product: "굿즈, 아이스크림", rating: "4.5", benefit: null, desc: "아이스크림뿐만 아니라 귀여운 굿즈도 판매." }
+                    { name: "크리스마스 랜드", product: "크리스마스 소품", rating: "4.6", benefit: "오리지널 스티커 증정", desc: "1년 365일 크리스마스 분위기. 오너먼트 추천.", map: "Christmas Land Okinawa", blogQuery: "오키나와+크리스마스랜드" },
+                    { name: "필버트 (Filbert)", product: "가죽 공예", rating: "4.9", benefit: "5% 할인", desc: "장인이 직접 만드는 고퀄리티 가죽 제품.", map: "Filbert Okinawa", blogQuery: "오키나와+필버트" },
+                    { name: "블루씰 데포 아일랜드", product: "굿즈, 아이스크림", rating: "4.5", benefit: null, desc: "아이스크림뿐만 아니라 귀여운 굿즈도 판매.", map: "Blue Seal Depot Island", blogQuery: "오키나와+데포아일랜드+블루씰" }
                 ]
             },
             {
                 building: "아메리칸 데포 (American Depot)",
                 desc: "입구 쪽 빈티지한 대형 건물",
                 shops: [
-                    { name: "소호 (SOHO)", product: "수입 의류, 밀리터리", rating: "4.5", benefit: "10% 할인", desc: "지하에 엄청난 규모의 수입/빈티지 의류 매장." },
-                    { name: "아메리칸 데포 B동", product: "빈티지 소품", rating: "4.4", benefit: "10% 할인", desc: "미국 감성 가득한 빈티지 장난감과 소품." }
+                    { name: "소호 (SOHO)", product: "수입 의류, 밀리터리", rating: "4.5", benefit: "10% 할인", desc: "지하에 엄청난 규모의 수입/빈티지 의류 매장.", map: "SOHO American Village", blogQuery: "오키나와+아메리칸빌리지+소호" },
+                    { name: "아메리칸 데포 B동", product: "빈티지 소품", rating: "4.4", benefit: "10% 할인", desc: "미국 감성 가득한 빈티지 장난감과 소품.", map: "American Depot Okinawa", blogQuery: "오키나와+아메리칸데포" }
                 ]
             },
             {
                 building: "이온 차탄점 (Aeon Chatan)",
                 desc: "도보 5분 거리 대형 마트",
                 shops: [
-                    { name: "이온 슈퍼마켓", product: "식료품, 회, 맥주", rating: "4.3", benefit: null, desc: "밤에 야식(회, 초밥)과 오리온 맥주 사기 좋음." },
-                    { name: "베스트 전기", product: "전자제품", rating: "4.0", benefit: "5% 할인 (면세 중복가능)", desc: "2층에 위치. 급하게 필요한 전자제품 구매." }
+                    { name: "이온 슈퍼마켓", product: "식료품, 회, 맥주", rating: "4.3", benefit: null, desc: "밤에 야식(회, 초밥)과 오리온 맥주 사기 좋음.", map: "Aeon Chatan", blogQuery: "오키나와+이온차탄" },
+                    { name: "베스트 전기", product: "전자제품", rating: "4.0", benefit: "5% 할인 (면세 중복가능)", desc: "2층에 위치. 급하게 필요한 전자제품 구매.", map: "Best Denki Aeon Chatan", blogQuery: "오키나와+베스트전기+차탄" }
                 ]
             }
         ];
@@ -165,21 +166,32 @@
                         ? `<span class="badge-cardkey">${shop.benefit}</span>` 
                         : '';
                     
+                    // 공식 구글맵 검색 URL 및 네이버 블로그 검색 URL 적용
+                    const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop.map)}`;
+                    const naverBlogUrl = `https://m.search.naver.com/search.naver?where=m_view&sm=mtb_jum&query=${shop.blogQuery}`;
+                    
                     shopsHtml += `
-                        <div class="shop-item" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('아메리칸빌리지 ' + shop.name)}', '_blank')">
-                            <div class="flex justify-between items-start mb-1">
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="badge-product">${shop.product}</span>
+                        <div class="shop-item" onclick="window.open('${googleMapUrl}', '_blank')">
+                            <div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="badge-product">${shop.product}</span>
+                                    </div>
+                                    <span class="rating-text flex items-center gap-1">
+                                        <i data-lucide="star" class="w-3 h-3 fill-current text-yellow-400"></i> ${shop.rating}
+                                    </span>
                                 </div>
-                                <span class="rating-text flex items-center gap-1">
-                                    <i data-lucide="star" class="w-3 h-3 fill-current text-yellow-400"></i> ${shop.rating}
-                                </span>
+                                <h3 class="font-bold text-slate-800 text-sm">${shop.name}</h3>
+                                <p class="text-xs text-slate-500 mt-1">${shop.desc}</p>
+                                ${benefitHtml}
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm">${shop.name}</h3>
-                            <p class="text-xs text-slate-500 mt-1">${shop.desc}</p>
-                            ${benefitHtml}
-                            <div class="mt-2 pt-2 border-t border-slate-50 flex justify-end">
-                                <span class="text-[10px] font-bold text-blue-500 flex items-center gap-1">구글맵 보기 <i data-lucide="arrow-up-right" class="w-3 h-3"></i></span>
+                            <div class="mt-3 pt-3 border-t border-slate-50 flex items-center justify-between gap-1.5">
+                                <a href="${naverBlogUrl}" target="_blank" onclick="event.stopPropagation();" class="flex-1 bg-green-50 border border-green-200 text-green-700 text-[11px] font-bold py-1.5 rounded-md hover:bg-green-100 transition-colors text-center flex justify-center items-center">
+                                    네이버 리뷰보기
+                                </a>
+                                <span class="text-[11px] font-bold text-blue-500 flex items-center gap-0.5 px-1">
+                                    구글맵 보기 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                                </span>
                             </div>
                         </div>
                     `;

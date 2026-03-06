@@ -6,7 +6,8 @@
     
     <meta name="robots" content="noindex, nofollow">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#e11d48"> <title>오키나와 가족 여행 - 아메리칸 빌리지 맛집</title>
+    <meta name="theme-color" content="#e11d48"> 
+    <title>오키나와 가족 여행 - 아메리칸 빌리지 맛집</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +36,7 @@
             justify-content: space-between;
             transition: transform 0.2s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            cursor: pointer;
         }
         .dining-item:active { transform: scale(0.98); background-color: #F8FAFC; }
 
@@ -113,41 +115,41 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // [수정됨] 구글맵 검색 정확도 향상을 위해 검색어에 'Okinawa American Village' 또는 'Chatan' 추가
+        // 지점명 확실히 명시(American Village, Chatan 등)
         const places = [
             // --- 식사 (Meal) ---
-            { type: 'meal', name: '스테이크 하우스 88', desc: '아메리칸 빌리지의 상징적인 스테이크.', rating: '4.1', reviews: '2,800+', benefit: '드링크바 무료', map: 'Steak House 88 American Village' },
-            { type: 'meal', name: '타코라이스 카페 키지무나', desc: '부드러운 계란이 올라간 오무타코 강추.', rating: '4.3', reviews: '1,500+', benefit: '토핑 1가지 무료', map: 'Kijimuna Depot Island' },
-            { type: 'meal', name: '포크 타마고 오니기리', desc: '아침 식사 대용으로 최고인 주먹밥.', rating: '4.2', reviews: '1,200+', benefit: null, map: 'Pork Tamago Onigiri Chatan' },
-            { type: 'meal', name: '아타비스(Atabii\'s)', desc: '육즙 가득한 수제 버거 맛집.', rating: '4.4', reviews: '800+', benefit: '5% 할인', map: 'Atabii\'s Burger Chatan' },
-            { type: 'meal', name: '야키니쿠 유메마루', desc: '가성비 좋은 소고기 무한리필.', rating: '4.5', reviews: '900+', benefit: '음료 무제한 반값', map: 'Yakiniku Yumemaru Chatan' },
-            { type: 'meal', name: '씨사이드 카페 하논', desc: '바다 보며 먹는 팬케이크와 브런치.', rating: '4.3', reviews: '1,100+', benefit: '10% 할인', map: 'Seaside Cafe Hanon' },
-            { type: 'meal', name: '점보 스테이크 한스', desc: '푸짐한 양의 가성비 스테이크.', rating: '4.0', reviews: '1,300+', benefit: '소프트 드링크 무료', map: 'Jumbo Steak Han\'s American Village' },
-            { type: 'meal', name: '카이텐즈시 요시 (스시)', desc: '퀄리티 좋은 회전 초밥 (웨이팅 주의).', rating: '4.1', reviews: '1,800+', benefit: null, map: 'Gourmet Sushi American Village' },
-            { type: 'meal', name: '차탄 하버 브루어리', desc: '수제 맥주와 함께하는 분위기 깡패.', rating: '4.3', reviews: '1,200+', benefit: '5% 할인', map: 'Chatan Harbor Brewery' },
-            { type: 'meal', name: '블루 오션 스테이크', desc: '오션뷰와 함께 즐기는 고급 스테이크.', rating: '4.6', reviews: '900+', benefit: '웰컴 드링크', map: 'Blue Ocean Steak Okinawa' },
-            { type: 'meal', name: '더 칼리프 키친', desc: '뷰가 예쁜 캘리포니아 스타일 다이닝.', rating: '4.2', reviews: '700+', benefit: '5% 할인', map: 'The Calif Kitchen Okinawa' },
-            { type: 'meal', name: '볼리우드 드림즈', desc: '현지인이 사랑하는 정통 인도 커리.', rating: '4.5', reviews: '600+', benefit: '라씨 1잔 무료', map: 'Bollywood Dreams Okinawa' },
-            { type: 'meal', name: '피자 스탠드 NY', desc: '가볍게 즐기는 뉴욕 스타일 피자.', rating: '4.4', reviews: '500+', benefit: null, map: 'Pizza Stand NY Okinawa' },
-            { type: 'meal', name: '솔리 솜브라', desc: '이국적인 분위기의 멕시칸 요리.', rating: '4.2', reviews: '600+', benefit: '5% 할인', map: 'Sol i Sombra Okinawa' },
-            { type: 'meal', name: '카야 (Kaya)', desc: '아메리칸 빌리지 근처 오키나와 소바.', rating: '4.3', reviews: '800+', benefit: null, map: 'Okinawa Soba Kaya' },
-            { type: 'meal', name: '버거 베어 (Burger Bear)', desc: '귀여운 곰돌이 빵 수제 버거.', rating: '4.1', reviews: '550+', benefit: '감자튀김 무료', map: 'Burger Bear Chatan' },
-            { type: 'meal', name: '하레 노아 (Hale Noa)', desc: '하와이안 스타일 조식과 런치.', rating: '4.4', reviews: '750+', benefit: '5% 할인', map: 'Hale Noa Cafe' },
-            { type: 'meal', name: '아일랜드 패독', desc: '핫도그와 감자튀김이 맛있는 펍.', rating: '4.5', reviews: '500+', benefit: '10% 할인', map: 'Island Paddock Chatan' },
-            { type: 'meal', name: '린야 (Linya)', desc: '깔끔한 일본식 야키니쿠 (고기 구이).', rating: '4.2', reviews: '600+', benefit: '김치 모듬 무료', map: 'Yakiniku Linya Chatan' },
-            { type: 'meal', name: '더블 데커', desc: '2층 버스에서 즐기는 식사와 맥주.', rating: '4.0', reviews: '800+', benefit: '5% 할인', map: 'Double Decker Okinawa' },
+            { type: 'meal', name: '스테이크 하우스 88', desc: '아메리칸 빌리지의 상징적인 스테이크.', rating: '4.1', reviews: '2,800+', benefit: '드링크바 무료', map: 'Steak House 88 Chatan American Village', blogQuery: '오키나와+스테이크하우스88' },
+            { type: 'meal', name: '타코라이스 카페 키지무나', desc: '부드러운 계란이 올라간 오무타코 강추.', rating: '4.3', reviews: '1,500+', benefit: '토핑 1가지 무료', map: 'Kijimuna Depot Island', blogQuery: '오키나와+키지무나' },
+            { type: 'meal', name: '포크 타마고 오니기리', desc: '아침 식사 대용으로 최고인 주먹밥.', rating: '4.2', reviews: '1,200+', benefit: null, map: 'Pork Tamago Onigiri Chatan American Village', blogQuery: '오키나와+포크타마고' },
+            { type: 'meal', name: '아타비스(Atabii\'s)', desc: '육즙 가득한 수제 버거 맛집.', rating: '4.4', reviews: '800+', benefit: '5% 할인', map: 'Chatan Burger Base Atabii\'s American Village', blogQuery: '오키나와+아타비스' },
+            { type: 'meal', name: '야키니쿠 유메마루', desc: '가성비 좋은 소고기 무한리필.', rating: '4.5', reviews: '900+', benefit: '음료 무제한 반값', map: 'Yakiniku Yumemaru Chatan', blogQuery: '오키나와+야키니쿠+유메마루' },
+            { type: 'meal', name: '씨사이드 카페 하논', desc: '바다 보며 먹는 팬케이크와 브런치.', rating: '4.3', reviews: '1,100+', benefit: '10% 할인', map: 'Seaside Cafe Hanon American Village', blogQuery: '오키나와+하논' },
+            { type: 'meal', name: '점보 스테이크 한스', desc: '푸짐한 양의 가성비 스테이크.', rating: '4.0', reviews: '1,300+', benefit: '소프트 드링크 무료', map: 'Jumbo Steak Han\'s American Village', blogQuery: '오키나와+한스+스테이크' },
+            { type: 'meal', name: '카이텐즈시 요시 (스시)', desc: '퀄리티 좋은 회전 초밥 (웨이팅 주의).', rating: '4.1', reviews: '1,800+', benefit: null, map: 'Gourmet Sushi American Village', blogQuery: '오키나와+회전초밥+구르메스시' },
+            { type: 'meal', name: '차탄 하버 브루어리', desc: '수제 맥주와 함께하는 분위기 깡패.', rating: '4.3', reviews: '1,200+', benefit: '5% 할인', map: 'Chatan Harbor Brewery', blogQuery: '오키나와+차탄하버브루어리' },
+            { type: 'meal', name: '블루 오션 스테이크', desc: '오션뷰와 함께 즐기는 고급 스테이크.', rating: '4.6', reviews: '900+', benefit: '웰컴 드링크', map: 'Blue Ocean Steak Okinawa Chatan', blogQuery: '오키나와+블루오션스테이크' },
+            { type: 'meal', name: '더 칼리프 키친', desc: '뷰가 예쁜 캘리포니아 스타일 다이닝.', rating: '4.2', reviews: '700+', benefit: '5% 할인', map: 'The Calif Kitchen Okinawa Chatan', blogQuery: '오키나와+더칼리프키친' },
+            { type: 'meal', name: '볼리우드 드림즈', desc: '현지인이 사랑하는 정통 인도 커리.', rating: '4.5', reviews: '600+', benefit: '라씨 1잔 무료', map: 'Bollywood Dreams American Village', blogQuery: '오키나와+볼리우드+드림즈' },
+            { type: 'meal', name: '피자 스탠드 NY', desc: '가볍게 즐기는 뉴욕 스타일 피자.', rating: '4.4', reviews: '500+', benefit: null, map: 'Pizza Stand NY American Village', blogQuery: '오키나와+피자스탠드+NY' },
+            { type: 'meal', name: '솔리 솜브라', desc: '이국적인 분위기의 멕시칸 요리.', rating: '4.2', reviews: '600+', benefit: '5% 할인', map: 'Sol i Sombra Okinawa Chatan', blogQuery: '오키나와+솔리솜브라' },
+            { type: 'meal', name: '카야 (Kaya)', desc: '아메리칸 빌리지 근처 오키나와 소바.', rating: '4.3', reviews: '800+', benefit: null, map: 'Okinawa Soba Kaya', blogQuery: '오키나와+카야+소바' },
+            { type: 'meal', name: '버거 베어 (Burger Bear)', desc: '귀여운 곰돌이 빵 수제 버거.', rating: '4.1', reviews: '550+', benefit: '감자튀김 무료', map: 'Burger Bear Chatan', blogQuery: '오키나와+버거베어' },
+            { type: 'meal', name: '하레 노아 (Hale Noa)', desc: '하와이안 스타일 조식과 런치.', rating: '4.4', reviews: '750+', benefit: '5% 할인', map: 'Hale Noa Cafe Chatan', blogQuery: '오키나와+하레노아' },
+            { type: 'meal', name: '아일랜드 패독', desc: '핫도그와 감자튀김이 맛있는 펍.', rating: '4.5', reviews: '500+', benefit: '10% 할인', map: 'Island Paddock Chatan', blogQuery: '오키나와+아일랜드+패독' },
+            { type: 'meal', name: '린야 (Linya)', desc: '깔끔한 일본식 야키니쿠 (고기 구이).', rating: '4.2', reviews: '600+', benefit: '김치 모듬 무료', map: 'Yakiniku Linya Chatan', blogQuery: '오키나와+야키니쿠+린야' },
+            { type: 'meal', name: '더블 데커', desc: '2층 버스에서 즐기는 식사와 맥주.', rating: '4.0', reviews: '800+', benefit: '5% 할인', map: 'Double Decker American Village', blogQuery: '오키나와+더블데커' },
             
             // --- 디저트 (Dessert) ---
-            { type: 'dessert', name: '지바고 커피 웍스', desc: '힙한 분위기의 오션뷰 커피 맛집.', rating: '4.6', reviews: '2,500+', benefit: '5% 할인', map: 'Zhyvago Coffee Works Okinawa' },
-            { type: 'dessert', name: '타임리스 초콜릿', desc: '직접 카카오를 볶아 만드는 초콜릿.', rating: '4.4', reviews: '900+', benefit: '10% 할인', map: 'Timeless Chocolate Okinawa' },
-            { type: 'dessert', name: '블루씰 (데포 아일랜드)', desc: '오키나와 필수 아이스크림 (소금맛).', rating: '4.2', reviews: '2,100+', benefit: null, map: 'Blue Seal Depot Island' },
-            { type: 'dessert', name: '봉고 앤 앵커', desc: '샌드위치와 라떼가 맛있는 카페.', rating: '4.3', reviews: '800+', benefit: '5% 할인', map: 'Vongo & Anchor' },
-            { type: 'dessert', name: '홀드 바이 핸드', desc: '감자튀김과 소프트 아이스크림.', rating: '4.1', reviews: '600+', benefit: '토핑 무료', map: 'Hold By Hand Okinawa' },
-            { type: 'dessert', name: '허그 3do (Hug 3do)', desc: '쿠키 사이에 아이스크림 샌드.', rating: '4.2', reviews: '500+', benefit: '5% 할인', map: 'Hug 3do Okinawa' },
-            { type: 'dessert', name: '하우짓 소다바', desc: '상큼한 과일 소다와 아이스크림.', rating: '4.5', reviews: '500+', benefit: '100엔 할인', map: 'Howzit Sodabar' },
-            { type: 'dessert', name: '파티 랜드', desc: '토핑을 마음대로 고르는 요거트.', rating: '4.1', reviews: '500+', benefit: '10% 할인', map: 'Party Land Carnival Park Mihama' },
-            { type: 'dessert', name: '와-큔 (Wa-Kyun)', desc: '바삭하고 달콤한 와플 맛집.', rating: '4.3', reviews: '500+', benefit: '5% 할인', map: 'Wa-Kyun Okinawa' },
-            { type: 'dessert', name: '펠리즈 커피', desc: '조용하게 쉬기 좋은 로스터리 카페.', rating: '4.4', reviews: '600+', benefit: null, map: 'Feliz Coffee Okinawa' },
+            { type: 'dessert', name: '지바고 커피 웍스', desc: '힙한 분위기의 오션뷰 커피 맛집.', rating: '4.6', reviews: '2,500+', benefit: '5% 할인', map: 'Zhyvago Coffee Works Okinawa American Village', blogQuery: '오키나와+지바고커피' },
+            { type: 'dessert', name: '타임리스 초콜릿', desc: '직접 카카오를 볶아 만드는 초콜릿.', rating: '4.4', reviews: '900+', benefit: '10% 할인', map: 'Timeless Chocolate American Village', blogQuery: '오키나와+타임리스초콜릿' },
+            { type: 'dessert', name: '블루씰 (데포 아일랜드)', desc: '오키나와 필수 아이스크림 (소금맛).', rating: '4.2', reviews: '2,100+', benefit: null, map: 'Blue Seal Depot Island American Village', blogQuery: '오키나와+블루씰' },
+            { type: 'dessert', name: '봉고 앤 앵커', desc: '샌드위치와 라떼가 맛있는 카페.', rating: '4.3', reviews: '800+', benefit: '5% 할인', map: 'Vongo & Anchor American Village', blogQuery: '오키나와+봉고앤앵커' },
+            { type: 'dessert', name: '홀드 바이 핸드', desc: '감자튀김과 소프트 아이스크림.', rating: '4.1', reviews: '600+', benefit: '토핑 무료', map: 'Hold By Hand Okinawa American Village', blogQuery: '오키나와+홀드바이핸드' },
+            { type: 'dessert', name: '허그 3do (Hug 3do)', desc: '쿠키 사이에 아이스크림 샌드.', rating: '4.2', reviews: '500+', benefit: '5% 할인', map: 'Hug 3do American Village', blogQuery: '오키나와+허그3do' },
+            { type: 'dessert', name: '하우짓 소다바', desc: '상큼한 과일 소다와 아이스크림.', rating: '4.5', reviews: '500+', benefit: '100엔 할인', map: 'Howzit Sodabar American Village', blogQuery: '오키나와+하우짓+소다바' },
+            { type: 'dessert', name: '파티 랜드', desc: '토핑을 마음대로 고르는 요거트.', rating: '4.1', reviews: '500+', benefit: '10% 할인', map: 'Party Land Carnival Park Mihama', blogQuery: '오키나와+파티랜드' },
+            { type: 'dessert', name: '와-큔 (Wa-Kyun)', desc: '바삭하고 달콤한 와플 맛집.', rating: '4.3', reviews: '500+', benefit: '5% 할인', map: 'Wa-Kyun American Village', blogQuery: '오키나와+와플+와큔' },
+            { type: 'dessert', name: '펠리즈 커피', desc: '조용하게 쉬기 좋은 로스터리 카페.', rating: '4.4', reviews: '600+', benefit: null, map: 'Feliz Coffee American Village', blogQuery: '오키나와+펠리즈커피' },
         ];
 
         function renderList(filter) {
@@ -165,8 +167,14 @@
                     ? `<span class="badge-cardkey">${item.benefit}</span>` 
                     : '';
 
-                // [수정됨] 정확한 구글맵 검색 URL 생성
-                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.map)}`;
+                // 작은따옴표(')가 포함된 이름으로 인한 HTML 구조 파괴 방지를 위해 replace 처리
+                const mapQuery = encodeURIComponent(item.map).replace(/'/g, "%27");
+                
+                // [완벽수정] 구글맵 공식 API 검색 URL 적용 (절대 경로)
+                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+                
+                // 네이버 블로그 검색 URL 적용
+                const naverBlogUrl = `https://m.search.naver.com/search.naver?where=m_view&sm=mtb_jum&query=${item.blogQuery}`;
 
                 const html = `
                     <div class="dining-item" onclick="window.open('${googleMapUrl}', '_blank')">
@@ -179,8 +187,13 @@
                             <p class="text-xs text-slate-500 mt-1 line-clamp-2">${item.desc}</p>
                             ${benefitHtml}
                         </div>
-                        <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-end gap-1 text-xs text-slate-400 font-medium">
-                            <span>구글맵 보기</span> <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                        <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between gap-1.5">
+                            <a href="${naverBlogUrl}" target="_blank" onclick="event.stopPropagation();" class="flex-1 bg-green-50 border border-green-200 text-green-700 text-[11px] font-bold py-1.5 rounded-md hover:bg-green-100 transition-colors text-center flex justify-center items-center">
+                                네이버 리뷰보기
+                            </a>
+                            <span class="text-[11px] font-bold text-blue-500 flex items-center gap-0.5 px-1">
+                                구글맵 보기 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                            </span>
                         </div>
                     </div>
                 `;
