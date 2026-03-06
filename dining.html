@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://www.gstatic.com">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -67,7 +66,7 @@
                     <span class="text-rose-200 font-bold text-xs mb-1 block">아메리칸 빌리지 (숙소 도보권)</span>
                     <h1 class="text-2xl md:text-3xl font-black leading-tight tracking-tight">
                         실패 없는<br>
-                        <span class="text-yellow-300">검증된 맛집</span> 30선
+                        <span class="text-yellow-300">검증된 맛집</span>
                     </h1>
                     <p class="text-white/80 text-xs mt-2 flex items-center gap-1">
                         <i data-lucide="star" class="w-3 h-3 fill-current"></i> 구글 4.0+ & 리뷰 500+ 엄선
@@ -83,8 +82,8 @@
     <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
         <div class="flex gap-2 mb-6 sticky top-[57px] z-40 bg-[#F8FAFC] py-2">
             <button onclick="filterList('all')" id="btn-all" class="filter-btn active flex-1 py-2 rounded-lg text-xs font-bold shadow-sm transition-colors">전체</button>
-            <button onclick="filterList('meal')" id="btn-meal" class="filter-btn flex-1 py-2 rounded-lg text-xs font-bold shadow-sm transition-colors">식사 (20)</button>
-            <button onclick="filterList('dessert')" id="btn-dessert" class="filter-btn flex-1 py-2 rounded-lg text-xs font-bold shadow-sm transition-colors">디저트 (10)</button>
+            <button onclick="filterList('meal')" id="btn-meal" class="filter-btn flex-1 py-2 rounded-lg text-xs font-bold shadow-sm transition-colors">식사</button>
+            <button onclick="filterList('dessert')" id="btn-dessert" class="filter-btn flex-1 py-2 rounded-lg text-xs font-bold shadow-sm transition-colors">디저트</button>
         </div>
 
         <div id="dining-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -112,10 +111,8 @@
     </div>
 
     <script type="module" src="common.js"></script>
-    <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 지점명 확실히 명시(American Village, Chatan 등)
         const places = [
             // --- 식사 (Meal) ---
             { type: 'meal', name: '스테이크 하우스 88', desc: '아메리칸 빌리지의 상징적인 스테이크.', rating: '4.1', reviews: '2,800+', benefit: '드링크바 무료', map: 'Steak House 88 Chatan American Village', blogQuery: '오키나와+스테이크하우스88' },
@@ -138,6 +135,10 @@
             { type: 'meal', name: '아일랜드 패독', desc: '핫도그와 감자튀김이 맛있는 펍.', rating: '4.5', reviews: '500+', benefit: '10% 할인', map: 'Island Paddock Chatan', blogQuery: '오키나와+아일랜드+패독' },
             { type: 'meal', name: '린야 (Linya)', desc: '깔끔한 일본식 야키니쿠 (고기 구이).', rating: '4.2', reviews: '600+', benefit: '김치 모듬 무료', map: 'Yakiniku Linya Chatan', blogQuery: '오키나와+야키니쿠+린야' },
             { type: 'meal', name: '더블 데커', desc: '2층 버스에서 즐기는 식사와 맥주.', rating: '4.0', reviews: '800+', benefit: '5% 할인', map: 'Double Decker American Village', blogQuery: '오키나와+더블데커' },
+            
+            // 새로 추가된 맛집
+            { type: 'meal', name: '호카이소자이 스시', desc: '신선한 홋카이도산 해산물을 맛볼 수 있는 초밥 전문점.', rating: '4.3', reviews: '1,000+', benefit: null, map: 'Hokkaisozai Okinawa Chatan', blogQuery: '오키나와+호카이소자이' },
+            { type: 'meal', name: '카이센 밧텐', desc: '신선한 해산물과 오키나와 요리가 일품인 현지인 추천 맛집.', rating: '4.4', reviews: '500+', benefit: null, map: 'Kaisen Batten Chatan', blogQuery: '오키나와+카이센밧텐' },
             
             // --- 디저트 (Dessert) ---
             { type: 'dessert', name: '지바고 커피 웍스', desc: '힙한 분위기의 오션뷰 커피 맛집.', rating: '4.6', reviews: '2,500+', benefit: '5% 할인', map: 'Zhyvago Coffee Works Okinawa American Village', blogQuery: '오키나와+지바고커피' },
@@ -167,10 +168,10 @@
                     ? `<span class="badge-cardkey">${item.benefit}</span>` 
                     : '';
 
-                // 작은따옴표(')가 포함된 이름으로 인한 HTML 구조 파괴 방지를 위해 replace 처리
+                // 구글맵 검색 오류 수정을 위해 특수문자(') 이스케이프 처리
                 const mapQuery = encodeURIComponent(item.map).replace(/'/g, "%27");
                 
-                // [완벽수정] 구글맵 공식 API 검색 URL 적용 (절대 경로)
+                // 완벽한 구글맵 연동을 위한 공식 URL 사용
                 const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
                 
                 // 네이버 블로그 검색 URL 적용
@@ -181,7 +182,7 @@
                         <div>
                             <div class="flex justify-between items-start">
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded ${typeColor} mb-1 inline-block">${typeLabel}</span>
-                                <span class="badge-star"><i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> ${item.rating} <span class="text-slate-400 font-normal">(${item.reviews})</span></span>
+                                <span class="badge-star"><i data-lucide="star" class="w-2.5 h-2.5 fill-current text-yellow-400"></i> ${item.rating} <span class="text-slate-400 font-normal">(${item.reviews})</span></span>
                             </div>
                             <h3 class="font-bold text-slate-800 text-sm mt-0.5">${item.name}</h3>
                             <p class="text-xs text-slate-500 mt-1 line-clamp-2">${item.desc}</p>
