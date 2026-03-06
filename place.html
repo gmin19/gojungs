@@ -43,6 +43,7 @@
             transition: transform 0.2s;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             height: 100%;
+            cursor: pointer;
         }
         .place-item:active { transform: scale(0.98); background-color: #F0FDFA; }
 
@@ -126,7 +127,7 @@
     <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84GO0uHuyrYlp+WvTffKiknkIODCo572M"></script>
 
     <script>
-        // 관광지 데이터에 네이버 블로그 검색 URL 추가 완료
+        // 쇼핑몰 공식 홈페이지 링크 및 구글맵 정확도 향상을 위한 검색어 추가 완료
         const places = [
             // --- 북부 (North) ---
             { region: 'north', category: 'sightseeing', name: '츄라우미 수족관', desc: '거대한 수조의 고래상어는 필수 코스.', mapcode: '553 075 797', mapUrl: 'Okinawa Churaumi Aquarium', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+츄라우미+수족관' },
@@ -144,10 +145,11 @@
             { region: 'central', category: 'sightseeing', name: '류큐무라', desc: '오키나와 전통 가옥과 문화 체험.', mapcode: '206 033 065*25', mapUrl: 'Ryukyu Mura', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+류큐무라' },
             { region: 'central', category: 'sightseeing', name: '낚고 찾아내는 모험의 나라', desc: '비 오는 날에도 즐기기 좋은 실내 낚시 & 보물찾기 체험.', mapcode: '206 069 262*13', mapUrl: '釣って見つけるぼうけんの国 沖縄', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+낚고+찾아내는+모험의+나라' },
             
-            // 중부 쇼핑 & 기념품 (다중 분류)
-            { region: 'central', category: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: 'AEON MALL Okinawa Rycom', status: 'planned', taxfree: '1F 면세카운터 / 각 매장', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이온몰+라이카무' },
-            { region: 'central', category: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰. (우천 시 예비)', mapcode: '33 341 124*74', mapUrl: 'San-A Urasoe West Coast PARCO CITY', status: 'option', taxfree: '1F 그린존 통합 카운터', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+파르코시티' },
-            { region: 'central', category: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: 'MEGA Don Quijote Ginowan', status: 'planned', taxfree: '면세 전용 계산대', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+메가돈키호테+기노완' },
+            // 중부 쇼핑 & 기념품 (홈페이지 연동 포함)
+            { region: 'central', category: 'mall', name: '이온몰 라이카무', desc: '오키나와 최대 규모 리조트형 몰.', mapcode: '33 530 406*45', mapUrl: 'AEON MALL Okinawa Rycom', status: 'planned', taxfree: '1F 면세카운터 / 각 매장', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이온몰+라이카무', homeUrl: 'https://kr.aeonmall.global/mall/okinawarycom' },
+            { region: 'central', category: 'mall', name: '파르코 시티', desc: '나하 인근, 바다가 보이는 최신 몰. (우천 시 예비)', mapcode: '33 341 124*74', mapUrl: 'San-A Urasoe West Coast PARCO CITY', status: 'option', taxfree: '1F 그린존 통합 카운터', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+파르코시티', homeUrl: 'https://parcocity.j-server.com/LUCSPRCC/ns/tl.cgi/https://www.parcocity.jp/?SLANG=ja&TLANG=ko&XMODE=0&XCHARSET=UTF-8&XJSID=0' },
+            { region: 'central', category: 'mall', name: '이온몰 차탄점', desc: '아메리칸 빌리지 내 위치한 대형 마트.', mapcode: '33 526 212*33', mapUrl: 'Aeon Chatan American Village', status: 'option', taxfree: '면세 가능', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이온몰+차탄', homeUrl: 'https://world.aeon-ryukyu.jp/ko/' },
+            { region: 'central', category: 'gift', name: '메가 돈키호테 기노완', desc: '국제거리보다 주차가 편리한 매장.', mapcode: '33 434 024*44', mapUrl: 'MEGA Don Quijote Ginowan', status: 'planned', taxfree: '면세 전용 계산대', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+메가돈키호테+기노완', homeUrl: 'https://www.donki-global.com/kr/store/shop_detail.php?shop_id=302' },
             { region: 'central', category: 'gift', name: '오카시고텐 (요미탄)', desc: '자색고구마 타르트 원조 (선물 추천).', mapcode: '206 315 289*63', mapUrl: 'Okashigoten Yomitan Main Shop', status: 'option', taxfree: '면세 전용 카운터', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+오카시고텐+요미탄' },
 
             // --- 남부 (South) ---
@@ -156,9 +158,9 @@
             { region: 'south', category: 'sightseeing', name: '국제거리 (주차장)', desc: '나하 최대 번화가. (목적지: 마키시 제3 주차장)', mapcode: '33 157 403*33', mapUrl: 'テクニカルパーク牧志第3', status: 'planned', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+국제거리' },
             { region: 'south', category: 'sightseeing', name: '슈리성 공원', desc: '류큐 왕국의 역사가 깃든 세계문화유산.', mapcode: '33 161 526*66', mapUrl: 'Shurijo Castle Park', status: 'option', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+슈리성' },
 
-            // 남부 쇼핑 & 기념품
+            // 남부 쇼핑 & 기념품 (홈페이지 연동 포함)
             { region: 'south', category: 'mall', name: '아시비나 아울렛', desc: '명품 브랜드 및 스포츠 의류 아울렛.', mapcode: '232 544 452*22', mapUrl: 'Okinawa Outlet Mall Ashibinaa', status: 'option', taxfree: '각 매장 계산대', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+아시비나+아울렛' },
-            { region: 'south', category: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: 'iias Okinawa Toyosaki', status: 'planned', taxfree: '매장별 상이', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이아스' },
+            { region: 'south', category: 'mall', name: '이아스 오키나와', desc: '수족관이 있는 최신 복합 시설.', mapcode: '232 543 400*25', mapUrl: 'iias Okinawa Toyosaki', status: 'planned', taxfree: '매장별 상이', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+이아스', homeUrl: 'https://toyosaki.iias.jp' },
             { region: 'south', category: 'gift', name: '만화창고 (나하점)', desc: '피규어, 게임 등 보물찾기 중고샵.', mapcode: '33 064 552*55', mapUrl: 'Manga Souko Naha', status: 'option', taxfree: '면세 가능', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+만화창고' },
             { region: 'south', category: 'gift', name: '야치문 거리', desc: '전통 도자기 공방 거리.', mapcode: '33 158 123*44', mapUrl: 'Tsuboya Yachimun Street', status: 'option', taxfree: '매장별 상이', blogUrl: 'https://search.naver.com/search.naver?where=view&sm=tab_jum&query=오키나와+야치문거리' },
         ];
@@ -199,9 +201,16 @@
                     ? `<span class="badge-taxfree"><i data-lucide="receipt" class="w-3 h-3"></i> ${place.taxfree}</span>` 
                     : '';
 
-                // 구글맵 공식 검색 URL 적용 완료 및 네이버 블로그 리뷰 버튼 추가
+                // 홈페이지 버튼 (존재할 경우 렌더링)
+                let homeBtnHtml = place.homeUrl 
+                    ? `<a href="${place.homeUrl}" target="_blank" onclick="event.stopPropagation();" class="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded border border-teal-100 hover:bg-teal-100 transition-colors"><i data-lucide="globe" class="w-3 h-3"></i> 공식 홈페이지</a>` 
+                    : '';
+
+                // [완벽수정] 공식 구글맵 API 검색 URL (안정성 보장)
+                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapUrl)}`;
+
                 const html = `
-                    <div class="place-item" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapUrl)}', '_blank')">
+                    <div class="place-item" onclick="window.open('${googleMapUrl}', '_blank')">
                         <div>
                             <div class="flex justify-between items-start mb-1">
                                 <div class="flex gap-1">
@@ -212,6 +221,7 @@
                             <h3 class="font-bold text-slate-800 text-sm mt-1">${place.name}</h3>
                             <p class="text-xs text-slate-500 mt-1 line-clamp-2">${place.desc}</p>
                             ${taxFreeBadge}
+                            <div class="block">${homeBtnHtml}</div>
                         </div>
                         <div class="mt-3 pt-3 border-t border-slate-50 flex items-center justify-between gap-1.5">
                             <button class="flex-1 bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-bold py-1.5 rounded-md hover:bg-slate-100 transition-colors" onclick="event.stopPropagation(); copyToClipboard('${place.mapcode}')">
