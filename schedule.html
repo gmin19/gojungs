@@ -2,8 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     
     <title>오키나와 가족 여행 - 일정표</title>
@@ -148,7 +147,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-blue-600">06:20</span>
                         <h3 class="text-lg font-bold text-slate-800">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('인천공항 제2여객터미널')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">인천공항 2터미널 집결 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></span>
+                            <span onclick="openPlace('인천공항 제2여객터미널')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">인천공항 2터미널 집결 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">대한항공 체크인 카운터: <strong>B, C</strong></p>
                         
@@ -212,7 +211,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('ユニバースレンタカー那覇空港店 外車・輸入車専門')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('ユニバースレンタカー那覇空港店 外車・輸入車専門')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 유니버스 렌터카 인수 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">택시 15분</span>
@@ -237,7 +236,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('テクニカルパーク牧志第3')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('テクニカルパーク牧志第3')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 국제거리 관광 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 20분</span>
@@ -250,7 +249,7 @@
                         
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><i data-lucide="umbrella" class="w-3 h-3 text-blue-400"></i> 우천 시 예비일정: 파르코 시티</span>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('San-A Urasoe West Coast PARCO CITY')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">파르코 시티 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('San-A Urasoe West Coast PARCO CITY')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">파르코 시티 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 341 124*74')">MC: 33 341 124*74 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
@@ -264,7 +263,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 레쿠 오키나와 체크인 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 45분</span>
@@ -285,7 +284,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:00</span>
                         <h3 class="text-lg font-bold text-slate-800">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('American Village Okinawa')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">아메리칸 빌리지 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></span>
+                            <span onclick="openPlace('American Village Okinawa')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">아메리칸 빌리지 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i></span>
                         </h3>
                         <p class="text-slate-500 text-sm mt-1">주변 산책, 야경 감상 및 <strong>저녁 자유식</strong></p>
                         <span class="mapcode" onclick="copyToClipboard('33 526 451*20')">MC: 33 526 451*20 <i data-lucide="copy" class="w-3 h-3"></i></span>
@@ -319,7 +318,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">09:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Kyoda Roadside Station')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Kyoda Roadside Station')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 쿄다 휴게소 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 1시간</span>
@@ -340,7 +339,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">10:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Okinawa Churaumi Aquarium')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Okinawa Churaumi Aquarium')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 츄라우미 수족관 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 30분</span>
@@ -354,7 +353,7 @@
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 block mb-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3 text-slate-400"></i> 시간 여유 시 추천: 열대드림센터 (P8 주차장)</span>
                             <p class="text-[11px] text-slate-500 mb-1">수족관 근처에 위치한 이국적인 난초/열대 식물원</p>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Tropical Dream Center Okinawa')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('Tropical Dream Center Okinawa')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
                 </div>
@@ -367,7 +366,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Ufuya')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Ufuya')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 백년고택 우후야 (점심) <span class="inline-block text-[10px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-1 py-0.5 rounded ml-1 align-middle">웨이팅 예상</span> <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 30분</span>
@@ -388,7 +387,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Manzamo')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Manzamo')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 만좌모 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 40분</span>
@@ -402,7 +401,7 @@
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 block mb-1 flex items-center gap-1"><i data-lucide="coffee" class="w-3 h-3 text-orange-400"></i> 예비 일정: 호시노 리조트 반타카페</span>
                             <p class="text-[11px] text-slate-500 mb-1">시간 여유 시 만좌모에서 숙소 가는 길에 들르기 좋은 절경 카페</p>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Hoshino Resorts Banta Cafe')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">반타카페 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('Hoshino Resorts Banta Cafe')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">반타카페 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 881 273*06')">MC: 33 881 273*06 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
@@ -416,7 +415,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 40분</span>
@@ -437,7 +436,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">18:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Blue Ocean Steak Okinawa Chatan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Blue Ocean Steak Okinawa Chatan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 블루 오션 스테이크 (저녁) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">도보 10분</span>
@@ -476,7 +475,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">10:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Ryukyu Mura')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Ryukyu Mura')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 류큐무라 (어른) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 25분</span>
@@ -497,7 +496,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">10:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('釣って見つけるぼうけんの国 沖縄')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('釣って見つけるぼうけんの国 沖縄')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 모험의 나라 (아이) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 25분</span>
@@ -518,7 +517,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('AEON MALL Okinawa Rycom')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('AEON MALL Okinawa Rycom')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 이온몰 라이카무 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 15분</span>
@@ -541,7 +540,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">16:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('MEGA Don Quijote Ginowan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('MEGA Don Quijote Ginowan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 메가 돈키호테 기노완점 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 15분</span>
@@ -555,7 +554,7 @@
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><i data-lucide="waves" class="w-3 h-3 text-cyan-500"></i> 예비 일정: 아라하 비치</span>
                             <p class="text-[11px] text-slate-500 mb-1">시간 여유 시 해적선 놀이터 방문</p>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Araha Beach')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">아라하 비치 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('Araha Beach')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">아라하 비치 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 496 038*21')">MC: 33 496 038*21 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
@@ -569,7 +568,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">17:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Lequ Okinawa Chatan Spa & Resort')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 레쿠 오키나와 복귀 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 10분</span>
@@ -590,7 +589,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">18:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Kaisen Batten Chatan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Kaisen Batten Chatan')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 카이센 밧텐 (저녁) <span class="badge-confirmed">예약확정</span> <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">도보 10분</span>
@@ -629,7 +628,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">11:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('iias Okinawa Toyosaki')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('iias Okinawa Toyosaki')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 이아스 오키나와 & 점심 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 40분</span>
@@ -642,13 +641,13 @@
                         
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 block mb-1">옵션: 이토만 어시장 (차로 3분)</span>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Itoman Fishing Cooperative Fish Center')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">이토만 어시장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('Itoman Fishing Cooperative Fish Center')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">이토만 어시장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('232 484 136*78')">MC: 232 484 136*78 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                         
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
                             <span class="text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><i data-lucide="umbrella" class="w-3 h-3 text-blue-400"></i> 1일차 우천 시 예비일정: 국제거리</span>
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Technical Park Makishi 3rd')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">마키시 제3주차장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
+                            <span onclick="openPlace('Technical Park Makishi 3rd')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">마키시 제3주차장 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 157 403*33')">MC: 33 157 403*33 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
                     </div>
@@ -662,7 +661,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">13:30</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Senagajima Umikaji Terrace')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('Senagajima Umikaji Terrace')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 우미카지 테라스 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 15분</span>
@@ -683,7 +682,7 @@
                     <div class="pb-6 flex-1">
                         <span class="text-sm font-bold text-slate-500">15:00</span>
                         <h3 class="text-lg font-bold text-slate-800 flex items-center flex-wrap gap-1">
-                            <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('ユニバースレンタカー那覇空港店 外車・輸入車専門')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
+                            <span onclick="openPlace('ユニバースレンタカー那覇空港店 外車・輸入車専門')" class="hover:text-blue-600 cursor-pointer flex items-center gap-1">
                                 유니버스 렌터카 반납 <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">차량 10분</span>
@@ -867,10 +866,40 @@
             }
         }
 
-        // 구글맵 표준 길찾기 API 연동으로 완벽 수정 (모바일 앱 바로 열기)
+        // 장소 검색용 함수 (정보 보기, 앱 팝업 방지 딥링크 적용)
+        function openPlace(placeName) {
+            var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            var isAndroid = /Android/.test(navigator.userAgent);
+            var query = encodeURIComponent(placeName);
+
+            if (isIOS) {
+                window.location.href = 'comgooglemaps://?q=' + query;
+                setTimeout(function() {
+                    window.location.href = 'https://www.google.com/maps/search/?api=1&query=' + query;
+                }, 500);
+            } else if (isAndroid) {
+                window.location.href = 'intent://maps.google.com/maps?q=' + query + '#Intent;scheme=https;package=com.google.android.apps.maps;end;';
+            } else {
+                window.location.href = 'https://www.google.com/maps/search/?api=1&query=' + query;
+            }
+        }
+
+        // 길찾기 내비게이션용 함수 (바로 안내 시작, 앱 팝업 방지 딥링크 적용)
         function openRealTimeNavi(destinationName) {
-            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}&travelmode=driving`;
-            location.href = url;
+            var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            var isAndroid = /Android/.test(navigator.userAgent);
+            var query = encodeURIComponent(destinationName);
+
+            if (isIOS) {
+                window.location.href = 'comgooglemaps://?daddr=' + query + '&directionsmode=driving';
+                setTimeout(function() {
+                    window.location.href = 'https://www.google.com/maps/dir/?api=1&destination=' + query + '&travelmode=driving';
+                }, 500);
+            } else if (isAndroid) {
+                window.location.href = 'intent://maps.google.com/maps?daddr=' + query + '&nav=1#Intent;scheme=https;package=com.google.android.apps.maps;end;';
+            } else {
+                window.location.href = 'https://www.google.com/maps/dir/?api=1&destination=' + query + '&travelmode=driving';
+            }
         }
 
         function initChecklists() {
