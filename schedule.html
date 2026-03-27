@@ -440,7 +440,7 @@
                                 블루 오션 스테이크 (저녁) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">도보 10분</span>
-                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa Chatan')">
+                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa')">
                                 <i data-lucide="navigation" class="w-2.5 h-2.5"></i> 현위치→목적지
                             </span>
                         </h3>
@@ -866,7 +866,7 @@
             }
         }
 
-        // 장소 검색용 함수 (정보 보기, 앱 팝업 방지 딥링크 적용)
+        // 장소 검색용 함수 (정보 보기, 스마트폰 구글맵 앱 바로 열기 적용)
         function openPlace(placeName) {
             var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             var isAndroid = /Android/.test(navigator.userAgent);
@@ -884,7 +884,7 @@
             }
         }
 
-        // 길찾기 내비게이션용 함수 (바로 안내 시작, 앱 팝업 방지 딥링크 적용)
+        // 길찾기 내비게이션용 함수 (바로 안내 시작, 스마트폰 구글맵 앱 바로 열기 적용)
         function openRealTimeNavi(destinationName) {
             var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             var isAndroid = /Android/.test(navigator.userAgent);
