@@ -440,7 +440,7 @@
                                 블루 오션 스테이크 (저녁) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">도보 10분</span>
-                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa')">
+                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa Chatan')">
                                 <i data-lucide="navigation" class="w-2.5 h-2.5"></i> 현위치→목적지
                             </span>
                         </h3>
@@ -873,13 +873,17 @@
             var query = encodeURIComponent(placeName);
 
             if (isIOS) {
+                // 아이폰(iOS) 구글맵 앱 실행 프로토콜
                 window.location.href = 'comgooglemaps://?q=' + query;
+                // 앱이 없을 경우 대비 웹페이지로 폴백(Fallback) 이동
                 setTimeout(function() {
                     window.location.href = 'https://www.google.com/maps/search/?api=1&query=' + query;
                 }, 500);
             } else if (isAndroid) {
+                // 안드로이드 구글맵 앱 실행 인텐트(Intent)
                 window.location.href = 'intent://maps.google.com/maps?q=' + query + '#Intent;scheme=https;package=com.google.android.apps.maps;end;';
             } else {
+                // PC 등 기타 환경은 웹페이지 실행
                 window.location.href = 'https://www.google.com/maps/search/?api=1&query=' + query;
             }
         }
@@ -891,13 +895,17 @@
             var query = encodeURIComponent(destinationName);
 
             if (isIOS) {
+                // 아이폰(iOS) 길찾기 모드 앱 실행 프로토콜
                 window.location.href = 'comgooglemaps://?daddr=' + query + '&directionsmode=driving';
+                // 앱이 없을 경우 대비 웹페이지 길찾기로 폴백(Fallback) 이동
                 setTimeout(function() {
                     window.location.href = 'https://www.google.com/maps/dir/?api=1&destination=' + query + '&travelmode=driving';
                 }, 500);
             } else if (isAndroid) {
+                // 안드로이드 길찾기 모드 앱 실행 인텐트(Intent)
                 window.location.href = 'intent://maps.google.com/maps?daddr=' + query + '&nav=1#Intent;scheme=https;package=com.google.android.apps.maps;end;';
             } else {
+                // PC 등 기타 환경은 웹페이지 길찾기 실행
                 window.location.href = 'https://www.google.com/maps/dir/?api=1&destination=' + query + '&travelmode=driving';
             }
         }
