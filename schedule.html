@@ -23,6 +23,9 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #F8FAFC; color: #334155; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .pb-safe { padding-bottom: calc(env(safe-area-inset-bottom) + 2rem); }
+        
         .timeline-line { position: absolute; left: 19px; top: 32px; bottom: -16px; width: 2px; background-color: #E2E8F0; z-index: 0; }
         .last-item .timeline-line { display: none; }
         .nav-link.active { color: #EA580C; border-bottom-color: #EA580C; background-color: rgba(255, 255, 255, 0.8); }
@@ -63,7 +66,6 @@
             vertical-align: middle;
         }
 
-        /* 예약 확정 뱃지 */
         .badge-confirmed {
             display: inline-block;
             font-size: 10px;
@@ -77,7 +79,6 @@
             vertical-align: middle;
         }
         
-        /* 예상 시간 뱃지 */
         .badge-time {
             display: inline-flex; align-items: center; gap: 2px;
             font-size: 10px; font-weight: 700; color: #64748B;
@@ -85,7 +86,6 @@
             vertical-align: middle; border: 1px solid #E2E8F0; white-space: nowrap;
         }
 
-        /* 실시간 경로 뱃지 (클릭 가능) */
         .badge-navi {
             display: inline-flex; align-items: center; gap: 2px;
             font-size: 10px; font-weight: 700; color: #059669;
@@ -95,6 +95,9 @@
             transition: transform 0.1s;
         }
         .badge-navi:active { transform: scale(0.95); background-color: #D1FAE5; }
+
+        /* 체크리스트 커스텀 스타일 */
+        .checklist-item:checked + label { text-decoration: line-through; color: #94A3B8; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col pb-safe">
@@ -116,19 +119,19 @@
 
     <nav id="global-nav" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm"></nav>
 
-    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 pb-32 relative">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-5 py-6 relative">
         <div class="flex gap-2 mb-6 overflow-x-auto no-scrollbar pb-1">
-            <button onclick="switchDay(1)" id="tab-1" class="day-tab active flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
-                1일차<br><span class="text-[10px] font-normal opacity-80">출국/중부</span>
+            <button onclick="switchDay(1)" id="tab-1" data-date="2026-04-02" class="day-tab active flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                1일차 <span id="weather-2026-04-02" class="ml-1 inline-flex items-center"></span><br><span class="text-[10px] font-normal opacity-80">출국/중부</span>
             </button>
-            <button onclick="switchDay(2)" id="tab-2" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
-                2일차<br><span class="text-[10px] font-normal opacity-80">북부 투어</span>
+            <button onclick="switchDay(2)" id="tab-2" data-date="2026-04-03" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                2일차 <span id="weather-2026-04-03" class="ml-1 inline-flex items-center"></span><br><span class="text-[10px] font-normal opacity-80">북부 투어</span>
             </button>
-            <button onclick="switchDay(3)" id="tab-3" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
-                3일차<br><span class="text-[10px] font-normal opacity-80">쇼핑/휴식</span>
+            <button onclick="switchDay(3)" id="tab-3" data-date="2026-04-04" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                3일차 <span id="weather-2026-04-04" class="ml-1 inline-flex items-center"></span><br><span class="text-[10px] font-normal opacity-80">쇼핑/휴식</span>
             </button>
-            <button onclick="switchDay(4)" id="tab-4" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
-                4일차<br><span class="text-[10px] font-normal opacity-80">남부/귀국</span>
+            <button onclick="switchDay(4)" id="tab-4" data-date="2026-04-05" class="day-tab flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-sm shadow-sm whitespace-nowrap min-w-[80px]">
+                4일차 <span id="weather-2026-04-05" class="ml-1 inline-flex items-center"></span><br><span class="text-[10px] font-normal opacity-80">남부/귀국</span>
             </button>
         </div>
 
@@ -150,12 +153,24 @@
                         <p class="text-slate-500 text-sm mt-1">대한항공 체크인 카운터: <strong>B, C</strong></p>
                         
                         <div class="bg-white border border-slate-200 rounded-lg p-3 mt-2 shadow-sm">
-                            <h4 class="text-xs font-bold text-slate-700 mb-1 flex items-center gap-1"><i data-lucide="check-square" class="w-3 h-3 text-blue-500"></i> 한국 출발 체크</h4>
-                            <ul class="space-y-1 text-xs text-slate-600">
-                                <li>• 여권 (유효기간 6개월 이상)</li>
-                                <li>• eSIM/로밍 데이터 설정 확인</li>
-                                <li>• 110v 돼지코 어댑터</li>
-                                <li>• 렌터카 예약 바우처 & 국제면허증</li>
+                            <h4 class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1"><i data-lucide="check-square" class="w-3 h-3 text-blue-500"></i> 한국 출발 체크 (터치하여 체크)</h4>
+                            <ul class="space-y-2 text-xs text-slate-600">
+                                <li class="flex items-center gap-2">
+                                    <input type="checkbox" id="chk-passport" class="checklist-input w-4 h-4 text-blue-600 rounded border-slate-300">
+                                    <label for="chk-passport" class="cursor-pointer flex-1">여권 (유효기간 6개월 이상)</label>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <input type="checkbox" id="chk-esim" class="checklist-input w-4 h-4 text-blue-600 rounded border-slate-300">
+                                    <label for="chk-esim" class="cursor-pointer flex-1">eSIM/로밍 데이터 설정 확인</label>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <input type="checkbox" id="chk-adapter" class="checklist-input w-4 h-4 text-blue-600 rounded border-slate-300">
+                                    <label for="chk-adapter" class="cursor-pointer flex-1">110v 돼지코 어댑터</label>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <input type="checkbox" id="chk-rentcar" class="checklist-input w-4 h-4 text-blue-600 rounded border-slate-300">
+                                    <label for="chk-rentcar" class="cursor-pointer flex-1">렌터카 예약 바우처 & 국제면허증</label>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -234,7 +249,7 @@
                         <span class="mapcode" onclick="copyToClipboard('33 157 403*33')">MC: 33 157 403*33 <i data-lucide="copy" class="w-3 h-3"></i></span>
                         
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
-                            <span class="text-xs font-bold text-slate-600 block mb-1 flex items-center gap-1"><i data-lucide="umbrella" class="w-3 h-3 text-blue-400"></i> 우천 시 예비일정: 파르코 시티</span>
+                            <span class="text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><i data-lucide="umbrella" class="w-3 h-3 text-blue-400"></i> 우천 시 예비일정: 파르코 시티</span>
                             <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('San-A Urasoe West Coast PARCO CITY')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">파르코 시티 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 341 124*74')">MC: 33 341 124*74 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
                         </div>
@@ -426,7 +441,7 @@
                                 블루 오션 스테이크 (저녁) <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i>
                             </span>
                             <span class="badge-time">도보 10분</span>
-                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa')">
+                            <span class="badge-navi" onclick="openRealTimeNavi('Blue Ocean Steak Okinawa Chatan')">
                                 <i data-lucide="navigation" class="w-2.5 h-2.5"></i> 현위치→목적지
                             </span>
                         </h3>
@@ -538,7 +553,7 @@
                         <span class="mapcode" onclick="copyToClipboard('33 434 024*44')">MC: 33 434 024*44 <i data-lucide="copy" class="w-3 h-3"></i></span>
                         
                         <div class="bg-white border border-slate-200 p-2 rounded mt-2">
-                            <span class="text-xs font-bold text-slate-600 block mb-1 flex items-center gap-1"><i data-lucide="waves" class="w-3 h-3 text-cyan-500"></i> 예비 일정: 아라하 비치</span>
+                            <span class="text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><i data-lucide="waves" class="w-3 h-3 text-cyan-500"></i> 예비 일정: 아라하 비치</span>
                             <p class="text-[11px] text-slate-500 mb-1">시간 여유 시 해적선 놀이터 방문</p>
                             <span onclick="location.href='https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Araha Beach')" class="text-xs text-blue-600 cursor-pointer font-bold hover:underline flex items-center gap-1">아라하 비치 위치 보기 <i data-lucide="external-link" class="w-2.5 h-2.5"></i></span>
                             <span class="mapcode mt-1" onclick="copyToClipboard('33 496 038*21')">MC: 33 496 038*21 <i data-lucide="copy" class="w-2.5 h-2.5"></i></span>
@@ -852,6 +867,7 @@
             }
         }
 
+        // 구글맵 표준 길찾기 API 연동으로 완벽 수정 (모바일 앱 바로 열기)
         function openRealTimeNavi(destinationName) {
             const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}&travelmode=driving`;
             location.href = url;
